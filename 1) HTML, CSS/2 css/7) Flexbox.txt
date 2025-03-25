@@ -1,0 +1,202 @@
+		## Flexbox
+
+-flexbox란 박스 내 요소 공간의 공간을 배분과 정렬 기능을 제공하기위한 1차원 레이아웃 모델이다.
+-flexbox를 1차원 모델이라 부르는 이유는 레이아웃을 다룰 때 한번에 하나의 차원(행, 열)만을 다루기 때문이다.
+-flexbox를 flex 컨테이너라고도 한다. (요소들을 포함하기 때문이다.)
+-flexbox를 만들기 위해서는 컨테이너에 display: flex; 를 적용해야 한다.
+-flex 컨테이너는 기본적으로 요소들을 행 방향으로 정렬한다. (추가속성들을 사용하여 다양하게 적용할 수 있다.
+
+
+
+
+	# 주축(main-axis)과 교차축(cross-axis)
+
+-flexbox에는 주축(main-axis)과 교차축(cross-axis)이 있다.
+-flexbox는 기본적으로 주축(행방향, 가로방향)방향이다.
+-flexbox의 교차축은(열방향, 세로방향)방향이된다.
+-주축과 교차축을 서로 바꿔가며 레이아웃을 변경할 수있다.
+ 만약 세로 방향을 주축을 사용하게되면 당연히 가로방향이 교차축이된다.
+ 주축이 어떤것이냐에 따라 레이아웃에 많은 변화가 생긴다
+
+
+
+
+
+	# felx-direction
+-flex-direction 속성은 flexbox 내 요소를 배치할 때 사용할 주축 및 방향(정방향, 역방향)을 지정한다.
+
+=================================================================
+|    속성값		|		의미				|
+-----------------------------------------------------------------
+| row		| 기본값이며 주축은 행이고 방향은 콘텐츠의 방향과 동일	|
+-----------------------------------------------------------------
+| row-reverse	| 주축은 행이고 방향은 콘텐츠의 방향과 반대		|
+-----------------------------------------------------------------
+| column		| 주축은 열이고 방향은 콘텐츠의 방향과 동일		|
+-----------------------------------------------------------------
+| column-reverse	| 주축은 열이고 방향은 콘텐츠의 방향과 반대		|
+=================================================================
+
+
+
+
+-flexbox를 다루기위해서는 다음과 같은 속성들을 사용할 수 있다.
+ # 주축 배치 방법		: justify-content (가로 축을 기준으로 좌우에 대한 정렬을 관장 합니다.)
+
+<body>
+    <div class="containner">
+        <div class="item">div1</div>
+        <div class="item">div2</div>
+        <div class="item">div3</div>
+    </div>
+</body>
+
+
+.item {
+    width: 60px;
+    height: 60px;
+    background-color: orange;
+}
+
+.containner {
+    display: flex;
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    justify-content: start;
+    justify-content: end;
+    justify-content: center;
+    justify-content: space-around;
+    justify-content: space-between;
+}
+
+
+
+
+ # 교차축 배치 방법		: algin-items (세로 축을 기준으로 정렬을 하게 됩니다.)
+
+    <div class="containner">
+        <div class="item">div1</div>
+        <div class="item">div2</div>
+        <div class="item">div3</div>
+    </div>
+
+
+.item {
+    width: 60px;
+    height: 60px;
+    background-color: orange;
+}
+
+.containner {
+    display: flex;
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    justify-content: space-between;
+    align-items: start;
+    align-items: end;
+    align-items: center;
+}
+
+
+ # 교차축 개별요소 배치방법	: algin-self (algin-items은 모든 요소를 정렬하지만 algin-self는 하나의 요소만 정렬)
+
+
+    <div class="containner">
+        <div class="item">div1</div>
+        <div class="item self">div2</div>
+        <div class="item">div3</div>
+    </div>
+
+
+.self {
+    align-self: flex-center;
+}
+
+.item {
+    width: 60px;
+    height: 60px;
+    background-color: orange;
+}
+
+.containner {
+    display: flex;
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    justify-content: space-between;
+    align-items: start;
+    align-items: end;
+    align-items: center;
+}
+
+
+
+
+
+ # 줄바꿈 여부		: flex-wrap (각 요소들의 합이 컨테이너보다 클 경우 줄바꿈해줄 수 있다.)
+
+
+    <div class="containner">
+        <div class="item">div1</div>
+        <div class="item">div2</div>
+        <div class="item">div3</div>
+    </div>
+
+
+
+
+.self {
+    align-self: flex-center;
+}
+
+.item {
+    width: 120px;
+    height: 60px;
+    background-color: orange;
+}
+
+.containner {
+    display: flex;
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

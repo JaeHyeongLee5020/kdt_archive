@@ -1,0 +1,724 @@
+			## 함수 (function)
+
+-자바스크립트에서 함수는 가장 중요한 구성 요소 중 하나로 함수는 특정 작업을 수행하거나 
+ 값을 계산하기 위해 독립된 코드 블록을 정의하는 방법이다.
+
+-함수는 특정 작업을 수행하기 위해 작성된 재사용 가능한 코드 블록으로 
+ 자바스크립트에서 함수는 값으로 취급되며, 코드의 재사용성과 구조적인 프로그래밍을 가능하게 한다.
+
+-변수를 선언하고 데이터를 대입하면 변수의 이름을 데이터 대신 사용할 수 있는 것처럼
+ 함수를 선언하면 함수의 이름을 코드 조각 대신 사용할 수 있다.
+
+-함수의 필요성
+ # 코드 재사용	: 동일한 작업을 여러 번 수행할 때 함수를 사용하면 코드를 반복하지 않아도 된다.
+ # 가독성 향상	: 코드를 구조화하여 논리적으로 작성할 수 있다.
+ # 유지보수성	: 코드를 수정할 때 함수 내부만 변경하면 되므로 유지보수가 용이
+ # 논리적 단위	: 프로그램을 작은 논리적 단위로 나누어 작성할 수 있다.
+
+-함수의 구성
+자바스크립트의 함수는 아래와 같은 요소로 구성된다.
+ # 함수 이름 (Function Name)	: 함수를 호출할 때 사용하는 이름
+ # 매개변수 (Parameters)	: 함수에 전달되는 입력값을 담는 변수
+ # 함수 몸체 (Function Body)	: 함수가 수행할 코드를 포함하는 블록({}).
+ # 반환값 (Return Value)	: 함수 실행 결과를 반환합니다. 반환값이 없을 경우 undefined를 반환
+
+
+-함수를 만드는 대표적인 방법 2가지
+ # 함수 선언식
+ # 함수 표현식
+
+	# 함수 선언식
+
+	function 함수명(매개변수1, 매개변수2, 매개변수3.....) {
+		// 함수의 기능을 표현하는 구문
+		// 함수의 기능을 표현하는 구문
+		// 함수의 기능을 표현하는 구문
+		// 함수의 기능을 표현하는 구문
+		return 반환할값;
+	}
+
+
+	# 함수 표현식 (이름이 없는 함수를 만든 후 변수에 대입하는 형식)
+
+	const 함수명 = function(매개변수1, 매개변수2, 매개변수3.....) { 
+		// 함수의 기능을 표현하는 구문
+		// 함수의 기능을 표현하는 구문
+		// 함수의 기능을 표현하는 구문
+		// 함수의 기능을 표현하는 구문
+		return 반환할값;
+	}
+
+
+-함수가 만들어지고 나면 함수명은 스스로 보관하고 있는 구문 대신 사용될 수 있다.
+-함수를 사용하기 위해서는 함수를 호출해야 한다.
+
+example1)
+const sayHello = function(){
+	let hello = "Hello javaScript~~!!";
+	console.log(hello);
+}
+
+sayHello();	// 함수 호출
+
+
+
+	# 함수명 작성 규칙
+-해당 함수의 의미를 표현할 수 있는 이름을 사용하는 것을 권장 (카멜표기법 사용을 권장)
+-소문자로 시작하며, 여러개의 단어가 연결되는 경우 첫 글자를 대문자로 작성하는 것을 권장한다. (카멜표기법 사용을 권장)
+
+
+		## 함수 만들기
+
+
+
+// 함수 선언식
+sayHello1();    // 함수 호출 O
+
+function sayHello1() {
+    // console.log('hello javaScript');
+    let hello = 'hello javaScript';
+    console.log(hello);
+}
+
+sayHello1();    // 함수 호출 O
+
+
+
+
+    // 함수 표현식
+sayHello2();    // 함수 호출 X
+
+const sayHello2 = function() {
+    let hello = 'hello HTML/CSS';
+    console.log(hello);    
+}
+sayHello2();    // 함수 호출 O
+
+
+
+
+-함수 선언식과 함수 표현식의 차이점은 함수의 호출 위치 제한을 제외하면 기능은 동일하다.
+-함수 선언식은 만들어진 함수 위에서도 호출이 가능한 반면
+ 함수 표현식은 만들어진 함수의 아래에서만 호출이 가능하다.
+
+
+
+
+
+
+
+
+
+
+======================================================================================================
+
+		## 함수의 데이터 반환(return)
+
+-함수를 만들 때 함수가 데이터를 반환하도록 할 수 있다.
+-함수가 데이터를 반환한다는 것은, 함수 호출문이 데이터로 대체됨을 의미한다.
+
+example1)
+// console.log()를 사용하여 3을 출력
+console.log(3);
+
+// 3을 반환하는 함수를 호출
+console.log(getNumber());	
+
+-함수가 데이터를 반환하려면 ‘해당 데이터를 반환한다’ 라는 구문을 함수 내부에서 추가해야 한다.
+ 반환하는 키워드를 return이라고 한다.
+
+example2)
+function getNumber() {
+    return 3;
+}
+
+example3)
+function getNumber() {
+    let num = 3;
+    return num;
+}
+-return은 함수 내부에서 함수의 부가 기능을 위해 사용되는 키워드이다.
+
+	return의 2가지 기능
+1) 함수를 호출한곳으로 값을 반환한다. (값은 1개만 반환할 수 있다.)
+2) 함수는 return문을 만나게되면 해당 값을 반환하고 해당 함수를 종료한다.
+
+-return은 반환값이 없거나 한 개의 값만 반환할 수 없다. (함수는 return을 만나게 되면 해당 함수는 종료된다.)
+
+
+
+
+
+function getNumber() {
+    let result;
+    result = 5 + 5;
+    return result;
+}
+let number = getNumber();
+console.log(number);
+
+
+
+function getString(){
+    let result;
+    result = '함수를 호출합니다.';
+    return result;
+}
+let str = getString();
+console.log(str);
+
+
+
+function getBoolean() {
+    let result;
+    result = 5 > 3;
+    return result;
+}
+
+let boo = getBoolean();
+console.log(boo);
+
+
+
+
+
+
+
+
+
+function result1() {
+    let boo = window.confirm('구매하시겠습니까?(Y/N)');
+    
+    if(boo) {
+        console.log('해당 상품을 구매하셨습니다.');
+    } else {
+        console.log('해당 상품의 구매가 취소되었습니다.');
+    }
+}
+result1();
+
+
+
+function result2() {
+    let boo = window.confirm('구매하시겠습니까?(Y/N)');
+    return boo;
+}
+
+let yesOrNo = result2();
+
+if(yesOrNo) {
+    console.log('해당 상품을 구매하셨습니다.');
+} else {
+    console.log('해당 상품의 구매가 취소되었습니다.');
+}
+
+
+
+
+
+
+let power = false;
+
+function powerOnOff() {
+    power = !power;
+
+    if(power) {
+        console.log('폰의 전원이 켜졌습니다.');
+    } else {
+        console.log('폰의 전원이 꺼졌습니다.');
+    }
+}
+
+powerOnOff();
+powerOnOff();
+powerOnOff();
+powerOnOff();
+powerOnOff();
+powerOnOff();
+
+
+
+
+
+
+
+
+//EX) prompt()를 사용하여 이름을 입력받고 confirm()을 사용하여 해당 이름을 저장하시겠습니까? 에서 확인을 누르면 이름이 저장되고 취소 버튼 클릭시 이름을 취소
+
+function nameSave() {
+    let name = prompt('이름을 입력하세요');
+
+    if(name !== null) {
+        if(confirm(`입력한 이름 ${name}을 사용하시겠습니까?`)) {
+            console.log(`입력하신 이름 ${name}이 저장되었습니다.`);
+            return name;
+        } else {
+            console.log(`입력하신 이름 ${name}이 취소되었습니다.`);
+            return null;
+        }
+    } else {
+        console.log('이름을 입력하지 않았습니다.');
+        return null;
+    }
+}
+
+let username = nameSave();
+
+if(username === null) {
+    console.log('이름이 설정되지 않았습니다.');
+} else {
+    console.log(`저장되 이름은 ${username}입니다.`);
+}
+
+
+
+
+// EX2-1) 사용자에게 두 숫자를 입력받아, 두 숫자의 합을 반환하는 함수를 작성
+
+// function calculateSum1() {
+//     const num1 = parseInt(prompt("첫 번째 숫자를 입력하세요:"));
+//     const num2 = parseInt(prompt("두 번째 숫자를 입력하세요:"));
+//     let sum = num1 + num2
+//     return sum;
+//   }
+//   const result1 = calculateSum1();
+//   console.log(`두 숫자의 합: ${result1}`);
+
+
+// EX2-1) 사용자에게 두 숫자를 입력받아, 두 숫자의 합이 50 이상이면 함수를 종료하고
+//        50미만일경우 다시 두 수를 입력받아야 한다.
+
+function calculateSum2() {
+    while(true) {
+        const num1 = parseInt(prompt("첫 번째 숫자를 입력하세요:"));
+        const num2 = parseInt(prompt("두 번째 숫자를 입력하세요:"));
+
+        // isNaN(is Not a Number)
+        //isNaN = 숫자가 아니면 true를 리턴 , isNaN = 숫자면 flase를 리턴
+        if(isNaN(num1) || isNaN(num2)) {    // num1 또는 num2가 숫자인가 아닌가를 판단.
+            alert('숫자만 입력이 가능합니다.(다시 입력하세요)');
+            continue;   // 현재 반복문을 건너뛰가 다음 반복문을 실행
+        }
+    
+        let sum = num1 + num2;
+    
+        if(sum >= 50) {
+            alert(`두 수의 합이 ${sum}으로 50이상입니다.(프로그램을 종료)`);
+            return sum;
+        } else {
+            alert(`두 수의 합이 ${sum}으로 50미만입니다.(다시 입력하세요)`);
+        }
+    }
+}
+
+const result2 = calculateSum2();
+console.log(`두 숫자의 합: ${result2}`);
+
+
+
+
+
+EX3) 사용자에게 나이를 입력받아, 18세 이상인지 확인하는 함수를 작성
+       (18살 이상 = “성인입니다.” , 18살 미만 = “미성년자입니다“ 가 출력되어야 한다.)
+
+function checkAge() {
+    let age = parseInt(prompt('나이를 입력하세요'));
+
+    let message;
+
+    if(age >= 18) {
+        message = '성인입니다.';
+    } else {
+        message = '미성년자입니다';
+    }
+    return message;
+}
+
+let result = checkAge();
+alert(result);
+
+
+
+
+
+
+
+EX4) confirm()을 사용하여 사용자에게 게임을 계속할 것인지 묻고, 확인을 누르면 "계속"을, 취소를 누르면 "종료"를 반환하는 함수를 작성
+
+function continueGame() {
+    let isContinue = confirm('게임을 계속 진행하시겠습니까?');
+    
+    return isContinue ? '계속 진행' : '게임 종료';  // 3항연산자
+}
+
+let continueState = continueGame();
+alert(continueState);
+
+
+
+
+
+
+
+
+// EX5) 사용자에게 두 숫자를 입력받아, 첫 번째 입력 값부터 두 번째 입력값까지의 합을 반환하는 함수를 작성 (첫번째 정수보다 두번째 정수값이 작은경우 정수를 다시 입력받아야 한다.)
+
+let sum = 0;
+function numberSum() {
+    while(true){
+        let start = parseInt(prompt('첫 번째 정수를 입력하세요'));
+        let end = parseInt(prompt('두 번째 정수를 입력하세요'));
+
+        if(start > end) {
+            alert('두번째 정수가 첫번째 정수보다 커야합니다.');
+            continue;
+        }
+
+        for(let i = start; i <= end; i += 1) {
+            sum += i;
+        }
+        return sum;
+    }
+}
+
+let reslut = numberSum();
+alert(`첫번째 정수부터 두번째 정수까지의 총합 = ${reslut}`);
+
+
+
+
+
+//EX6-1) 사용자에게 비밀번호를 입력받고, 입력받은 비밀번호가 저장된 비밀번호와 일치하는지 확인하는 함수를 작성
+
+// let password = 'asdf1234';
+
+// function passwordCheck() {
+//     let newPassword = prompt('비밀번호를 입력하세요');
+
+//     if(password === newPassword) {
+//         alert('비밀번호가 일치합니다.');
+//         return true;
+//     } else {
+//         alert('비밀번호가 일치하지 않습니다.');
+//         return false;
+//     }
+// }
+// let boo = passwordCheck();
+// console.log(boo ? '로그인 성공' : '로그인 실패');   // 3항 연산자를 사용
+
+
+
+// EX6-2) 아래의 조건에 맞게 함수를 작성하시오
+// # 사용자에게 비밀번호를 입력받고, 입력받은 비밀번호가 저장된 비밀번호와 일치하는지 확인하는 함수를 작성
+// # 비밀번호가 일치하지 않을 경우 일치할때까지 비밀번호를 다시 입력받아야 한다.
+// # 취소 버튼 클릭시 함수가 종료되어야 한다.
+
+let password = 'asdf1234';
+
+function passwordCheck() {
+    while(true) {
+        let newPassword = prompt('비밀번호를 입력하세요');
+
+        if(newPassword === null) {
+            alert('비밀번호 입력을 취소했습니다.');
+            return false;
+        }
+
+        if(password === newPassword) {
+            alert('비밀번호가 일치합니다.');
+            return true;
+        } else {
+            alert('비밀번호가 일치하지 않습니다.');
+        }
+    }
+}
+let boo = passwordCheck();
+console.log(boo ? '로그인 성공' : '로그인 실패');   // 3항 연산자를 사용
+
+
+
+
+
+
+// EX7) 사용자에게 숫자를 입력받아 입력받은 숫자의 구구단을 출력하는 함수를 작성
+
+function gugudan() {
+    let number = parseInt(prompt('출력할 단을 입력하세요'));
+    let result = "";
+    for(let i = 1; i <= 9; i += 1) {
+        console.log(`${number} x ${i} = ${number * i}`);
+    }
+    return result;
+}
+
+gugudan();
+
+
+
+
+
+
+
+
+
+======================================================================================================
+
+			## 함수와 매개변수
+
+-함수 호출문은 '함수명' + '소괄호'이다.
+-소괄호의 목적은 함수가 실행될 때 사용할 데이터를 전달받는 것이다.
+
+example1)  myFunction(데이터);
+
+
+
+-데이터를 전달받아 기능을 수행하는 함수를 만들때에는 
+ 전달받을 데이터의 이름을 정해야 하는데 이를 매개변수라고 한다.
+
+example2)
+function exam (number1, number2) {
+    console.log("입력받은 숫자는 : " + number);
+    number += 10;
+    return number;
+}
+
+exam(10 , 20);		// 함수 호출
+
+console.log(exam(10 , 20));	// 함수 호출
+
+
+
+
+-매개변수는 개수의 제한이 없기 때문에 필요한 만큼 작성하면 된다.
+-매개변수의 구분자는 쉼표(,)를 사용하여 추가하고 호출시 작성한 매개변수 개수 만큼 넣어서 호출해야 한다.
+
+example3)
+function exam (num1, num2, str1, str2) {
+    //
+}
+
+-데이터를 전달받기 위해 만들어 둔 변수를 매개변수(parameter)라고 하며
+ 함수 호출시 전달하는 데이터를 인자(argument)라고 한다.
+
+
+-함수를 만들때 매개변수는 있어도 되고 없어도 된다.
+-함수를 만들때 return을 통한 데이터반환도 있어도 되고 없어도 된다.
+
+
+1) 매개변수도 없고, return문도 없는 함수
+
+2) 매개변수는 있고, return문은 없는 함수
+
+3) 매개변수는 없고, return문은 있는 함수
+
+4) 매개변수도 있고, return문도 있는 함수
+
+
+
+
+
+        // 1) 매개변수도 없고 리턴문도 없는 함수
+function fun1() {
+    console.log('매개변수도 없고 리턴문도 없는 함수');
+}
+fun1();
+
+
+
+        // 2) 매개변수는 없고 리턴문은 있는 함수
+function fun2() {
+    let sum = 0;
+    sum = 10 + 20;
+    return sum;
+}
+let result1 = fun2();
+console.log(fun2());
+
+
+
+        // 3) 매개변수는 있고 리턴문은 없는 함수
+function fun3(str) {
+    console.log(`매개변수로 받은 값 : ${str}`);
+}
+fun3('안녕하세요');
+
+
+
+        // 4) 매개변수도 있고 리턴문도 있는 함수
+function fun4(num1 , num2) {
+    let sum = num1 + num2;
+    return sum;
+}
+let result = fun4(100 , 200);
+console.log(result);
+
+
+
+
+
+
+EX) 두 수를 입력받아 첫 번째 수부터 두 번째 수까지의 합을 반환하는 함수를 작성
+
+function calcul(start, end) {
+    let sum = 0;
+
+    for(start; start <= end; start += 1) {
+        sum += start;
+    }
+    return sum;
+}
+
+let startNum = parseInt(prompt('첫번째 정수를 입력하세요'));
+let endNum = parseInt(prompt('첫번째 정수를 입력하세요'));
+
+let result = calcul(startNum, endNum);
+console.log(`${startNum}부터 ${endNum}까지의 총합 : ${result}`);
+
+
+
+
+
+
+
+EX) 두 숫자를 매개변수로 받아, 두 숫자의 크기를 비교하여 큰 값을 반환하는 함수를 작성
+
+function getMaxValue1(num1 , num2) {
+    if(num1 > num2) {
+        return num1;
+    } else {
+        return num2;
+    }
+}
+
+let result1 = getMaxValue1(10 , 20);
+console.log(result1);
+
+
+function getMaxValue2(num1 , num2) {
+    return num1 > num2 ? num1 : num2;
+}
+
+let result2 = getMaxValue2(200 , 100);
+console.log(result2);
+
+
+
+
+
+
+
+
+EX) 사용자의 이름을 매개변수로 받아, 저장 여부를 확인하는 함수를 작성
+      이름을 저장할지 묻고, 확인 버튼을 누르면 이름을 반환하고 취소 버튼을 누르면 null을 반환
+
+function nameSave(name) {
+    if(confirm(`설정한 이름인 ${name}을 저장할까요?`)) {
+        alert(`설정한 이름인 ${name}을 저장합니다.`);
+        return name;
+    } else {
+        alert(`설정한 이름인 ${name}을 저장하지 않았습니다.`);
+        return null;
+    }
+}
+
+let returnName = nameSave(prompt('이름을 입력하세요'));
+
+if(returnName !== null) {
+    console.log(`입력하신 ${returnName}이 저장되었습니다.`);
+} else {
+    console.log('이름이 입력되지 않았습니다.');
+}
+
+
+
+
+
+
+EX) 3개의 매개변수를 받아 덧셈 , 뺄샘 , 곱셈 , 나눗셈이 계산되도록 함수를 구성
+
+function calculator(num1 , num2 , operator) {
+    let sum = 0;
+
+    if(operator === "+") {
+        sum = num1 + num2;
+        return sum;
+    } else if(operator === "-") {
+        sum = num1 - num2;
+        return sum;
+    } else if(operator === "*") {
+        sum = num1 * num2;
+        return sum;
+    } else if(operator === "/") {
+        sum = num1 / num2;
+        return sum;
+    }
+}
+
+let num1 = parseInt(prompt('첫번째 정수를 입력하세요'));
+let operator = prompt('덧셈(+) , 뺄샘(-) , 곱셈(*) , 나눗셈(/)');
+let num2 = parseInt(prompt('두번째 정수를 입력하세요'));
+let result = calculator(num1 , num2 , operator);
+console.log(`${num1} ${operator} ${num2} = ${result}`);
+
+
+
+
+
+function productSale() {
+    let boo1 = confirm('해당 제품을 구매하시겠습니까?');
+    let str = '';
+    if(boo1) {
+        console.log('해당 상품이 구매되었습니다.');
+        str = '해당상품이 곧 배송됩니다.';
+        return str;
+    } else {
+        console.log('해당 상품의 구매가 취소되었습니다.');
+    }
+
+    let boo2 = confirm('취소 사유를 작성하시겠습니까');
+    if(boo2) {
+        str = prompt('취소 사유를 작성해주세요');
+    } else {
+        str = '취소사유를 작성하지 않았습니다.'
+    }
+    return str;
+}
+
+let pName = productSale();
+console.log(pName);
+
+
+
+
+
+
+function productSale() {
+    let boo1 = confirm('해당 제품을 구매하시겠습니까?');
+    let str = '';
+    if(boo1) {
+        console.log('해당 상품이 구매되었습니다.');
+        str = '해당상품이 곧 배송됩니다.';
+        return str;
+    } else {
+        console.log('해당 상품의 구매가 취소되었습니다.');
+    }
+
+    let boo2 = confirm('취소 사유를 작성하시겠습니까');
+    if(boo2) {
+        str = prompt('취소 사유를 작성해주세요');
+    } else {
+        str = '취소사유를 작성하지 않았습니다.'
+    }
+    return str;
+}
+
+let pName = productSale();
+console.log(pName);
+
+
+
+
+
+
+
+

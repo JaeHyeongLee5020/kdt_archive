@@ -1,0 +1,363 @@
+		# 정적 멤버와 static
+ 
+-정적 멤버는 클래스에 고정된 멤버로서 객체를 생성하지 않고 사용할 수 있는 필드와 메소드를 말한다. 
+-이들을 각각 정적 필드, 정적 메소드라고 부른다. 
+-정적 멤버는 객체 (인스턴스)에 소속된 멤버가 아니라 클래스에 소속된 멤버이기 때문에 클래스 멤버라고도 한다.
+-정적 멤버는 객체를 생성하지 않고 클래스로 바로 접근이 가능하다.
+
+	# 정적 멤버 선언
+
+정적 필드와 정적 메소드를 선언하는 방법은 필드와 메소드 선언 시 static 키워드를 추가적으로 붙이면 된다. 
+다음은 정적 필드와 정적 메소드를 선언하는 방법을 보여준다.
+
+	public  class 클래스 {
+	//정적 필드
+	static 타입 필드명 = 초기값;
+
+	//정적 메소드
+	static 리턴타입 메소드( 매개변수 , 매개변수... ) { 
+		실행코드
+	}
+
+
+정적 필드와 정적 메소드는 클래스에 고정된 멤버이므로 클래스 로더가 
+클래스(바이트 코드)를 로딩해서 메소드 메모리 영역에 적재할 때 클래스별로 관리된다. 
+따라서 클래스의 로딩이 끝나면 바로 사용할 수 있다.
+                          
+필드를 선언할 때 인스턴스 필드로 선언할 것인가 아니면 정적 필드로 선언할 것인가의 
+판단 기준은 객체마다 가지고 있어야 할 데이터라면 인스턴스 필드로 선언하고 
+객체마다 가지고 있을 필요성이 없는 공용적인 데이터라면 정적 필드로 선언하는 것이 좋다. 
+
+
+
+
+
+
+
+
+
+	# 정적 멤버 사용
+
+클래스가 메모리로 로딩되면 정적 맴버를 바로 사용할수 있는데 클래스 이름과 함께 도트(.) 연산자로 접근한다.
+
+
+	클래스.필드;
+	클래스.메소드( 매개변수 );
+
+
+
+예를 들어 Calculator 클래스가 다음과 같이 작성되었다면，
+
+	public class Calculator (
+
+		static double pi = 3.14159;
+
+		static int plus (int x,  int y)  {
+		}
+
+		static int minus (int x,  int y) {
+		}
+	}
+
+
+
+정적 필드 pi와 정적 메소드 plus(), minus()는 다음과 같이 사용할 수 있다.
+
+	double result1 = 10 * 10 * Calculator.pi; 
+	int result2 = Calculator.plus(16, 5); 
+	int result3 = Calculator.minus(16, 5);
+
+
+
+정적 필드와 정적 메소드는 원칙적으로는 클래스 이름으로 접근해야 하지만 
+다음과 같이 객체 참조변수로도 접근이 가능하다.
+하지만 정적 요소는 클래스 이름으로 접근하는 것이 좋다. 
+이클립스에서는 정적 뱀버를 클래스 이름으로 접근하지 않고 객체 참조 변수로 접근했을 경우, 경고 표시()가 나타난다
+
+	Calculator myCalcu = new Calculator(); 	// 객체 생성
+
+	double result1 = 10 * 10  * myCalcu.pi; 	// 객체를 사용하여 정적 메서드 사용
+	int result2  = myCalcu.plus(10, 5);  		// 객체를 사용하여 정적 메서드 사용
+	int result3 =  myCalcu.minus(10, 5); 		// 객체를 사용하여 정적 메서드 사용
+
+
+
+
+
+
+
+public class Calculator {
+	
+	// 정적 필드 (객체 없이 클래스를 사용하여 접근할 수 있다.)
+	static double pi = 3.14159;
+	
+	
+	// 정적 메소드 (객체 없이 클래스를 사용하여 호출할 수 있다.)
+	static int plus(int x, int y) {
+		int result = x + y;
+		return result;
+	}
+	
+	static int minus(int x, int y) {
+		int result = x - y;
+		return result;
+	}
+}
+
+
+
+public class CalculatorMain {
+	public static void main(String[] args) {
+		
+//		Calculator cal = new Calculator();
+		
+		// 클래스를 사용하여 정적 필드를 사용
+		double result = Calculator.pi;
+		System.out.println(result);
+		
+		// 클래스를 사용하여 정적 메소드 호출
+		int intResult1 = Calculator.plus(10, 20);
+		System.out.println(intResult1);
+		
+		int intResult2 = Calculator.minus(20, 10);
+		System.out.println(intResult2);
+		
+		double doublePI = Math.PI;
+		System.out.println("PI = " + doublePI);
+	}
+}
+
+
+
+
+
+
+
+
+==========================================================================================
+
+	# 인스턴스 멤버 선언 vs 정적 멤버 선언의 기준
+
+원의 넓이나 둘레를 구할 때 필요한 파이(π)는 Calculator 객체마다 가지고 있을 필요가 없는 
+변하지 않는 공용적인 데이터이므로 정적 필드로 선언하는 것이 좋다. 
+그러나 객체별로 색깔이 다르다면 색깔은 인스턴스 필드로 선언해야 한다.
+
+pub1ic  c1ass  Ca1cu1ator  { 
+	String co1or;			// 계산기별로 색깔이 다를 수 있다
+	static doub1e pi = 3.1 4159;	// 계산기에서 사용하는 파이(π) 값은 동일하다
+}
+
+메소드의 경우, 인스턴스 메소드로 선언할 것인가, 아니면 정적 메소드로 선언할 것인가의 판단 기준은 
+인스턴스 필드를 이용해서 실행해야 한다면 인스턴스 메소드로 선언하고, 
+인스턴스 필드를 이용하지 않는다면 정적 메소드로 선언한다. 
+
+예를 들어 Calculator 클래스의 덧셈, 뺄셈 기능은 인스턴스 필드를 이용하기보다는 
+외부에서 주어진 매개값들을 가지고 덧셈과 뺑셈을 수행하므로 정적메소드로 선언하는 것이 좋다 
+그러나 인스턴스 필드인 색깔을 변경하는 메소드는 인스턴스 메소드로 선언해야한다.
+
+pub1ic c1ass Ca1cu1ator { 
+	String co1or;
+	static doub1e  pi = 3.14159;
+}
+
+
+메소드의 경우, 인스턴스 메소드로 선언할 것인가, 아니면 정적 메소드로 선언할 것인가의 판단 기준은 
+인스턴스 필드를 이용해서 실행해야 한다면 인스턴스 메소드로 선언하고, 
+인스턴스 필드를 이용하지 않는다면 정적 메소드로 선언한다. 
+예를 들어 Calculator 클래스의 덧셈, 뺄셈 기능은 인스턴스 필드를 이용하기보다는 
+외부에서 주어진 매개값들을 기-지고 덧셈과 뺑셈을 수행하므로 정적메소드로 선언히는 것이 좋다 
+그러나 인스턴스 필드인 색깔을 변경하는 메소드는 인스턴스 메소드로 선언해야한다.
+
+pub1ic  Ca1cu1ator  { 
+	String color;			// 인스턴스 필드
+
+	static double pi = 3.14159;		// 정적 필드
+
+	void setColor (String color) {		// 인스턴스 메소드 (this는 객체에서 사용하므로 static을 
+		this.color = co1or;		// static을 붙이게되면 컴파일 에러가 발생한다.)
+	}
+
+	static int p1us (int x,  int y)  {		// 정적 메소드
+		return x  + y;  
+	} 
+
+	static int minus (int x,  int y)  { 	// 정적 메소드
+		return X   -    y; 
+	} 
+ }
+
+
+
+
+
+
+
+==========================================================================================
+
+
+
+	# 정적 초기화 블록 
+
+-정적 필드는 다음과 같이 필드 선언과 동시에 초기값을 주는 것이 보통이다.
+
+	static double  pi = 3.14159;
+
+그러나 계산이 필요한 초기화 작업이 있을 수 있다. 
+
+-인스턴스 필드는 생성자에서 초기화하지만, 
+ 정적 필드는 객체 생성 없이도 사용해야 하므로 생성자에서 초기화 작업을 할 수 없다. (생성자는 객체 생성시에만 실행되기 때문이다. )
+그렇다면 정적 필드를 위한 초기화 작업은 어디에서 해야 할까? 
+자바는 정적 필드의 복잡한 초기화 작업을 위해서 정적 블록(static block) 을 제공한다. 
+
+다음은 정적블록의 형태를 보여준다.
+
+	static {
+		....
+	}
+
+정적 블록은 클래스가 메모리로 로딩될 때 자동적으로 실행된다. 
+정적 블록은 클래스 내부에 여러개가 선언되어도 상관없다. 
+클래스가 메모리로 로딩될 때 선언된 순서대로 실행된다. 
+
+다음 예제를 보자
+Television은 세 개의 정적 필드를 가지고 있는데, 
+company와 model은 선언 시 초기값을 주었고 info는 초기화하지 않았다. 
+info 필드는 정적 블록에서 company와 model 필드값을 서로 연결해서 초기값으로 설정한다.
+
+
+
+public class Television {
+
+	static String company = "SAMSUNG";
+	static String model = "S-JT2154";
+	static String info;
+	static int sum;
+	
+	static {
+		info = company + "_" + model;
+		
+		for(int i = 1; i <= 100; i++) {
+			sum += i;
+		}
+	}
+}
+
+
+
+public class TvMain {
+	public static void main(String[] args) {
+	
+		
+		System.out.println(Television.company);
+		System.out.println(Television.model);
+		System.out.println(Television.info);
+		System.out.println(Television.sum);
+	}
+}
+
+
+
+
+
+
+
+==========================================================================================
+
+	# 정적 메소드와 블록 선언시 주의할 점
+
+정적 메소드와 정적 블록을 선언할 때 주의할 점은 객체가 없어도 실행된다는 특정 때문에,
+이들 내부에 인스턴스 필드나 인스턴스 메소드를 사용할 수 없다. 
+또한 객체 자신의 참조인 this 키워드도 사용이 불가능하다. 그래서 다음 코드는 컴파일 오류가 발생한다.
+
+public class ClassName {
+
+	// 인스턴스 필드와 인스턴스 메소드
+	int field1; 
+	void  method1()  {...}
+
+	// 정적 필드와 정적 메소드
+	static int field2; 
+	static void method2 () {...}
+
+
+	//정적 블록
+	static {
+		field1 = 10; 	// (X) 컴파일에러
+		method1 ();  	// (X) 컴파일에러
+		field2 = 10;	// (O)
+		method2 ();  	// (O)
+	}	 
+	//정적 메소드
+	static void  Method3  { 
+		this.field1 = 10;  	// (X) 컴파일에러
+		this.method1 ();  	// (X) 컴파일에러
+		field2 = 10 ;	// (O)
+		method2 ();	// (O)
+}
+
+
+정적 메소드와 정적 블록에서 인스턴스 멤버를 사용하고 싶다면 
+다음과 같이 객체를 먼저 생성하고 참조 변수로 접근해야 한다.
+
+static void Method3 ()  {
+	ClassName obj = new ClassName (); 	// 객체 생성
+	obj.field1 = 10;		// 객체 생성 후 static 메서드 안에서 인스턴스 변수를 사용할 수 있다.
+	obj.method1 ();		// 객체 생성 후 static 메서드 안에서 인스턴스 메서드를 사용할 수 있다.
+}
+
+
+
+
+main() 메소드도 동일한 규칙이 적용된다. 
+main() 메소드도 정적 (static) 메소드이므로 객체생성 없이 
+인스턴스 필드와 인스턴스 메소드를 main() 메소드에서 바로 사용할 수 없다. 
+
+따라서 다음은 잘못코딩된 것이다.
+
+public class Car {
+	int speed;	// 인스턴스 변수
+	void run() {	// 인스턴스 메서드
+		System.out.println(speed + "으로 달립니다.");
+	}
+	
+	public static void main(String[] args) {		// main 메서드도 정적 메서드이다.
+		speed = 60;	// 컴파일 에러 (인스턴스 변수이므로 사용할 수 없다.)
+		run();		// 컴파일 에러 (인스턴스 메서드이므로 사용할 수 없다.)
+	}
+}
+
+
+
+main() 메소드를 올바르게 수정하면 다음과 같다.
+
+public class Car {
+	int speed;	// 인스턴스 변수
+	void run() {	// 인스턴스 메서드
+		System.out.println(speed + "으로 달립니다.");
+	}
+	
+	public static void main(String[] args) {		// main 메서드도 정적 메서드이다.
+		Car myCar = new Car(); 	// 객체 생성
+		myCar.speed = 60;	// 객체를 사용하여 저근할 수 있다.
+		myCar.run();		// 객체를 사용하여 저근할 수 있다.
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

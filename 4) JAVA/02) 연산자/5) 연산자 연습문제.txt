@@ -1,0 +1,229 @@
+연습문제 1)
+1. 연산자와 연산식에 대한 설명 중틀린 것은 무엇입니까
+1) 연산자는 피연산자의 수에 따라 단항, 이항, 삼항 연산자로 구분된다. 
+2) 비교 연산자와 논리 연산자의 산출 타입은 boolean (true/false) 이다
+3) 연산식은 하나 이상의 값을 산출할수도 있다.
+4) 하나의 값이 올 수 있는 자리라면 연산식도 올수 있다.
+
+
+
+
+
+
+
+
+연습문제 2)
+2. 다음 코드를 실행했을 때 출력 결과는 무엇입니까?
+public class Exercise02 {
+   public static void main(String[] args) {
+       int x = 10;
+       int y = 20;
+       int z = (++x) + (y--);
+       System.out.println(z); 
+   }
+}
+
+
+
+
+
+
+
+
+연습문제 3)
+3. 다음 코드를 실행했을 때 출력 결과는 무엇입니까?
+public class Example3 (
+	public static void main (String [] args ) { 
+		int score = 85;
+		String result = (!(score > 90 )) ? "가" : "나";
+		System.out.println(result );
+	}
+}
+
+
+
+
+
+
+
+
+연습문제 4)
+4. 534자루의 연필을 30명의 학생들에게 똑같은 개수로 나누어 줄 때 학생당 몇 개를 가질 수 있고， 
+최종적으로 몇 개가 남는지를 구히는 코드입니다. 
+( #1 ) 과 ( #2 ) 에 틀어갈 알맞은 코드를 작성하세요
+
+package verify;
+public class Exercise04 {
+	public static void main(String[] args) {
+		int pencils = 534;
+		int students = 30;
+		
+		//학생 한 명이 가지는 연필 수
+		int pencilsPerStudent = ( #1 ); 
+		System.out.println(pencilsPerStudent);
+		
+		//남은 연필 수
+		int pencilsLeft = ( #2 );
+		System.out.println(pencilsLeft);
+	}
+}
+
+
+
+
+
+
+
+
+연습문제 5)
+5. 다음은 십의 자리 이하를 버리는 코드입니다. 
+변수 valu e의 값이 356이라면 300이 나올수 있도록 (#1 )에 알맞은 코드를 작성하세요(산술 연산자만 사용하세요)
+
+package verify;
+public class Exercise05 {
+	public static void main(String[] args) {
+		int value = 356;
+		System.out.println(   #1    );
+	}
+}
+
+
+
+
+
+
+
+
+연습문제 6)
+6. 다음코드는 비교 연산자와 논리 연산자의 복합연산식입니다. 연산식의출력 결과를 괄호( )속에 넣으세요
+
+package verify;
+public class Exercise07 {
+	public static void main(String[] args) {
+		int x = 10;
+		int y = 5;
+		System.out.println( (x>7) && (y<=5) );    	------------(      #1      )
+		System.out.println( (x%3 == 2) || (y%2 != 1) );	------------(      #2      )
+	}
+}
+
+
+
+
+
+
+
+
+연습문제 7)
+7. 다음과 같은 작업을 수행하는 프로그램을 작성하시오
+1. num1 ,  num2 ,  num3 라는 이름의 세 개의 int 변수를 선언하고, 각각 10, 20, 30으로 초기화하세요.
+2. 세 변수의 합을 계산하고, 그 결과를 sum 이라는 이름의 int 변수에 저장하세요.
+3.세 변수의 평균을 계산하고, 그 결과를 average 라는 이름의 int 변수에 저장하세요. 
+  (평균 계산 시 소수점 이하의 결과는 버림)
+4. sum과 average 변수의 값을 출력하세요.
+
+
+
+
+
+
+
+
+연습문제 8) 결과를 예측하고 결과를 확인해보자
+class OperEx04 {
+	public static void main(String[] args) {
+
+		int a = 10;
+		int b = 10;
+		int c = ++a + ++b;
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(c);
+	}
+}
+
+
+
+
+
+
+
+
+연습문제 9) 결과를 예측하고 결과를 확인해보자
+class OperEx04 {
+	public static void main(String[] args) {
+
+		int a = 10;
+		int c = ++a + ++a;
+		System.out.println(a);
+		System.out.println(c);
+	}
+}
+
+
+
+
+
+
+
+
+연습문제 10) 결과를 예측하고 결과를 확인해보자
+class OperEx04 {
+	public static void main(String[] args) {
+
+		int a = 10;
+		int c = ++a + a++;
+		System.out.println(a);
+		System.out.println(c);
+	}
+}
+
+
+
+
+
+
+
+
+연습문제 11) a와 c의 결과를 예측하고 결과를 확인해보자
+class OperEx04 {
+	public static void main(String[] args) {
+
+		int a = 10;
+		int c = a++ + a++;
+		System.out.println(a);
+		System.out.println(c);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

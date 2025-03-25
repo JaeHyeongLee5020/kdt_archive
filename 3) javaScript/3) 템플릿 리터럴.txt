@@ -1,0 +1,67 @@
+			## 템플릿 리터럴
+  
+-기존의 문자열은 따옴표를 이용해 표현했지만, 템플릿 리터럴은 백틱을 이용해 표현한다.
+
+
+	const str1 = '작은 따옴표';	// 작은 따옴표를 사용한 문자열
+	const str2 = "작은 따옴표";	// 큰 따옴표를 사용한 문자열
+
+	const str3 = `백틱을 사용`;	// 백틱을 사용한 템플릿 리터럴	
+
+
+-템플릿 리터럴은 표현식을 내장할 수 있는 문자열 표현법이다.
+ 이는 문자열의 내용에 데이터를 삽입한다는 것을 의미한다.
+
+-템플릿 리터럴로 표현한 문자열 내부에 플레이스 홀더( ${ } )를 기입하고, 
+ 그 안에 데이터를 기입하면 데이터는 문자열의 멤버가 된다.
+
+EX)
+
+let data = '데이터';
+let message = `문자열 중간에 ${data} 삽입하기`;
+
+window.console.log(message);
+
+문자열 중간에 데이터 삽입하기
+
+
+
+
+let data = '데이터';
+let message = `문자열 중간에 ${data} 삽입하기`;
+
+window.console.log(message);
+
+// let str1 = `프롬프트로 입력받은 메세지 : "${window.prompt("메세지 입력")}" 입니다.`;
+// window.console.log(str1);
+
+let backNumber = 7;
+let playerName = "손흥민";
+
+let epl = `한국의 ${playerName} 선수는 등번호 ${backNumber}번을 달고 경기에 출전합니다.`;
+window.console.log(epl);
+
+let likePlayer = window.prompt("좋아하는 축구 선수는?");
+let likeTeam = window.prompt("좋아하는 축구 팀은?");
+window.console.log(`당신이 좋아하는 축구 선수는 ${likePlayer} 좋아하는 축구 팀은 ${likeTeam}입니다.`);
+
+window.console.log(`당신이 좋아하는 축구 선수는 ${window.prompt("좋아하는 축구 선수는?")} 좋아하는 축구 팀은 ${window.prompt("좋아하는 축구 팀은?")}입니다.`);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

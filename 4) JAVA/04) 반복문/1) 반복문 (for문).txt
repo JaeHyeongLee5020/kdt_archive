@@ -1,0 +1,322 @@
+				## 반복문 시작
+
+-반복문은 이름 그대로 특정 코드를 반복해서 실행할 때 사용한다.
+-자바는 다음 3가지 종류의 반복문을 제공한다.
+ # for
+ # while ,  
+ # do-while
+
+# 먼저 간단한 예제를 통해 반복문이 왜 필요한지 이유를 알아보자.
+# 1을 한 번씩 더해서 총 3번 더하는 간단한 코드를 만들어보자.
+
+class Loop01{
+	public static void main(String[] args) {
+		int count = 0;
+
+		count = count + 1;
+		System.out.println("현재 숫자는" + count + "입니다.");
+		count = count + 1;
+		System.out.println("현재 숫자는" + count + "입니다.");
+		count = count + 1;
+		System.out.println("현재 숫자는" + count + "입니다.");
+		System.out.println();
+
+		int count2 = 0;
+
+		++count2;
+		System.out.println("현재 숫자는" + count2 + "입니다.");
+		++count2;
+		System.out.println("현재 숫자는" + count2 + "입니다.");
+		++count2;
+		System.out.println("현재 숫자는" + count2 + "입니다.");
+
+	}
+}
+
+-현재 코드가 3번 반복되고 있다. 이번에는 1을 한 번씩 더해서 총 100번 더하는 코드를 만든다면
+ 아마도 직접 작성한다면 같은 코드가 100번 반복될 것이다.
+ 이렇게 특정 코드를 반복해서 실행할 때 사용하는 것이 바로 반복문이다.
+ 반복문에는 while ,  for 문이 있다. 먼저 while 문부터 알아보자.
+
+
+
+
+
+
+========================================================================================================
+
+				## 반복문(for문， while문， do-while문)
+
+-반복문은 어떤 작업 (코드들)이 반복적으로 실행되도록 할 때 사용되며, 
+ 반복문의 종류로는 for문, while문, do-while문이 있다. 
+
+-for문과 while분은 서로 변환이 가능하기 때문에 반복문을 작성할때 어느 쪽을 선택해도 좋지만, 
+ for문은 반복 횟수를 알고 있을 때 주로 사용하고, while문은 조건에 따라 반복할 때 주로 사용한다. 
+
+-while문과 do-while문의 차이점은 조건을 먼저 검사하느냐 나중에 검사 하느냐일 뿐 동작 방식은 동일하다.
+
+
+
+
+		# for문
+
+프로그램을 작성하다 보면 똑같은 실행문을 반복적으로 실행해야 할 경우가 많이 발생한다. 
+
+
+
+
+Example01) 1부터 5까지의 합을 구해보자
+
+class ForhExample01 {
+	public static void main(String[] args) {
+		int sum = 0;
+
+		sum = sum + 1;
+		sum = sum + 2;
+		sum = sum + 3;
+		sum = sum + 4;
+		sum = sum + 5;
+		System.out.println(sum);
+	}
+}
+15
+
+class ForhExample01 {
+	public static void main(String[] args) {
+		int sum = 0;
+		int num = 0;
+
+		sum = sum + ++num;
+		sum = sum + ++num;
+		sum = sum + ++num;
+		sum = sum + ++num;
+		sum = sum + ++num;
+		System.out.println(sum);
+	}
+}
+15
+
+class ForExample01 {
+	public static void main(String[] args) {
+		int sum = 0;
+		int num = 0;
+
+		sum += ++num;
+		sum += ++num;
+		sum += ++num;
+		sum += ++num;
+		sum += ++num;
+		System.out.println(sum);
+	}
+}
+
+상기 코드는 1 부터 5까지의 합을 구하는 것으로 5개의 실행문으로 해결했다. 
+하지만 1부터 100까지의 합을 구히는 코드를 같은 방법으로 작성한다면 코드 양이 엄청 늘어난다. 
+100개의 지루한 실행문이 필요하기 때문이다. 이런경우 for문을 시용하면 코드를 획기적으로 줄여준다.
+
+
+  for(1초기식;  2조건식;  3증감식){
+	4 실행문
+  }
+
+
+100개의 실행문을 단3라인으로 압축한 것이라고 볼 수 있는데 반복문은 한 번 작성된 실행문을 
+여러 번 반복 실행해주기 때문에 코드를 절감하고 간결하게 만들어준다. 
+코드가 간결하면 개발 시간을 줄일 수 있고, 오류가 날 획률도 줄어든다. 
+for문은 주어진 횟수만큼 실행분을 반복 실행할 때 적합한 반복 제어문이다. 
+
+1. 초기식이 실행된다. 주로 반복 횟수와 관련된 변수를 선언하고 초기화 할 때 사용한다. 초기식은 딱 1번 사용된다.
+2. 조건식을 검증한다. 참이면 코드를 실행, 거짓이면 for문을 빠져나간다. (if문의 조건식과 동일하다.)
+3. 코드를 실행한다.
+4. 코드가 종료되면 증감식을 실행한다. 주로 초기식에 넣은 반복 횟수와 관련된 변수의 값을 증가할 때 사용한다.
+5. 다시 2. 조건식 부터 시작한다. (무한 반복)
+
+-for문은 복잡해 보이지만 while문을 조금 더 편하게 다룰 수 있도록 구조화 한 것 뿐이다.
+-for문에서 초기식 , 조건식, 증감식은 생략이 가능하다.
+ (단 세미콜론(;)은 각 영역을 구분하는 역할이므로 생략이 불가능하다.)
+
+
+
+
+# 예를 들어 1부터 10까지 출력하는 for문은 다음과 같다.
+
+	for (int i = 1 ; i <= 10 ; i++) {
+		System.out.println(i);
+	}
+
+
+1.   초기식이 실행된다.  int i = 1
+2.   조건식을 검증한다.  i <= 10
+3.   조건식이 참이면 코드를 실행한다.  System.out.println(i);
+4.   코드가 종료되면 증감식을 실행한다.  i++
+5.   다시 2. 조건식을 검증한다. (무한 반복) 이후 i <= 10 조건이 거짓이 되면 for문을 빠져나간다.
+
+
+public class ForExample01 {
+
+	public static void main(String[] args) {
+
+		System.out.println("프로그램 시작");
+
+		for(int i = 0; i <= 50; i++) {
+			if(i % 2 == 0) {
+				System.out.println(i);
+			}
+		}
+		
+		for(int j = 2; j <= 50; j += 2) {
+			System.out.print(j + " ");
+		}
+		
+		System.out.println("프로그램 종료");
+		
+		// 1부터 100까지의 범위에서 홀수의 합
+		// 1부터 100까지의 범위에서 짝수의 합
+	}
+}
+
+
+
+
+
+
+
+
+
+public class ForExample02 {
+	public static void main(String[] args) {
+
+		int sum1 = 0;
+		int sum2 = 0;
+		
+		for(int i = 1; i <= 100; i++) {
+			if(i % 2 == 0) {
+				sum1 += i;
+			}
+		}
+		
+		for(int i = 1; i <= 100; i++) {
+			if(i % 2 == 1) {
+				sum2 += i;
+			}
+		}
+		System.out.println("짝수의 총 합 : " + sum1);
+		System.out.println("홀수의 총 합 : " + sum2);
+		System.out.println();
+		
+		sum1 = 0;
+		sum2 = 0;
+		for(int i = 1; i <= 100; i++) {
+			if(i % 2 == 0) {
+				sum1 += i;
+			} else {
+				sum2 += i;
+			}
+		}
+		System.out.println("짝수의 총 합 : " + sum1);
+		System.out.println("홀수의 총 합 : " + sum2);
+	}
+}
+
+
+
+
+
+
+
+public class ForExample03 {
+
+	public static void main(String[] args) {
+		// 1부터 10까지의 범위를 출력 (숫자 출력시 가로로 출력)
+		// 각 숫자를 구분하기위해서 ","를 사용해야 한다. 
+		// 단 마지막 숫자에는 ","가 출력되지 않아야 한다.
+		for(int i = 1; i <= 10; i++) {
+			System.out.print(i);
+			
+			if(i != 10) {
+				System.out.print(", ");
+			}
+		}
+		System.out.println();
+		
+		// 10부터 1까지의 범위를 출력 (숫자 출력시 가로로 출력)
+		// 각 숫자를 구분하기위해서 ","를 사용해야 한다. 
+		// 단 마지막 숫자에는 ","가 출력되지 않아야 한다.
+		for(int i = 10; i >= 1; i--) {
+			System.out.print(i);
+			
+			if(i != 1) {
+				System.out.print(", ");
+			}
+		}
+		System.out.println();
+		
+		for(int i = 1; i <= 10; i++) {
+			if(i < 10) {
+				System.out.print(i + ", ");
+			} else {
+				System.out.print(i);
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+public class ForExample04 {
+
+	public static void main(String[] args) {
+		// 이중 for문 , 중첩 for문, 다중 for문
+		
+		System.out.println("프로그램 시작");
+		
+		for(int i = 1; i <= 4; i++) {
+			System.out.println("외부 for문-" + i);
+			
+			for(int j = 1; j <= 2; j++) {
+				System.out.println("          내부 for문-" + j);
+			}
+		}
+		
+		System.out.println("프로그램 종료");
+	}
+}
+
+
+
+
+
+
+
+
+public class ForExample05 {
+
+	public static void main(String[] args) {
+		// 구구단
+		
+		for(int i = 1 ; i <= 20; i++) {
+			System.out.println("#### " + i + "단 ####");
+			for(int j = 1; j <= 9; j++) {
+				System.out.println(i + " * " + j + " = " + (i * j));
+			}
+			System.out.println();
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

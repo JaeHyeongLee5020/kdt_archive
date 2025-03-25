@@ -1,0 +1,1283 @@
+				## 메소드
+
+-메소드는 객체의 동작에 해당하는 중괄호 { } 블록을 말한다. 
+-중괄호 블록은 이름을 가지고 있는데, 이것이 메서드 이름이다.  
+-메소드를 호출하게 되면 중괄호 블록에 있는 모든 코드들이 일괄적으로 실행된다. 
+-메소드는 필드를 읽고 수정하는 역할도 하지만, 다른 객체를 생성해서 다양한 기능을 수행하기도 한다. 
+-메소드는 객체 간의 데이터 전달의 수단으로 시용된다. 
+-외부로부터 매개값을 받을 수도 있고, 실행 후 어떤 값을 return할수도 있다.
+
+
+
+
+		# 메소드선언
+
+-메소드 선언은 선언부(리턴타입 메소드이름 매개변수선언)와 실행 블록으로 구성된다. 
+-메소드 선언부를 메소드 signature 라고도 한다.
+
+
+	# 리턴타입
+-리턴 타입은 메소드가 실행 후 리턴히는 값의 타입을 말한다. 
+-메소드는 리턴값이 있을 수도 있고 없을 수도 있다. 
+-메소드가 실행 후 결과를 호출한 곳에 넘겨줄 경우에는 리턴값이 있어야 한다.
+   (리턴 타입이 없는경우 void를 사용해야한다.)
+  
+-예를들어 전자계산기 객체에서 전원을 켜는 powerOn() 메소드와 
+  두 수를 나누는 기능인 divide() 메소드가 있다고 가정해보자. 
+
+-divide() 메소드는 나눗셈의 결과를 리턴해야 하지만 powerOn() 메소드는 전원만 켜면 그만이다. 
+  따라서 powerOn() 메소드는 리턴값이 없고, divide() 메소드는 리턴값이 있다고 봐야 한다.
+-리턴값이 없는 메소드는 리턴타입에 void가 와야 하며 리턴값이 있는 메소드는 리턴값의 타입이 와야 한다. 
+-divide() 메소드의 결과가 double 값이라면 double을 리턴 타입으로 사용해야한다.
+
+	void powerOn () {
+	}
+
+	double divide(int  x,  int y)  { 
+
+		retrun sum;
+	}
+
+
+
+-리턴값이 있느냐 없느냐에 따라 메소드를 호출하는 방법이 조금 다르다. 위의 두 메소드는 다음과 같이 호출할 수 있다.
+
+	powerOn();
+	double result = divide ( 10, 20 );
+
+-powerOn() 메소드는 리턴값이 없기 때문에 변수에 저장할 내용이 없다. 단순히 메소드만 호출하 면 된다. 
+  그러나 divide () 메소드는 10을 20으로 나눈 후 0.5를 리턴하므로 이것을 저장할 변수가 있어야 한다. 
+-리턴값을 받기 위해 변수는 메소드의 라턴 타입인 double 타입으로 선언되어야 한다.
+
+-만약 result 변수를 int타입으로 선언하게 되면 double 값을 저장할 수 없기 때문에 컴파일 에러가 발생한다.
+
+	int result = divide ( 10, 20 );	// 컴파일 에러발생 (리턴값은 doube이지만 저장을 int변수에 대입)
+
+
+-리턴 타입이 있다고 해서 반드시 리턴값을 변수에 저장할 필요는 없다. 
+-리턴값이 중요하지 않고, 메소드 실행이 중요할 경우에는 다음과 같이 변수 선언 없이 메소드를 호출할 수도 있다.
+
+
+
+
+	# 메소드이름
+
+-메소드 이름은 자바 식별자 규칙에 맞게 작성하면 되는데, 다음사항에 주의하면 된다.
+ # 숫자로 시작하면 안 되고 $와 _를 제외한 특수문자를 사용하지 말아야 한다.
+ # 관례적으로 메소드명은 소문자로 작성한다.
+ # 서로 다른 단어가 혼합된 이름이라면 뒤이어 오는 단어의 첫머리 글자는 대문자로 작성한다.
+
+-다음은 잘작성된 메소드 이름을 보여준다.
+
+	void run() {... }
+	void startEngine() {... }
+	String getName () {... }
+	int [] getScores () {... }
+
+-메소드 이름은 이 메소드가 어떤 기능을 수행하는지 쉽게 알 수 있도록 기능 이름으로 지어주는 것이 좋다. 
+-메소드명의 길이는 프로그램 실행과는 무관하니 너무 짧게 주지 않도록 한다.
+
+
+	# 매개변수선언
+
+-매개 변수는 메소드가 실행할 때 필요한 데이터를 외부로부터 받기 위해 사용된다. 
+-매개 변수도 필요한 경우가 있고 필요 없는 경우가 있다. (매개변수 사용 유/무는 옵션이다.)
+
+-예를 들어 powerOn() 메소드는 그냥 전원만 켜변 그만 이지만, divide() 메소드는 나눗셈할 두 수가필요하다. 
+ 따라서 powerOn() 메소드는 매개 변수 가 필요없고, divide() 메소드는 매개 변수가 두 개 필요하다. 
+
+-다음은 매개 변수가 있는 devide() 메소드 선언 예를 보여준다.
+
+	double divide (int x,  int y) {
+	 ... 
+	}
+
+
+
+
+-이렇게 선언된 divide () 메소드를 호출할 때에는 반드시 두 개의 int 값을 주어야 한다.
+
+	double result = divide (10 ,  20 )
+
+
+-호출시 넘겨준 매개값인 10과 20은 해당위치의 매개 변수인 x와 y에 각각 저장되고,
+  이 매개 변수들을 이용해서 메소드 블록을 실행하게 된다. 
+-매개값은 반드시 매개 변수의 타입에 부합되는 값이어야 한다. 
+-divide() 메소드가 int 타입 매개 변수를 가지고 있다면 호출 시 매개값으로 int 값이나 
+  int 타입으로 변환될 수 있는 값을 넘겨주어야 한다. 
+
+-다음은 잘못된 매개값을 사용해서 컴파일 오류가 발행한다.
+
+	int result = divide (10 ,  20 )
+
+
+-10.5와 20.0은 double 값이므로 int 타입으로 변환될 수 없다. 하지만 다음 코드는 컴파일 오류가 
+ 생기지 않고 정상적으로 실행된다. 매개값의 타입 ( byte)과 매개 변수의 타입 (int)이 달라도 byte 
+  타입은 int 타임으로 지동 타입 변환되기 때문에 컴파일 오류가 생기지 않는다.
+
+
+package test.chapter07.example05;
+
+public class Tv {
+	// 리턴타입 메서드명 (매개변수) { 실행코드 };
+	// 리턴타입 : 정수 = int , 실수 = double , 문자열 = String , 
+	// 논리형 boolean , 리턴타입이 없는경우 = void
+	
+	// 필드
+	String brand;
+	int inch;
+	int channel;
+	int volume;
+	boolean power;
+
+	void methodA() {	// 리턴이 없는 메소드
+		System.out.println("리턴이 없는 methodA() 메소드 호출");
+	}
+	
+	int methodB() {	// 리턴타입이 int인 메소드
+		System.out.println("리턴타입이 int인 methodB() 메소드 호출");
+		int result = 10 + 20;
+		return result;
+	}
+	
+	String methodC() {	// 리턴타입이 문자열인 메소드
+		System.out.println("리턴타입이 문자열인 methodC() 메소드 호출");
+		String str = "hello java";
+		return str;
+	}
+	
+	void channelUp() {
+		this.channel++;
+		System.out.println("현재 채널 : " + this.channel);
+	}
+	
+	void volumeUp() {
+		this.volume++;
+		System.out.println("현재 볼륨 : " + this.volume);
+	}
+}
+
+
+
+
+
+
+package test.chapter07.example05;
+public class TvMain {
+	public static void main(String[] args) {
+		
+		Tv tv = new Tv();
+		tv.methodA();
+		System.out.println();
+		
+		int result = tv.methodB();
+		System.out.println("methodB() 호출 결과 : " + result);
+		System.out.println();
+		
+		String resultStr = tv.methodC();
+		System.out.println("methodC() 호출 결과 : " + resultStr);
+		System.out.println();
+		
+		tv.channelUp();
+		tv.channelUp();
+		tv.channelUp();
+		System.out.println();
+
+		tv.volumeUp();
+		tv.volumeUp();
+		tv.volumeUp();
+		tv.volumeUp();
+	}
+}
+
+
+
+		--------------------------------------------------------
+
+
+package test.chapter07.example05;
+public class Calculator {
+	
+	boolean power;
+	
+	void powerOn() {
+		power = true;
+		if(power) {
+			System.out.println("전원이 켜졌습니다.");
+		} else {
+			System.out.println("전원이 꺼졌습니다.");
+		}
+	}
+	
+	boolean powerOff() {
+		power = false;
+		return power;
+	}
+	
+	int plus(int x, int y) {
+		int result = x + y;
+		return result;
+	}
+	
+	double divide(int x, int y) {
+		double result = (double)x / y;
+		return result;
+	}
+	
+	void powerOnOff(boolean power) {
+		this.power = power;
+		if(this.power) {
+			System.out.println("계산기의 전원이 켜졌습니다.");
+		} else {
+			System.out.println("계산기의 전원이 꺼졌습니다.");
+		}
+	}
+}
+
+
+
+package test.chapter07.example05;
+public class CalculatorMain {
+	public static void main(String[] args) {
+		
+		Calculator cal = new Calculator();
+		
+		cal.powerOn();
+		
+		boolean powResult = cal.powerOff();
+		if(powResult) {
+			System.out.println("전원이 켜졌습니다.");
+		} else {
+			System.out.println("전원이 꺼졌습니다.");
+		}
+		
+		int result1 = cal.plus(10, 20);
+		System.out.println(result1);
+		
+		int num1 = 100;
+		int num2 = 200;
+		int result2 = cal.plus(num1, num2);
+		System.out.println(num1 + " + " + num2 + " = " + result2);
+		
+		double doubleResult = cal.divide(10, 4);
+		System.out.println(doubleResult);
+		
+		cal.powerOnOff(false);
+	}
+}
+
+
+
+		--------------------------------------------------------
+
+
+package test.chapter07.example05;
+public class RemoteController {
+
+	int channel = 10;
+	int volume;
+	boolean power;
+	
+	void powerOnOff() {
+		power = !power;
+		if(power) {
+			System.out.println("전원이 켜졌습니다.");
+		} else {
+			System.out.println("전원이 꺼졌습니다.");
+		}
+	}
+	
+	void channelUp() {
+		channel++;
+		System.out.println("현재 채널은 " + channel + "번 입니다.");
+	}
+	
+	void channelDown() {
+		channel--;
+		System.out.println("현재 채널은 " + channel + "번 입니다.");
+	}
+	
+	void inputChannel(int channel) {
+		this.channel = channel;
+		System.out.println("현재 채널은 " + this.channel + "번 입니다.");
+	}
+	
+	void volumeUp() {
+		volume++;
+		System.out.println("볼륨 " + volume);
+	}
+	
+	void volumeDown() {
+		volume--;
+		System.out.println("볼륨 " + volume);
+	}
+	
+	void mute() {
+		volume = 0;
+		System.out.print("음소거 활성화");
+		System.out.println(" (볼륨 " + volume + ")");
+	}
+}
+
+
+
+
+
+package test.chapter07.example05;
+public class RemoteControllerMain {
+	public static void main(String[] args) {
+		
+		RemoteController rc = new RemoteController();
+		
+		rc.powerOnOff();
+		rc.powerOnOff();
+		rc.powerOnOff();
+		rc.powerOnOff();
+		System.out.println();
+		
+		rc.channelUp();
+		rc.channelUp();
+		rc.channelUp();
+		rc.channelUp();
+		rc.channelDown();
+		rc.channelDown();
+		rc.channelDown();
+		System.out.println();
+		
+		rc.volumeUp();
+		rc.volumeUp();
+		rc.volumeUp();
+		rc.volumeDown();
+		rc.volumeDown();
+		System.out.println();
+		
+		rc.mute();
+		System.out.println();
+		
+		rc.inputChannel(112);
+	}
+}
+
+
+
+
+
+
+================================================================================================
+
+
+		## 매개변수의 개수가 명확하지 않을 때 처리방법
+
+
+	# 메서드 시그니처(Signature)
+
+
+	int methodA(int[] values) { }
+
+-정적 배열 매개변수: int[] values는 정적 배열을 매개변수로 받는다.
+-고정된 배열 객체를 반드시 전달해야 한다.
+
+
+	int methodB(int ... intValue) { }
+
+-가변 인자(Varargs): int ... intValue는 가변 인자로, 호출 시 임의의 개수의 int 값을 전달할 수 있다.
+-배열처럼 동작하지만, 더 유연하게 사용할 수 있습니다.
+
+
+	# 호출 방식 차이
+
+Calculator cal = new Calculator();
+
+// 1. 배열 변수를 전달
+int[] arr = {5, 6, 7};
+int resultA2 = cal.methodA(arr);
+
+
+// 2. 배열 리터럴을 직접 전달
+int resultA1 = cal.methodA(new int[]{1, 2, 3, 4});
+
+
+
+Calculator cal = new Calculator();
+
+// 1. 값을 나열해서 전달 (가장 일반적인 방식)
+int resultB1 = cal.methodB(1, 2, 3, 4);
+
+
+// 2. 배열을 전달 (배열도 허용됨)
+int[] arr = {5, 6, 7};
+int resultB2 = cal.methodB(arr);
+
+
+// 3. 아무 값도 전달하지 않음 (빈 배열로 처리됨)
+int resultB3 = cal.methodB();
+
+
+
+
+
+	# 내부 처리 방식
+
+public int methodA(int[] values) {
+    int sum = 0;
+    for (int value : values) {
+        sum += value;
+    }
+    return sum;
+}
+
+
+public int methodB(int ... intValue) {
+    int sum = 0;
+    for (int value : intValue) {
+        sum += value;
+    }
+    return sum;
+}
+
+
+=================================================================================================
+          항목	|           methodA(int[] values)	  |                   methodB(int ... intValue)			|
+=================================================================================================
+호출시 인자전달	| 배열 객체를 반드시 전달해야 함		  | 개별 값 또는 배열 모두 전달 가능			|
+-------------------------------------------------------------------------------------------------
+빈 값 처리		| 빈 배열 new int[] {}을 		  | 인자를 생략시 자동으로 빈 배열로 처리(length == 0)	|
+		| 명시적으로 전달해야 함		  |						|
+-------------------------------------------------------------------------------------------------
+호출코드 가독성	| new int[]{1,2,3}처럼 배열을 생성해야 함	  | methodB(1, 2, 3)처럼 간단하게 값만 나열하면 됨		|
+-------------------------------------------------------------------------------------------------
+메서드 오버로딩	| 다른 배열 타입과 쉽게 구분 가능	  | 유사한 시그니처로 인해 오버로딩 시 충돌 위험 존재		|
+-------------------------------------------------------------------------------------------------
+내부 처리		| 전달된 배열을 바로 사용		  | 인자들이 배열로 변환된 후 사용됨			|
+=================================================================================================
+
+
+
+
+
+package test.chapter07.example06;
+public class Calculator {
+	
+	// 매개변수를 배열을 사용 , 리턴타입 int
+	int methodA(int[] intValue) {
+		int sum = 0;
+		for(int num : intValue) {
+			sum += num;
+		}
+		return sum;
+	}
+	
+	// 매개변수를 가변인자를 사용 , 리턴타입 int
+	int methodB(int ... intValue) {
+		int sum = 0;
+		for(int num : intValue)
+			sum += num;
+		return sum;
+	}
+	
+	// 이름 5개를 입력받아 5개의 이름을 모두 출력해야 한다.
+	
+	// 1) 매개변수를 배열을 사용 , 리턴타입 String
+	String methodC(String[] strValue) {
+		String result = "";
+		for(String name : strValue) {
+			result += name + " ";
+		}
+		return result;
+	}
+	
+	
+	// 2) 매개변수를 가변인자를 사용 , 리턴타입 String
+	void methodD(String ... strValue) {
+		for(String name : strValue) {
+			System.out.print(name + " ");
+		}
+	}
+	
+}
+
+
+package test.chapter07.example06;
+public class CalculatorMain {
+	public static void main(String[] args) {
+		
+		Calculator cal = new Calculator();
+		
+		int[] intArr = {1,2,3,4,5,6,7,8,9,10};
+		int result1 = cal.methodA(intArr);
+		System.out.println("1부터 10까지의 합 : " + result1);
+		
+		int result2 = cal.methodA(new int[] {1,2,3,4,5,6,7,8,9,10});
+		System.out.println("1부터 10까지의 합 : " + result2);
+		
+		int result3 = cal.methodB(1,2,3,4,5);
+		System.out.println("1부터 5까지의 합 : " + result3);
+		
+		int[] intArr2 = {1,2,3,4,5};
+		int result4 = cal.methodB(intArr2);
+		System.out.println("1부터 5까지의 합 : " + result4);
+		
+		String[] names = {"김범수" , "나얼" , "박효신" , "이수" , "아이유"};
+		String strResult1 = cal.methodC(names);
+		System.out.println(strResult1);
+		
+		String strResult2 = cal.methodC(new String[] {"김범수","나얼","박효신","이수","아이유"});
+		System.out.println(strResult2);
+		
+		
+		
+		// 리턴 타입이 viod이므로 메소드를 호출만하면된다.
+		cal.methodD("현빈" , "정우성" , "공유" , "박신혜" , "장나라");
+		System.out.println();
+		
+		String[] names2 = {"현빈" , "정우성" , "공유" , "박신혜" , "장나라"};
+		cal.methodD(names2);
+	}
+}
+
+
+
+
+
+
+
+================================================================================================
+
+		# 리턴(return)문
+
+
+	# 리턴값이 있는 메소드
+
+-메소드 선언에 리턴 타입이 있는 메소드는 반드시 리턴 (return)문을 시용해서 리턴값을 지정해야 한다. 
+-만약 return문이 없다면 검파일 오류가 발생한다. 
+-return문이 실행되면 메소드는 즉시 종료된다.
+
+	return 리턴값;
+
+-return문의 리턴값은 return 타입이거나 return 타입으로 변환될 수 있어야 한다. 
+  예를 들어 return 타입이 int인 plus() 메소드에서 byte, short, int 타입의 값이 return되어도 상관없다.
+  byte와 short은 int로 자동 타입 변환되어 return되기 때문이다
+
+return문을 사용할 때 주의할 점은 return문 이후에 실행문이 오면 “Unreachable code"라는 컴파일 오류가 발생한다. 
+왜냐하면 return문 이후의 실행문은 결코 실행되지 않기 때문이다.  따라서 다음은 잘못된 코딩이다.
+
+	int plus(int x,  int y)  { 
+		int result =   x + y; 
+		return result;
+		System.out .println(result );   //   Unreachable  code
+	}
+
+
+하지만 다음과 같은 경우, 컴파일 에러가 발생하지 않는다. 
+(2)는 return false; 다음에 있지만, if문 의 조건식이 false가 될 경우 
+정상적으로 (2)가 실행되기 때문에 (2)는 "unreachable code" 에러를 발생시키지 않는다. 
+if문의 조건식이 true가 되면 (1)이 실행되고 return false; 가 실행되어 메소드는 즉시 종료한다.  
+당연히 (2)는 실행되지 않는다.
+
+	boolean isLeftGas() {
+		if(gas == 0) {
+			System.out.println("gas가 없습니다."); 
+			return false;
+		}
+		System.out.println("gas가 있습니다."); 
+		return true;
+	}
+
+
+
+
+
+
+
+	# 리턴값이 없는 메소드
+
+-void로 선언된 리턴값이 없는 메소드에서도 return문을 사용할 수 있다. 
+-다음과 같이 return문을 사용하면 메소드 실행을 강제 종료시킨다.
+
+	return;
+
+다음은 gas값이 0보다 클 경우 계속해서 while문을 실행하고, 
+0 일 경우 return문을 실행해서 run() 메소드를 즉시 종료한다. 
+while문이 한번 루핑할 때마다 gas를 1씩 감소하기 때문에 언젠 가는 0이 되어 run(）메소드를 종료한다. 
+이 예제에서는 return문 대신 break문을 사용할 수 있다.
+만약 while문 뒤에 실행문이 추가적으로 더 있을 경우 break문을 반드시 사용해야 한다，    
+return문은　즉시 메소드를　종료시키기 때문이다.
+
+
+
+
+public class Car {
+	
+	// 필드
+	int gas;	// 연료량
+	
+	// 생성자
+//	public Car() {
+//		gas = 5;
+//	}
+	
+	// 메서드
+	void setGas(int gas) {	// 연료를 충전하는 메서드
+		if(gas > 0) {
+			this.gas += gas;
+			System.out.println(gas + "만큼의 gas가 충전되었습니다.");
+			System.out.println("현재 연료 잔량 : " + this.gas);
+		} else {
+			System.out.println("잘못된 충전 방식입니다.");
+			System.out.println("현재 연료 잔량 : " + this.gas);
+		}
+	}
+	
+	boolean isLeftGas() {	// 현재 연료의 유/무 확인
+		if(gas <= 0) {
+			System.out.println("gas가 없습니다.");
+			return false;
+		}
+		System.out.println("gas가 있습니다.");
+		return true;
+	}
+	
+	void run() {	// 차가 달리는 메서드
+		while(true) {
+			if(gas > 0) {
+				System.out.println("차가 달립니다. (gas 잔량 : " + this.gas + ")");
+				gas--;
+			} else {
+				System.out.println("차가 멈춤니다. (gas 잔량 : " + this.gas + ")");
+				return;
+			}
+		}
+	}
+}
+
+
+
+
+public class CarMain {
+	public static void main(String[] args) {
+		
+		Car car = new Car();
+		
+		car.setGas(5);
+		
+		car.isLeftGas();
+		
+		car.run();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+		# 메소드 호출
+
+-메소드는 클래스 내부/외부의 호출에 의해 실행된다.   
+-클래스 내부의 다른 메소드에서 호출할 경우에는 단순한 메소드 이름으로 호출하면 되지만,
+  클래스 외부에서 호출할 경우에는 우선 클래스로부터 객체를 생성한 뒤, 
+  참조 변수를 이용해서 메소드를 호출해야 한다.  
+  그 이유는 객체가 존재해야 메소드도 존재하기 때문이다.
+
+
+
+
+	# 클래스 내부에서 메서드 호출
+
+-클래스 내부에서 다른 메소드를 호출할 경우에는 다음과 같은 형태로 작성하면 된다. 
+-메소드가 매개 변수를 가지고 있을 때에는 매개 변수의 타입과수에 맞게 매개값을 제공한다.
+
+	public class Car {
+
+		void method01(String name, int age){	// method01 생성
+			실행문
+		}
+
+		void method02(){			// method02 생성
+			method01("홍길동", 40);	// method01 호출
+			실행문
+		}
+	}
+
+메소드가 리턴값이 없거나 있어도 받고 싶지 않을 경우 위와 같이 모두 호출이 가능하다. 
+
+리턴값이 있는 메소드를 호출하고 리턴값을 받고 싶다면 다음과 같이 변수를 선언하고 대입하면 된다.
+
+	타입 변수명 = 메서드명(매개변수, 매개변수);
+
+주의해야 할 점은 변수 타입은 메소드 리턴 타입과 동일하거나， 타입 변환이 될 수 있어야 한다. 
+
+예를 들어 int 타입은 double 타입으로 자동 변환되기 때문에 int 리턴값은 double 변수에 대입할 수 있다.
+
+
+
+
+
+
+
+
+
+	# 객체 외부에서 호출
+
+-외부 클래스에서 메소드를 호출하려면 우선 다음과 같이 클래스로부터 객체를 생성해야 한다. 
+-메소드는 객체에 소속된 멤버이므로 객체가 존재하지 않으면 메소드도 존재하지 않기 때문이다.
+
+-객체가 생성되었다면 참조 변수와 함께 도트(.) 연산자를 사용해서 메소드를 호출할수 있다. 
+-도트(.) 연산자는 객체 접근 연산자로 객체가 가지고 있는 필드나, 메소드에 접근할 때 사용 된다
+
+
+ 	참조변수.메소드( 매개변수값,  매개변수값,..   ) ;		//리턴값이 없거나, 있어도 리턴값을 받지 않을 경우 
+ 	타입 변수 = 참조변수.메소드( 매개변수값,  매개변수값, ...);  	// 리턴값이 있고, 리턴값을 받고 싶을 경우
+
+
+
+
+
+package test.chapter07.example07;
+public class Calculator {
+	
+	// 정수 2개를 입력받아 각 정수를 더하는 메소드
+	int plus(int x, int y) {
+		System.out.println("plus()메소드 호출");
+		int result = x + y;
+		return result;
+	}
+	
+	// 정수 2개를 입력받아 두 정수를 더한 후 2로 나누는 메서드(평균값)
+	double avg(int x, int y) {
+		System.out.println("avg()메소드 호출");
+		double sum = plus(x, y);	// 클래스 내부에서 메소드 호출
+		double result = sum / 2;
+		return result;
+	}
+	
+	void execute() {
+		System.out.println("execute()메소드 호출");
+		double result = avg(10 , 7);
+		System.out.println("execute()에서 avg() 호출 : " + result);
+	}
+}
+
+
+
+
+
+package test.chapter07.example07;
+public class CalculatorMain {
+	public static void main(String[] args) {
+		
+		Calculator cal = new Calculator();
+		
+		int result1 = cal.plus(10, 20);
+		System.out.println("plus() 호출 : " + result1);
+		
+		double result2 = cal.avg(10, 7);
+		System.out.println("avg() 호출 : " + result2);
+		
+		cal.execute();
+	}
+}
+
+
+
+		---------------------------------------------------
+
+package test.chapter07.example07;
+
+public class Car {
+	int speed;	// 속도
+	
+	int getSpeed() {	// 현재 속도를 리턴하는 메소드
+		return speed;
+	}
+	
+	void keyTurnOn() {	// 시동을 거는 메소드
+		System.out.println("키를 사용하여 시동을 겁니다.");
+	}
+	
+	void run() {	// 차가 달리는 메서드
+		for(int i = 0; i <= 50; i += 10) {
+			speed = i;
+			System.out.println("차가 달립니다. (현재 속도 : " + speed + "km)");
+		}
+	}
+}
+
+
+
+
+package test.chapter07.example07;
+public class CarMain {
+	public static void main(String[] args) {
+		
+		Car car = new Car();
+
+		car.keyTurnOn();
+		
+		car.run();
+		
+		int speed = car.getSpeed();
+		System.out.println("현재 속도 : " + speed + "km");
+	}
+}
+
+
+
+
+
+
+
+================================================================================================
+
+
+	# 메소드 오버로딩 
+
+클래스 내에 같은 이름의 메소드를 여러 개 선언하는 것을 메소드 오버로딩 (overloading ) 이라고 한다. 
+오버로딩의 사전적 의미는 많이 싣는 것을 뜻한다. 
+하나의 메소드 이름으로 여러 기능을 담는다 하여 붙여진 이름이라 생각할 수 있다. 
+메소드 오버로딩의 조건은 매개 변수의 타입, 개수, 순서 중 하나가 달라야 한다.
+                       
+메소드 오버로딩이 필요한 이유는 매개값을 다양하게 받아 처리할 수 있도록 하기 위해서이다.   
+
+예를들어 다음과 같이 plus() 메소드가 있다고 가정해보자.
+
+	int plus(int x, int y) { 
+		int result x + y; 
+		return result;
+	}
+
+plus() 메소드를 호출하기 위해서는 두 개의 int 매개값이 필요하다. 
+하지만 int 타입이 아니라 double 타입의 값을 덧셈하기 위해서는 plus() 메소드를 호출할 수 없다. 
+
+해결 방법은 매개 변수 가 double 타입으로 선언된 plus() 메소드를 하나 더 선언하는 것이다.
+
+	double plus(double x, double y) { 
+		int result x + y; 
+		return result;
+	}
+
+
+오버로딩된 메소드를 호출할 경우JVM은 매개값의 타입을 보고 메소드를 선택한다. 
+
+
+예를 들어 다음과 같이 plus() 메소드를 호출하면 plus (int x, int y) 가 실행된다.
+
+	plus(10,  20);
+
+
+
+그리고 다음과 같이 plus () 메소드를 호출하면 p lu s (double x , double y) 가 실행된다.
+
+	plus (10.5,  20.3 );
+
+
+
+그렇다면 다음코드는 어떻게 될까? 컴파일 오류가날까? 만일 실행이 된다면 어떤 메소드가실행될까?
+
+	int x = 10; 
+	double y = 20.3; 
+	plus(x,  y);
+
+
+첫 번째 매개 변수가 int 타입이고 두 번째 매개 변수가 double 타입인 plus() 메소드가 없기 때문에 
+컴파일 오류가 날 것 같지만, 사실은 plus(double x , double y) 메소드가 실행된다. 
+JVM은 일차적으로 매개 변수 타입을 보지만， 매개 변수의 타입이 일치하지 않을 경우 
+자동타입 변환이 가능한지를 검사한다. 
+첫 번째 매개 변수인 int 타입은 double 타입으로 변환이 가능하므로
+최종적으로 plus (double x , double y) 메소드가 선택된다.
+
+메소드를 오버로딩할 때 주의할 점은 매개 변수의 타입과 개수 순서가 똑같을 경우 
+매개 변수 이름만 바꾸는 것은 메소드 오벼로딩이라고 볼 수 없다. 
+또한 리턴 타입만 다르고 매개 변수가 동일하다면 이것은 오버로딩이 아니다. 
+왜냐하면 리턴 타입은 JVM이 메소드를 선택할 때 아무런 도움을 주지 못하기 때문이다. 
+
+만약 아래와 같이 선언했다면 오버로딩이 아니기 때문에 컴파일 오류가 발생한다.
+
+int divide (int x,  int y) { }			// int, int 이므로 컴파일 에러가 발생한다.
+double divide (int boonja,  int boon mo ) { }	// int, int 이므로 컴파일 에러가 발생한다.
+
+
+메소드 오버로딩의 가장 대표적인 예는 System.out.println() 메소드이다. 
+println() 메소드는 호출할 때 주어진 매개값의 타입에 따라서 오버로딩된 println() 메소드를 호출한다. 
+
+다음은 오버로딩된 println() 메소드를 보여준다.
+
+	void  println()  { ..  }
+	void  println(boolean x)  { ..  }
+	void  println(char x) { . .  } 
+	void  println(char[]  x)  { ..  } 
+	void  println(double  x) { ..  }
+	void  println(float x)  { ..  }
+	void  println(int x)  { ..  }
+	void  println(long  x)  { ..  }
+	void  println(Object x ) { . .  }
+	void  println(String x)  { . .  }
+
+
+
+
+
+public class Test {
+	
+	// 메서드 오버로딩
+	int plus(int x) {
+		System.out.println("int 호출");
+		int sum = x + x;
+		return sum;
+	}
+
+	// 메서드 오버로딩
+	int plus(int x, int y) {
+		System.out.println("int , int 호출");
+		int sum = x + y;
+		return sum;
+	}
+	
+	// 메서드 오버로딩
+	double plus(double x, double y) {
+		System.out.println("double , double 호출");
+		double sum = x + y;
+		return sum;
+	}
+	
+	// 메서드 오버로딩
+	double plus(int x, double y) {
+		System.out.println("int , double 호출");
+		double sum = x + y;
+		return sum;
+	}
+}
+
+
+
+
+public class TestMain {
+	public static void main(String[] args) {
+		
+		Test test = new Test();
+		
+		int result1 = test.plus(10, 20);
+		System.out.println("plus() 메소드 호출 : " + result1);
+		System.out.println();
+		
+		double result2 = test.plus(10.5, 20.3);
+		System.out.println("plus() 메소드 호출 : " + result2);
+		System.out.println();
+		
+		double result3 = test.plus(10, 20.5);
+		System.out.println("plus() 메소드 호출 : " + result3);
+	}
+}
+
+
+
+1) 리턴문도 없고 매개변수도 없는 메소드
+
+2) 리턴문은 있지만 매개변수는 없는 메소드
+
+3) 리턴문은 없고 매개변수는 있는 메소드
+
+4) 리턴문도 있고 매개변수도 있는 메소드
+
+
+
+
+
+package test.chapter07.example07;
+
+public class MethodExample01 {
+
+	// Math.radom() 메소드를 활용
+	
+	int random;
+	
+	int randomA() {
+		this.random = (int)(Math.random() * 6) + 1;
+		return random;
+	}
+	
+	int randomA(int num) {
+		this.random = (int)(Math.random() * num) + 1;
+		return random;
+	}
+	
+	int randomA(int num1, int num2) {
+		this.random = (int)(Math.random() * num1) + num2;
+		return random;
+	}
+}
+
+
+
+
+
+package test.chapter07.example07;
+public class MethodExample01Main {
+	public static void main(String[] args) {	
+		MethodExample01 me = new MethodExample01();
+		
+		int sum = 0;
+		for(int i = 0; i < 5; i++) {
+			int num = me.randomA();
+			System.out.println("주사위 값 :" + num);
+			sum += num;
+		}
+		System.out.println("주사위 값은 총 합 : " + sum);
+		System.out.println("주사위 평균 값 : " + sum / 5.0);
+		System.out.println();
+		
+		System.out.print("로또번호 :");
+		for(int i = 0; i < 5; i++) {
+			int num = me.randomA(45);
+			System.out.print(num + " ");
+			sum += num;
+		}
+	}
+}
+
+
+
+
+
+
+
+EX1) 문자열을 매개변수로 받아, 해당 문자열의 길이를 반환하는 getStringLength 메소드를 작성
+
+
+public class Method01 {
+
+	int getStringLength(String str) {
+		int result = str.length();
+		return result;
+	}
+	
+}
+
+
+public class Method01Main {
+	public static void main(String[] args) {
+
+		Method01 me = new Method01();
+		
+		int strResult = me.getStringLength("hello world");
+		System.out.println("입력받은 문자열의 길이 : " + strResult);
+	}
+}
+
+
+
+
+
+
+		--------------------------------------------
+
+
+EX2) 정수형 배열을 매개변수로 받아, 배열의 최대값, 최소값을 반환하는 메소드를 작성
+         Scanner로 1입력 받으면 최대값 2를 입력 받으면 최소값 나머지는 잘못 입력되었습니다 가 출력되고 메서드 종료되어야 한다.
+
+
+import java.util.Scanner;
+public class Method01 {
+
+	int maxOrMin() {
+		System.out.print("배열안의 최대값 = 1 , 최소값 = 2 : ");
+		Scanner sc = new Scanner(System.in);
+		int result = sc.nextInt();
+		return result;
+	}
+	
+	void findMax(int[] intValue) {
+		
+		int result = maxOrMin();	// 최대값 , 최소값 확인
+		
+		int max = intValue[0];
+		int min = intValue[0];
+
+		for(int num : intValue) {
+			if(num > max) {
+				max = num;
+			}
+			if(num < min) {
+				min = num;
+			}
+		}
+
+		if(result == 1) {
+			System.out.println("배열의 값중 최대값 : " + max);
+		} else if(result == 2)  {
+			System.out.println("배열의 값중 최소값 : " + min);
+		} else {
+			System.out.println("잘못된 수를 입력하셨습니다.");
+		}
+	}
+}
+
+
+
+
+public class Method01Main {
+	public static void main(String[] args) {
+		
+		Method01 me = new Method01();
+		
+		int[] intArr = {12,4,8,15,9,11,21,19};
+		
+		me.findMax(intArr);
+	}
+}
+
+
+		--------------------------------------------
+
+EX3) 문자열을 매개변수로 받아, 문자열의 각 문자를 대소문자 반전시킨 문자열을 반환하는 메소드를 작성
+
+
+public class Method01 {
+	
+	String methodA (String str) {
+		
+		String result = "";
+		
+		for(int i = 0; i < str.length(); i++) {
+			char ch = str.charAt(i);
+			if(ch >= 'a' && ch <= 'z') {	// 소문자를 대문자로 반전
+				result += (char)(ch - 32);
+			} else if(ch >= 'A' && ch <= 'Z') {	// 대문자를 소문자로 반전
+				result += (char)(ch + 32);
+			} else {
+				result += ch;		// 알파벳이 아닌 나머지는 그대로 저장
+			}
+		}
+		return result;
+	}
+}
+
+
+
+public class Method01Main {
+	public static void main(String[] args) {
+		
+		Method01 me = new Method01();
+	
+		String result = me.methodA("abcdEFG!!!");
+		System.out.println(result);
+	}
+}
+
+
+
+		--------------------------------------------
+
+EX4) 사용자로부터 이름을 입력받아 입력받은 이름을 출력해야 한다.
+ 4-1 Scanner를 사용하여 이름을 입력받아야 한다.
+ 4-2 이름을 입력받은 후  Scanner를 사용하여 입력한 이름을 저장 유무를 확인해야 한다.
+ 4-2 "y"를 입력하면 이름이 저장된 후 출력되고 "n"를 입력시 이름은 저장되지 않아야 한다.
+
+package test.chapter07.example08;
+
+import java.util.Scanner;
+
+public class Person {
+//EX4) 사용자로부터 이름을 입력받아 입력받은 이름을 출력해야 한다.
+//4-1 Scanner를 사용하여 이름을 입력받아야 한다.
+//4-2 이름을 입력받은 후  Scanner를 사용하여 입력한 이름을 저장 유무를 확인해야 한다.
+//4-2 "y"를 입력하면 이름이 저장된 후 출력되고 "n"를 입력시 이름은 저장되지 않아야 한다.
+	
+	String name;
+	
+	// 이름을 입력받는 메서드
+	String inputName() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("이름을 입력하세요 : ");
+		String result = sc.nextLine();
+		return result;
+	}
+	
+	// 입력받은 이름을 확인 후 저장 유/무를 확인하는 메서드
+	void confirmName(String nameSave) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("입력하신 이름이 " + nameSave + "가 맞습니까?(y/n)");
+		String result = sc.nextLine();
+		if(result.equals("y")) {
+			this.name = nameSave;
+			System.out.println("입력하신 이름 " + this.name + "를 저장합니다.");
+		} else {
+			System.out.println("입력하신 이름의 저장을 취소합니다.");
+		}
+	}
+	
+	void nameSaveConfirm() {
+		while(true) {
+			String result = inputName();
+			confirmName(result);
+			
+			if(this.name != null) {
+				System.out.println("프로그램을 종료합니다.");
+				return;
+			}
+			System.out.println("이름을 다시 입력하세요");
+		}
+	}
+}
+
+
+
+
+public class PersonMain {
+	public static void main(String[] args) {
+		
+		
+		Person person = new Person();
+		
+		person.nameSaveConfirm();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

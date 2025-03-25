@@ -1,0 +1,89 @@
+			## addEventListener
+
+-onclick, onkeydown과 같은 이벤트 속성을 통해 이벤트 핸들러를 등록할수도 있지만
+ 최근에는 addEventListener() 메소드를 사용한다.
+
+-addEventListener는 자바스크립트에서 DOM 요소에 이벤트 핸들러를 등록하기 위해 사용하는 메서드
+-HTML 요소에서 발생하는 특정 이벤트(예: 클릭, 입력, 키보드 입력 등)에 대해 원하는 작업을 수행하도록 정의
+-addEventListener는 이벤트 처리의 표준 방식으로, 이벤트 기반 프로그래밍에서 많이 사용
+
+-자바스크립트의 addEventListener() 메소드 사용하면 버튼을 클릭하여 이벤트가 발생할 때  호출할 함수를 지정할 수 있다.
+
+-클릭 이벤트 핸들러를 등록하는 경우의 예
+
+	// 이전 방식
+	target.onclick = function() {};
+
+	// addEventListener() 메소드 방식
+	target.addEventListener('click', function() {});
+
+-위의 두가지 방식의 결과는 동일하다.
+
+-addEventListener() 메소드를 사용하는 것은 이벤트 핸들러 속성을 사용하는 것에 비해 몇 가지 장점이 있다.
+ # 같은 리스터(타겟)에 대해 다수의 핸들러를 등록 할 수 있다.
+ # 추가적인 옵션 사항들이 제공된다.
+ # addEventListener의 장점 : 같은 리스터(타겟)에 대해 다수의 핸들러를 등록 할 수 있다.
+ # 이전에 추가한 이벤트 핸들러를 제거고할 수 있는 대응 매소드가 존재한다. (removeEventListener가 존재)
+
+
+
+
+
+<body>
+    <button id="button1">버튼1</button>
+    <button id="button2">버튼2</button>
+    <button id="button3">버튼3</button>
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+
+const btn1 = document.querySelector("#button1");
+const btn2 = document.querySelector("#button2");
+const btn3 = document.querySelector("#button3");
+
+const handleClick = function() {
+    console.log("버튼을 클릭합니다.");
+    let id = prompt('아이디 입력');
+    let pw = prompt('비밀번호 입력');
+    console.log(`입력한 ID = ${id} , 입력한 PASSWORD = ${pw}`);
+}
+
+btn1.addEventListener('click' , handleClick);
+btn1.addEventListener('click' , function() {     // 익명함수
+    alert('또다른 핸들러를 등록합니다.');
+});
+
+btn2.addEventListener('click' , function() {
+    if(btn2.style.backgroundColor === "orange") {
+        btn2.style.backgroundColor = "";
+        console.log('2번 버튼의 색이 원본으로 변경됩니다.');
+    } else {
+        btn2.style.backgroundColor = "orange";
+        console.log('2번 버튼의 색이 변경됩니다.');
+    }
+});
+
+btn3.addEventListener('click' , function(){
+    if(btn3.textContent === '버튼3') {
+        btn3.textContent = '버튼 클릭상태';
+    } else {
+        btn3.textContent = '버튼3';
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

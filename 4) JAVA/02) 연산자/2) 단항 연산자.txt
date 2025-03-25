@@ -1,0 +1,212 @@
+		## 단항 연산자
+
+-단항 연산자는 피연산자가 단 하나뿐인 연산자를 말하며, 여기에는 부호 연산자(+， -), 
+증감 연산자(++， --), 논리 부정 연산자(!) 가 있다.
+
+
+	# 부호 연산자(+， -)
+-부호 연산지는 양수 및 음수를 표시하는 + , - 를 말한다. 
+-boolean타입과 char 타입을 제외한 나머지 기본 타입에 사용할 수 있다.
+
+=========================================================
+    연산식	|		|	설명			|
+--------------------------------------------------------
+|  +	|  피연산자	| 피연산자의 부호를 그대로 유지한다.	|
+--------------------------------------------------------
+|  -	| 피연산자		| 피연산자의 부호를 반대로 변경한다.	|
+=========================================================
+
+ # + , - 는 산술 연산자이기도 하고, 부호 연산자이기도 하다. (부호 연산자로 쓰일 때에는 하나의 피연산자만 필요하다.)
+    일반적으로 부호 연산자를 다음과 같이 정수 및 실수 리터렬 앞에 붙여 양수 및 음수를 표현한다.
+
+public class OperationExample02 {
+	public static void main(String[] args) {
+		
+		int Oper1 = +100;
+		int Oper2 = -100;
+		System.out.println(Oper1);
+		System.out.println(Oper2);
+		
+		double Oper3 = 3.14;
+		double Oper4 = -10.5;
+		System.out.println(Oper3);
+		System.out.println(Oper4);
+		
+	}
+}
+
+
+# 부호 연산자는 정수 또는 실수 타입 변수 앞에 붙일 수 있다. 
+# 이 경우는 변수를 양수 및 음수로 표현한 것이 아니고, 변수 값의 부호를 유지하거나 바꾸기 위해 사용된다. 
+# +연산지는 변수 값의 부호를 유지한다.  -연산자는 변수 값의 부호를 양수는 음수로 음수는 양수로 바꾼다.   
+# 다음 코드를 보면 resultl 에는 x 값인 음수 100이 그대로 저장된다. 
+# 그러나 result2는 부호가 변경된 양수 100이 저장된다
+
+public class OperationExample02 {
+	public static void main(String[] args) {
+		
+		int Oper1 = +100;
+		int Oper2 = -100;
+		System.out.println(Oper1);
+		System.out.println(Oper2);
+		System.out.println("-------------------");
+		
+		double Oper3 = 3.14;
+		double Oper4 = -10.5;
+		System.out.println(Oper3);
+		System.out.println(Oper4);
+		System.out.println("-------------------");
+		
+		int result1 = +Oper1;
+		int result2 = -Oper1;
+		System.out.println(result1);
+		System.out.println(result2);
+		System.out.println("-------------------");
+		int result3 = +Oper2;
+		int result4 = -Oper2;
+		System.out.println(result3);
+		System.out.println(result4);
+	}
+}
+
+
+
+
+
+==============================================================================
+
+		# 증감 연산자
+
+# 증감 연산자는 변수의 값을 1증가(++)시커거나 1감소(--)시키는 연산자를 말한다. 
+# boolean 타입을 제외한 모든 기본타입의 피연산자에 사용할 수 있다.
+
+
+=================================================================
+    연산식	|		|	설명				|
+-----------------------------------------------------------------
+|  ++	| 피연산자	| 다른 연산을 수행하기 전에 피연산자의 값을 1증가시킨다.	|
+-----------------------------------------------------------------
+|  --	| 피연산자	| 다른 연산을 수행하기 전에 피연산자의 값을 1감소시킨다.	|
+-----------------------------------------------------------------
+| 피연산자	|  ++	| 다른 연산을 수행한 후에 피연산자의 값을 1증가시킨다.	|
+-----------------------------------------------------------------
+| 피연산자	|  --	| 다른 연산을 수행한 후에 피연산자의 값을 1감소시킨다.	|
+=================================================================
+
+
+# ++ 연산지는 피연산자의 기존 값에 1을 더해서 그 결과를 다시 피연산자에 저장한다. 
+  예를 들어 num 변수의 기존 값이 5라면 ++num 연산 후 num 변수의 값은 6이 된다. 
+  그래서 ++ 연산자를 증가 연산자라고 부른다.  
+
+# --연산자는 피연산자의 기존 값에 1 을 뺀 후 그 결과를 다시 피연산자에 저장한다. 
+  예를 들어 num 변수의 기존 값이 5 라면 --num 연산 후 num 변수의 값은 4가 된다. 
+  그래서 -- 연산자를 감소 연산자라고 부른다. 
+
+# 증가 연산자와 감소 연산자는 변수의 앞뒤 어디에든올 수 있다. 
+# 연산식에서 증감 연산자만 있는 경우에는 증감 연산자가 변수 앞 또는 뒤 어디든 위치해도 상관없다.
+
+
+  ++a = 변수 a값에 1이 더해진다.
+  a++ = 변수 a값에 1이 더해진다.
+  --a = 변수 a값에 1이 감소진다.
+  a-- = 변수 a값에 1이 감소진다.
+
+하지만 다른 연산자와 함께 사용하는 연산식에서는 증감 연산자의 위치에 따라 
+연산식의 결과가 다르게 나오므로 주의해야 한다. 
+
+
+
+
+public class OperationExample03 {
+	public static void main(String[] args) {
+		int a = 10;
+		int b = 10;
+		
+		// 증감연산자 단독으로 사용될경우 피연산자 앞,뒤에 붙여도 결과는 동일한다.
+//		++a;
+//		b++;
+//		System.out.println("a : " + a);
+//		System.out.println("b : " + b);
+		
+		int result1 = --a;
+		int result2 = b--;
+		System.out.println("result1 : " + result1);
+		System.out.println("result2 : " + result2);
+		System.out.println("a : " + a);
+		System.out.println("b : " + b);
+	}
+}
+
+
+
+public class OperationExample04 {
+	public static void main(String[] args) {
+		
+		
+//		int a = 10;
+//		System.out.println(++a);	// 11
+//		System.out.println(a++);	// 11 (12)
+//		System.out.println(++a);	// 13
+//		System.out.println(a++);	// 13 (14)
+//		System.out.println(++a);	// 15
+//		System.out.println("a : " + a);
+		
+		int a = 3;
+		int b = 2 * ++a;
+		System.out.println("a : " + a);
+		System.out.println("b : " + b);
+		
+		int c = 2 * a++;
+		System.out.println("a : " + a);
+		System.out.println("c : " + c);
+	}
+
+}
+
+
+
+
+
+
+public class OperationExample05 {
+	public static void main(String[] args) {
+		
+//		int x = 10;
+//		int y = 10;
+//		int z;
+//		
+//		System.out.println("-----------------------");
+//		x++;
+//		++x;
+//		System.out.println("x=" + x);	// 12
+//
+//		System.out.println("-----------------------");	
+//		y--;
+//		--y;
+//		System.out.println("y = " + y);	// 8
+//
+//		System.out.println("-----------------------");	
+//		z = x++;
+//		System.out.println("z = " + z);
+//		System.out.println("x = " + x);
+//		
+//		System.out.println("-----------------------");		
+//		z = ++x;
+//		System.out.println("z = " + z);
+//		System.out.println("x = " + x);
+//		
+//		System.out.println("-----------------------");				
+//		z = ++x + y++;
+//		System.out.println("x = " + x);
+//		System.out.println("y = " + y);
+//		System.out.println("z = " + z);
+	}
+}
+
+
+
+
+
+
+
+

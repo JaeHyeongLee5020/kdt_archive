@@ -1,0 +1,992 @@
+				## IO 패키지 소개
+ 
+-데이터는 사용자로부터 키보드를 통해 입력될 수도 있고, 파일 또는 네트워크로부터 입력될 수도 있다.   
+-데이터는 반대로 모니터로 출력될 수도 있고, 파일로 출력되어 저장될 수도 있으며 네트워크로 출력되어 전송될 수도 있다.
+-자바에서 데이터는 스트림 (Stream) 을 통해 입출력되므로 스트림의 특정을 잘 이해해야 한다. 
+-스트림은 단일 방향으로 연속적으로 흘러가는 것을 말하는데 데이터는 출발지에서 나와 도착지로 들어간다는 개념이다.
+
+
+
+
+
+			## 입력 스트림과 출력 스트림
+
+-프로그램이 출발지냐 또는 도착지냐에 따라서 스트림의 종류가 결정되는데, 
+ 프로그램이 데이터를 입력받을 때에는 입력 스트림 (InputStream) 이라 부르고, 
+ 프로그램이 데이터를 보낼 때에는 출력 스트림 (OutputStream) 이라고 부른다. 
+-입력 스트림의 출발지는 키보드, 파일, 네트워크상의 프로그램이 될 수 있고, 
+ 출력 스트림의 도착지는 모니터, 파일, 네트워크상의 프로그램이 될 수 있다.
+
+                
+
+-항상 프로그램을 기준으로 데이터가 들어오면 입력 스트림이고 
+ 데이터가 나가면 출력 스트림이라는 것을 명심해야 한다. 
+-프로그램이 네트워크상의 다른 프로그램과 데이터 교환하기 위해서는 
+ 양쪽 모두 입력 스트림과 출력 스트림이 따로 필요하다.
+-스트림의 특성이 단방향이므로 하나의 스트림으로 입력과 출력을 모두 할 수 없기 때문이다.
+
+              
+
+-자바의 기본적인 데이터 입출력 (IO: Input/Output) API는 java.io 패키지에서 제공하고 있다. 
+-java.io 패키지에는 파일 시스템의 정보를 얻기 위한 File 클래스와 
+ 데이터를 입출력하기 위한 다양 한 입출력 스트림 클래스를 제공하고 있다.
+
+-스트림 클래스는 크게 두 종류로 구분된다. 
+-하나는 바이트(byte) 기반 스트림이고, 다른 하나는 문자(character) 기반 스트림이다.
+-바이트 기반 스트림은 그림, 멀티미디어, 문자 등 모든 종류의 데이터를 받고 보낼 수 있으나 
+ 문자 기반 스트림은 오로지 문자만 받고 보낼 수 있도록 특화되어 있다. 
+-바이트 기반 스트림과 문자 기반 스트림은 최상위 클래스에 따라서 다음과 같이 구분된다.
+
+=================================================================================================
+		|		바이트 기반 스트림			|	  문자 기반 스트림		|
+      구분		---------------------------------------------------------------------------------
+		|	입력 스트림	|	출력 스트림	|  입력 스트림	|  출력 스트림 	|
+=================================================================================================
+최상위 클래스	|  InputStream		|  OutputStream		|  Reader		|  Writer		|
+		---------------------------------------------------------------------------------
+ 하위 클래스	|  XXXInputStream		|  OutputStream		|  Reader		|  Writer		|
+  예)		|  (FileInputStream)		|  (FileOutputStream)	| (FileReader)	|  (FileWriter)	|
+=================================================================================================
+
+
+
+=========================================================================================
+	java.io 패키지의 클래스		|						|
+=========================================================================================
+File					|  파일 시스템의 파일 정보를 얻기 위한 클래스		|
+-----------------------------------------------------------------------------------------
+Console					|  콘솔로부터 문자를 입출력하기 위한 클래스 		|
+-----------------------------------------------------------------------------------------
+InputStream /OutputStream			|  바이트 단위 입출력을 위한 최상위 입출력 스트림 클래스	|
+-----------------------------------------------------------------------------------------
+FilelnputStream / FileOutputStream		|						|
+DatalnputStream / DataOutputStream 		|						|
+ObjectlnputStream /ObjectOutputStream 		|  바이트 단위 입출력을 위한 하위 스트림 클래스		|
+PrintStream				|						|
+BufferedlnputStream / BufferedOutputStream	|						|
+-----------------------------------------------------------------------------------------
+FileReader / FileWriter			|						|
+InputStreamReader / OutputStreamWriter 	|  문자 단위 입출력을 위한 하위 스트림 클래스		|
+PrintWriter				|						|
+BufferedReader / BufferedWriter		|						|
+=========================================================================================
+
+
+
+
+-InputStream은 바이트 기반 입력 스트림의 최상위 클래스이고, 
+ OutputStream은 바이트 기반 출력 스트림의 최상위 클래스이다. 
+-이 클래스들을 각각 상속받는 하위 클래스는 접미사로 InputStream 또는 OutputStream이 붙는다. 
+-Reader는 문자 기반 입력 스트림의 최상위 클래스이고, Writer는 문자 기반 출력 스트림의 최상위 클래스이다. 
+-이 클래스들을 각각 상속받는 하위 클래스는 접미사로 Reader 또는 Writer가 붙는다. 
+ 예를 들어 그림, 멀티미디어, 텍스트 등의 파일을 바이트 단위로 읽어들일 때에는 FilelnputStream을 사용하고, 
+ 바이트 단위로 저장할 때에는FileOutputStream을 시용한다. 
+-텍스트 파일의 경우, 문자 단위로 읽을때에는 FileReader를 사용하고, 문자 단위로 저장할 때에는 FileWriter를 사용한다.
+
+
+
+
+
+
+
+================================================================================================
+
+			## InputStream
+
+-InputStream은 바이트 기반 입력 스트림의 최상위 클래스로 추상 클래스이다. 
+-모든 바이트 기반 입력 스트림은 이 클래스를 상속받아서 만들어진다. 
+-다음과 같이 FilelnputStream, BufferedlnputStream, DatalnputStream 클래스는 
+ 모두 InputStream 클래스를 상속하고 있다.
+
+                  
+
+
+-InputStream 클래스에는 바이트 기반 입력 스트림이 기본적으로 가져야 할 메소드가 정의되어 있다. 
+-다음은 InputStream 클래스의 주요 메소드이다.
+
+======================================================================================================
+  리턴 타입	|	    메서드		|			설명						|
+======================================================================================================
+  int		|  read()				|  입력 스트림으로부터 1바이트를 읽고 일은 바이트를 리턴한다.		|
+------------------------------------------------------------------------------------------------------
+  int		|  read(byte[] b)			|  입력 스트림으로 부터 읽은 바이트들을 매개값으로 주어진 		|
+		|				|  바이트 배열 b에 저장하고 실제로 읽은 바이트 수를 리턴한다.		|
+------------------------------------------------------------------------------------------------------
+		|				|  입력 스트림으로부터 len개의 바이트만큼 읽고 매개값으로 주어진 	|
+		|				|  바이트 배열 b[off] 부터 len개까지 저장한다. 그리고 실제로 읽은 	|
+  int		| read(byte[] b, int, off, int len)	| 바이트	수인 len개를 리턴한다. 만약 len개를 모두 읽지 못하면 		|
+		|				|  실제로 읽은 바이트 수를 리턴 한다.				|
+------------------------------------------------------------------------------------------------------
+  void		|  close()				|  사용한 시스템 자원을 반납하고 스트림을 닫는다			|
+======================================================================================================
+
+
+
+
+
+
+
+
+================================================================================================
+
+			## read() 메소드
+
+read() 메소드는 입력 스트림으로부터 1 바이트를 읽고 4바이트 int 타입으로 리턴한다. 
+따라서 리턴된 4바이트 중 끝의 1 바이트에만 데이터가 들어 있다. 
+예를 들어 입력 스트림에서 5개의 바이트가 들어온다면 다음과 같이 read() 메소드로 1 바이트씩 5번 읽을 수 있다.
+                  
+
+더 이상 입력 스트림으로부터 바이트를 읽을 수 없다면 read()  메소드는 –1을 리턴하는데, 
+이것을 이용하면 읽을 수 있는 마지막 바이트까지 루프를 돌며 한 바이트씩 읽을 수 있다.
+
+	InputStream is = new FilelnputStream("C:/test.jpg"); 
+	int readByte;
+	while( (readByte = is.read() )  != -1)  {
+		...  
+	}
+
+
+
+
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+public class InputStreamReadExample {
+	public static void main(String[] args) throws Exception {
+		
+		InputStream input = new FileInputStream("D:/tmp/test.txt");
+		
+		int readByte = 0;	// 읽은 바이트를 저장하기위한 변수
+		
+		while((readByte = input.read()) != -1) {	// 읽은 1바이트를 readByte 변수에 대입
+			char ch = (char)readByte;
+			System.out.print(ch);			// readByte의 값을 출력
+		}
+	}
+}
+
+abcdefghijklmn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+			## read(byte[] b) 메소드
+
+read (byte[] b ) 메소드는 입력 스트림으로부터 매개값으로 주어진 바이트 배열의 길이만큼 바이트를 읽고 배열에 저장한다. 
+그리고 읽은 바이트 수를 리턴한다. 
+실제로 읽은 바이트 수가 배열의 길이보다 작을 경우 읽은 수만큼만 리턴한다. 
+예를 들어 입력 스트림에서 5개의 바이트가 들어온다면 다음과 같이 길이 3인 바이트 배열로 두 번 읽을 수 있다.
+
+read(byte[] b) 역시 입력 스트림으로부터 바이트를 더 이상 읽을 수 없다면 –1을 리턴하는데, 
+이것을 이용하면 읽을 수 있는 마지막 바이트까지 루프를 돌며 읽을 수 있다.
+
+	InputStream is = new FilelnputStream ("C:/test.jpg"); 
+
+	int readByteNo;
+
+	byte[] readBytes  = new byte[3];
+
+	while ( (readByteNo = is.read(readBytes) )  != -1 )   {
+	 	...  
+	}
+
+입력 스트림으로부터 100개의 바이트가 들어온다면 read () 메소드는 100번을 루핑해서 읽어들여야 한다. 
+그러나 read (byte[] b) 메소드는 한번 읽을때 매개값으로 주어진 
+바이트 배열 길이만큼 읽기 때문에 루핑 횟수가 현저히 줄어든다. 
+그러므로 많은 양의 바이트를 읽을 때는 read (byte[ ] b) 메소드를 사용하는 것이 좋다.
+
+
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+public class InputStreamReadExample02 {
+	public static void main(String[] args) throws Exception {
+		
+		InputStream input = new FileInputStream("D:/tmp/test.txt");
+		
+		int readByte = 0;
+		byte[] readBytes = new byte[3];
+		
+//		while((readByte = input.read(readBytes)) != -1) {
+//			for(int i = 0; i < readByte; i++) {
+//				char ch = (char)readBytes[i];
+//				System.out.print(ch);
+//			}
+//		}
+		
+		String str = "";
+		while((readByte = input.read(readBytes)) != -1) {
+			for(int i = 0; i < readByte; i++) {
+				char ch = (char)readBytes[i];
+				str += String.valueOf(ch);
+			}
+		}
+		System.out.println(str);
+	}
+}
+
+
+
+abcdefghijklmn
+
+
+
+
+
+================================================================================================
+
+			## read(byte[] b, int off, int len) 메소드
+
+read (byte[ ] b, int off, int len) 메소드는 입력 스트림으로부터 len개의 바이트만큼 읽고, 
+매개값으로 주어진 바이트 배열 b[off]부터 len개까지 저장한다. 그리고 읽은 바이트 수인 len개를 리턴한다. 
+실제로 읽은 바이트 수가 len개 보다 작을 경우 읽은 수만큼 리턴한다. 
+예를 들어 입력 스트림에서 전체 5개의 바이트가 들어오고 
+여기서 3개만 읽어 b[2], b[3], b[4]에 각각 저장한다면 다음과 같이할 수 있다.
+ 
+
+read (byte[ ] b, int off, int len) 역시 입력 스트림으로부터 바이트를 더 이상 읽을 수 없다면 –1을 리턴한다. 
+read (byte[ ] b)와의 차이점은 한 번에 읽어들이는 바이트 수를 len 매개값으로 조절할 수 있고,
+배열에서 저장이 시작되는 인텍스를 지정할 수 있다는 점이다.  
+만약 off를 0으로， len을 배열의 길이로 준다면 read(byte[ ] b)와 동일하다.
+
+	InputStream is = ...
+	byte [] readBytes = new byte [100]; 
+	int readByteNo = is.read(readB ytes);
+
+	InputStream is = ...
+	byte [] readBytes = new byte [100];
+	int readByteNo = is.read(readBytes, 0, 100) ;
+
+
+
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+public class InputStreamReadExample03 {
+	public static void main(String[] args) throws Exception {
+		
+		InputStream input = new FileInputStream("d:/tmp/test.txt");
+		
+		int readByteNo;
+		byte[] readBytes = new byte[5];
+		
+		while((readByteNo = input.read(readBytes, 0, 5)) != -1) {
+			for(int i = 0; i < readByteNo; i++) {
+				char ch = (char)readBytes[i];
+				System.out.print(ch);
+			}
+		}
+		
+//		readByteNo = input.read(readBytes, 0, 5);
+//		
+//		for(int i = 0; i < readBytes.length; i++) {
+//			System.out.println("readBytes[" + i + "] = " + readBytes[i]);
+//		}
+		
+		
+	}
+}
+
+
+
+abcdefghijklmn
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+			## close() 메소드
+
+InputStream을 더 이상 사용하지 않을 경우에는 close() 메소드를 호출해서 
+InputStream에서 사용했던 시스템 지원을 풀어준다.
+InputStream을 사용하여 파일을 다 읽었다면 is.close()를 사용해야만 파일이 닫히게 된다.
+
+
+	is.close();
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+					## OutputStream
+
+OutputStream은 바이트 기반 출력 스트림의 최상위 클래스로 추상 클래스이다. 
+모든 바이트 기반 출력 스트림 클래스는 이 클래스를 상속받아서 만들어진다. 
+다음과 같이 FileOutputStream, PrintStream, BufferedOutputStream, DataOutputStream 클래스는 
+모두 OutputStream 클래스를 상속하고 있다.
+
+                     
+
+OutputStream 클래스에는 모든 바이트 기반 출력 스트림이 기본적으로 가져야 할 메소드가 정의 되어 있다. 
+다음은 OutputStream 클래스의 주요 메소드이다.
+
+====================================================================================================== 
+  리턴 타입	|	    메서드				|			설명				|
+======================================================================================================
+  void		|  write(int b)			|  출력 스트림으로 1바이트를 보낸다 (b의 끝 1바이트)			|
+------------------------------------------------------------------------------------------------------
+  void		|  write(byte[] b)			|  출력 스트림으로 주어진 바이트 배열 b의 모든 바이트를 보낸다. 		|
+------------------------------------------------------------------------------------------------------
+  void		| write(byte[] b, int off, int len)	|  출력 스트림으로 주어진 바이트 배열 b[off]부터 len개 까지의		|
+		|				|  바이트를 보낸다.						|
+------------------------------------------------------------------------------------------------------
+  void		|  flush()				| 버퍼에 잔류하는 모든 바이트를 출력한다. 				|
+------------------------------------------------------------------------------------------------------
+  void		|  close()				|  사용한 시스템 자원을 반납하고 스트림을 닫는다			|
+======================================================================================================
+
+
+
+
+
+
+
+
+================================================================================================
+
+			## write(int b) 메서드
+
+
+write(byte[] b)는 매개값으로 주어진 바이트 배열의 모든 바이트를 출력 스트림으로 보낸다.
+
+	OutputStream os = new FileOutputStream("C:/test.txt"); 
+
+	byte[] data = "ABC".getBytes();
+
+	for(int i = 0; i < data.length;  i++ ) {
+
+		os.write(data[i]);			// "A", "B", "C"를 하나씩 출력
+	}
+
+
+
+
+================================================================================================
+
+			## write(byte[] b) 메소드
+
+write(byte[] b) 는 매개값으로 주어진 바이트 배열의 모든 바이트를 출력 스트림으로 보낸다.
+반복문 없이 한 번에 바이트를 출력 스트림으로 보낸다.
+
+	OutputStream os = new FileOutputStream ("C:/test.txt" ); 
+	byte[] data = "ABC".getBytes();
+	os.write (data);		// "ABC" 모두 출력
+
+
+
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+public class OutputStreamWriteEample02 {
+	public static void main(String[] args) throws Exception {
+		
+		OutputStream output = new FileOutputStream("d:/temp/test2.txt");
+		
+		byte[] data = "import java.io.FileOutputStream;".getBytes();
+		
+		output.write(data);
+		
+		output.flush();
+		output.close();
+		
+	}
+}
+
+
+
+
+================================================================================================
+
+			## write(byte[] b, int off, int len) 메소드
+
+-write(byte[] b, int off, int len)은 b[off]부터 len개의 바이트를 출력 스트림으로 보낸다.
+
+	OutputStream os = new FileOutputStream("C:/test.txt"); 
+	byte[] data = "ABCD".getBytes();
+	os.write(data, 1, 2);		// "BC"만 출력
+
+
+package test.chapter17.example01;
+
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
+public class OutputStreamWriteEample03 {
+	public static void main(String[] args) throws Exception {
+		
+		OutputStream output = new FileOutputStream("d:/temp/text3.txt");
+		
+		byte[] data = "import java.io.FileOutputStream;".getBytes();
+		
+		output.write(data, 7 , 4);
+		output.flush();
+		output.close();
+	}
+}
+
+
+java
+
+
+
+
+
+================================================================================================
+
+			## flush()와 close() 메소드
+
+출력 스트림은 내부에 작은 버퍼(buffer) 가 있어서 데이터가 출력되기 전에 버퍼에 쌓여있다가 순서대로 출력된다. 
+flush() 메소드는 버퍼에 잔류하고 있는 데이터를 모두 출력시키고 버퍼를 비우는 역할을 한다. 
+프로그램에서 더 이상 출력할 데이터가 없다면 flush() 메소드를 마지막으로 호출 하여 
+버퍼에 잔류하는 모든 데이터가 출력되도록 해야 한다. 
+OutputStream을 더 이상 사용하지않을 경우에는 close() 메소드를 호출해서 
+OutputStream에서 사용했던 시스템 자원을 풀어준다.
+
+
+	OutputStream os =  new FileOutputStream("C:/test.txt"); 
+	byte[] data = "ABC".getBytes();
+	os.write(data); 
+	os.flush(); 
+	os.close();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+					## Reader
+
+Reader는 문자 기반 입력 스트림의 최상위 클래스로 추상 클래스이다.
+모든 문자 기반 입력 스트림은 이 클래스를 상속받아서 만들어진다. 
+다음과 같이 FileReader, BufferedReader, InputStreamReader 클래스는 모두 Reader 클래스를 상속하고 있다.
+	
+====================================================================================================== 
+  리턴 타입		|	    메서드		|			설명				|
+======================================================================================================
+  int		|  read()			|  입력 스트림으로부터 한 개의 문자를 읽고 리턴한다.			|
+------------------------------------------------------------------------------------------------------
+  int		|  read(char[ ]cbuf)		|  입력 스트림으로부터 읽은 문자들을 매개값으로 주어진 문자 배열 	|
+		|			|  cbuf에 저장하고 실제로 읽은 문자 수를 리턴한다.			|
+------------------------------------------------------------------------------------------------------
+  int		|  read(char[ ] cbuf, 	|  입력 스트림으로부터 len개의 문자를 읽고 매개값으로 주어진 문자 배열 	| 
+		|  int off. int len)		|  cbuf[off]부터 len개까지 저장한다.				|
+		|			|  그리고 실제로 읽은 문자 수인 len개를 리턴한다.			|
+------------------------------------------------------------------------------------------------------
+  void		|  close()			|  사용한 시스템 자원을 반납하고 스트림을 닫는다			|
+======================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+			## read() 메소드
+
+-read() 메소드는 입력 스트림으로부터 한 개의 문자를 읽고 4바이트 int 타입으로 리턴한다. 
+ 따라서 리턴된 4바이트 중 끝에 있는 2바이트에 문자 데이터가 들어 있다. 
+-예를 들어 입력 스트림에서 2개의 문자(총4 바이트)가 들어 온다면 
+ 다음과 같이 read() 메소드로 한 문자씩 두 번 읽을 수 있다.
+
+                  
+
+-read() 메소드가 리턴한 int 값을 char 타입으로 변환하면 읽은 문자를 얻을 수 있다.
+
+	char charData =  (char)read();
+
+
+-더 이상 입력 스트림으로부터 문자를 읽을 수 없다연 read () 메소드는 –1을 리턴하는데 
+ 이것을 이용하면 읽을 수 있는 마지막 문자까지 루프를 돌며 한 문자씩 읽을 수 있다.
+
+import java.io.FileReader;
+import java.io.Reader;
+public class ReaderExample01 {
+	public static void main(String[] args) throws Exception {
+		
+		Reader reader = new FileReader("D:/tmp/test.txt");
+		
+		int readData;
+		
+		while((readData = reader.read()) != -1) {
+			char ch = (char)readData;
+			System.out.print(ch);
+		}
+	}
+}
+
+
+abcdefghijklmn
+오늘은 3월 5일입니다.
+
+
+
+
+
+
+
+================================================================================================
+
+			## read(char[ ] cbuf) 메소드
+
+read(char[] cbuf) 메소드는 입력 스트림으로부터 매개값으로 주어진 문자 배열의 길이만큼 문자를 읽고 배열에 저장한다. 
+그리고 읽은 문자 수를 리턴한다. 실제로 읽은 문자 수가 배열의 길이보다작을 경우 읽은 수만큼만 리턴한다. 
+예를 들어 입력 스트림에서 세 개의 문자가 들어온다면 다음과 같이 길이가 2인 문자 배열로 두 번 읽을 수 있다.
+
+                 
+
+-read (char[] cbuf) 역시 입력 스트림으로부터 문자를 더 이상 읽을 수 없다면 –1을 리턴한다. 
+-이것을 이용하면 읽을 수 있는 마지막 문자까지 루프를 돌며 읽을 수 있다.
+
+
+	Reader reader = new FileReader("C:/test.txt"); 
+
+	int readCharNo;
+
+	char[] cbuf = new char[2];
+
+	while(( readCharNo = reader.read(cbuf) ) != -1) {
+		...
+	}
+
+
+
+
+-reader.read(cbuf) 메소드로 읽은 바이트 수는 readCharNo에 저장되고 읽은 값은 cbuf 배열에 저장된다.
+-입력 스트림으로부터 100개 의 문자가 들어온다면 read() 메소드는 100번을 루핑해서 읽어들여야 한다. 
+그러나 read(char[ ] cbuf) 메소드는 한 번 읽을 때 주어진 배열 길이만큼 읽기 때문에 루핑 횟수가 현저히 줄어든다. 
+그러므로 많은 양의 문자를 읽을 때는 read (char[ ] cbuf) 메소드를 사용하는 것이 좋다.
+
+
+import java.io.FileReader;
+import java.io.Reader;
+public class ReaderExample02 {
+	public static void main(String[] args) throws Exception {
+		
+		Reader reader = new FileReader("d:/tmp/test.txt");
+		
+		int readData;
+		
+		char[] chars = new char[3];
+		
+		String str = "";
+		while((readData = reader.read(chars)) != -1) {
+			for(int i = 0; i < readData; i++) {
+				System.out.print(chars[i]);
+				
+				str += String.valueOf((char)chars[i]);
+			}
+		}
+		System.out.println("\n");
+		
+		System.out.println(str);
+	}
+}
+
+
+abcdefghijklmn
+오늘은 3월 5일입니다.
+
+abcdefghijklmn
+오늘은 3월 5일입니다.
+
+
+
+================================================================================================
+
+
+			## read(char[ ] cbuf, int off, int len) 메소드
+
+read (char[] cbuf, int off, int len) 메소드는 입력 스트림으로부터 len개의 문자만큼 읽고 
+매개값으로 주어진 문자 배열 cbuf[off]부터 len개까지 저장한다. 그리고 읽은 문자 수인 len개를 리턴한다. 
+실제로 읽은 문자 수가 len개 보다 작을 경우 읽은 수만큼 리턴한다. 
+예를 들어 입력 스트림에서 전체 3개의 문자가 들어오고 
+여기서 2개만 읽고 cbuf[ll cbuf[2]에 각각 저장한다면 다음과 같이 할 수 있다.
+
+
+read(char[ ] cbuf, int off, int len ) 역시 입력 스트림으로부터 문자를 더 이상 읽을 수 없다면 –1을 리턴한다. 
+read (char[ ] cbuf)와의 차이점은 한 번에 읽어들이는 문자 수를 len 매개값으로 조정할 수 있고, 
+배열에서 저장이 시작되는 인텍스를 지정할 수 있다는 점이다. 
+만약 off를 0으로，len을 배열의 길이로 준다면 read (char[] cbuf)와 동일하다.
+
+	Reader reader = new....
+	char[] cbuf = new char[100]; 
+	int readCharNo = is.read(cbuf);
+	Reader reader = new....
+	char[] cbuf = new char[100]; 
+	int readCharNo = is.read(cbuf, 0, 100);
+
+
+
+
+import java.io.FileReader;
+import java.io.Reader;
+public class ReaderExample03 {
+	public static void main(String[] args) throws Exception {
+		
+		Reader reader = new FileReader("d:/tmp/test.txt");
+		
+		int readnum;
+		char[] chars = new char[4];
+		
+		String str = "";
+		while((readnum = reader.read(chars, 0, chars.length)) != -1) {
+			for(int i = 0; i < readnum; i++) {
+				System.out.print(chars[i]);
+				
+				str += String.valueOf(chars[i]);
+			}
+		}
+		System.out.println("\n");
+		System.out.println(str);
+		System.out.println("\n");
+		
+		Reader reader2 = new FileReader("d:/tmp/test.txt");
+		char[] charArr = new char[10];
+		int readNo;
+		
+		readNo = reader2.read(charArr, 2 , 3);
+		System.out.println(readNo);
+		
+		for(int i = 0; i < charArr.length; i++) {
+			System.out.println("charArr[" + i + "] = " + charArr[i]);
+		}
+	}
+}
+
+
+abcdefghijklmn
+오늘은 3월 5일입니다.
+
+abcdefghijklmn
+오늘은 3월 5일입니다.
+
+
+
+
+
+
+
+================================================================================================
+
+			## close() 메소드
+
+마지막으로 Reader를 더 이상 사용하지 않을 경우에는 close() 메소드를 호출해서 
+Reader에서 사용했던 시스템 자원을 풀어준다.
+
+	reade r.close(); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+
+					## Writer
+
+writer는 문자 기반 출력 스트림의 최상위 클래스로 추상 클래스이다. 
+모든 문자 기반 출력 스트림 클래스는 이 클래스를 상속받아서 만들어진다. 
+다음과 같이 FileWriter, BufferedWriter, PrintWriter, OutputStreamWriter 클래스는 모두 Writer 클래스를 상속하고 있다.
+
+                        
+
+Writer 클래스에는 모든 문자 기반 출력 스트림이 기본적으로 가져야 할 메소드가 정의되어 있다. 
+Writer 클래스의 주요 메소드는 다음과 같다.
+
+=================================================================================================
+리턴타입	|       메서드		|			설명					|
+=================================================================================================
+ void	|  write(int c)		|  출력 스트림으로 주어진 한 문자를 보낸다.					|
+	|			| UTF-8 = 3byte ,  EUC-KR = 2byte , ASCII = 1byte 전송			|
+-------------------------------------------------------------------------------------------------
+ void	|  write(char[] cbuf)	|  출력 스트림으로 주어진 문자 배열 cbuf의 모든 문자를 보낸다. 			|	-------------------------------------------------------------------------------------------------
+ void	|  write(char[] cbuf, 	|  출력 스트림으로 주어진 문자 배열 cbuf[off]부터 len개 까지의 문자를 보낸다.	|
+	|       int off, int len)	|  								|
+-------------------------------------------------------------------------------------------------
+ void	|  write(String str) 		|  출력 스트림으로 주어진 문자열을 전부 보낸다. 				| 
+-------------------------------------------------------------------------------------------------
+ void	|  write(String str,		|  출력 스트림으로 주어진 문자열 off 순번부터 len개 까지의 문자를 보낸다.		|
+ 	|       int off, int len)	|  								|
+-------------------------------------------------------------------------------------------------
+ void	|  flush()			|  버퍼에 잔류하는 모든 문자열을 출력한다.					|
+-------------------------------------------------------------------------------------------------
+ void	|  close()			|  사용한 시스템 자원을 반납하고 출력 스트림을 닫는다.			|
+=================================================================================================
+
+
+
+
+
+
+================================================================================================
+
+			## write(int c) 메소드
+
+-write (int c) 메소드는 매개 변수로 주어진 int 값에서 끝에 있는 한 개의 문자만 출력 스트림으로 보낸다. 
+-매개 변수가 int 타입이므로 4바이트 모두를 보내는 것으로 오해할 수 있다.
+-UTF-8 = 3byte ,  EUC-KR = 2byte , ASCII = 1byte 전송
+                    
+	Writer writer = new  FileWriter("C:/test.txt" ); 
+
+	char[] data = "abc".toCharArray();
+
+	for (int i=0;  i <data.length;  i++)  {
+		writer.write(data[i]);		// "홍", "길", "동"을 하나씩 출력
+	}
+
+
+
+import java.io.FileWriter;
+import java.io.Writer;
+
+public class WriterExample01 {
+	public static void main(String[] args) throws Exception {
+		
+		Writer writer = new FileWriter("d:/temp/writer01.txt");
+		
+		String writerStr = "write(int c)는 매개 변수로 주어진 int 값에서 끝에 있는 한 개의 문자만 출력 스트림으로 보낸다.";
+		
+		char[] charArr = writerStr.toCharArray();
+		
+		System.out.println("배열 길이 : " + charArr.length);
+		for(int i = 0; i < charArr.length; i++) {
+			writer.write(charArr[i]);
+		}
+		
+		writer.flush();
+		writer.close();
+	}
+}
+
+
+
+
+
+
+
+
+================================================================================================
+
+			## write(char[] cbuf) 메소드
+
+write(char[] cbuf) 메소드는 매개값으로 주어진 char[] 배열의 모든 문자를 출력 스트림으로 보낸다.
+
+	Writer writer = new FileWriter("C:/test.txt"); 
+
+	char[] data = "홍길동".toCharArray();
+
+	writer.write(data);
+
+
+
+import java.io.FileWriter;
+import java.io.Writer;
+public class WriterExample02 {
+	public static void main(String[] args) throws Exception {
+		
+		Writer writer = new FileWriter("d:/temp/writer02.txt");
+		
+		char[] charArr = "오늘은 3월 5일 수요일 입니다.".toCharArray();
+		
+		writer.write(charArr);
+		
+		writer.flush();
+		writer.close();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+			## write(byte[ ] b, int off, int len) 메소드
+
+write(char[] c, int off, int len)은 c[off]부터 len개의 문자를 출력 스트림으로 보낸다.
+
+
+	Writer writer = new FileWriter("C:/test.txt"); 
+	char[] data = "홍길동".toCharArray();
+	writer.write(data, 1, 2);		// "길동”만 출력
+
+
+
+
+import java.io.FileWriter;
+import java.io.Writer;
+public class WriterExample03 {
+	public static void main(String[] args) throws Exception {
+		
+		Writer writer1 = new FileWriter("d:/temp/writer03_1.txt");
+		
+		String data1 = "오늘은 3월 5일 입니다.";
+		char[] charArr1 = data1.toCharArray();
+		writer1.write(charArr1);
+		writer1.flush();
+		writer1.close();
+		
+		Writer writer2 = new FileWriter("d:/temp/writer03_2.txt");
+		
+		String data2 = "오늘은 3월 5일 입니다.";
+		char[] charArr2 = data1.toCharArray();
+		writer2.write(charArr2, 4, 5);
+		writer2.flush();
+		writer2.close();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================
+
+			## write(String str)와 write(String str, int off, int len) 메소드
+
+Writer는 문자열을 좀 더 쉽게 보내기 위해서 write(String str)와 write(String str, int off, int len) 메소드들 제공한다.
+write(String str)은 문자열 전체를 출력 스트림으로 보내고， 
+write(String str, int off, int len)은 주어진 문자열 off 순번부터 len개째의 문자를 보낸다.
+
+                       
+문자 출력 스트림은 내부에 작은 버퍼 (buffer) 가 있어서 데이터가 출력되기 전에 버퍼에 쌓여있다가 순서대로 출력된다. 
+flush() 메소드는 버퍼에 잔류하고 있는 데이터를 모두 출력시키고 버퍼를 비우는 역할을 한다. 
+프로그램에서 더 이상 출력할 문자가 없다면 flush() 메소드를 마지막으로 호출하여 모든 문자가 출력되도록 해야 한다. 
+마지막으로 Writer를 더 이상 사용하지 않을 경우에는 close() 메소드를 호출해서 
+Writer에서 사용했던 시스템 자원을 풀어준다.
+
+
+
+import java.io.FileWriter;
+import java.io.Writer;
+public class WriterExample04 {
+	public static void main(String[] args) throws Exception {
+		
+		Writer writer1 = new FileWriter("d:/temp/writer04_1.txt");
+		
+		String data1 = "오늘은 3월 5일 입니다.";
+		writer1.write(data1);
+		writer1.flush();
+		writer1.close();
+		
+		Writer writer2 = new FileWriter("d:/temp/writer04_2.txt");
+		
+		String data2 = "오늘은 3월 5일 입니다.";
+		writer2.write(data2, 4, 5);
+		writer2.flush();
+		writer2.close();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

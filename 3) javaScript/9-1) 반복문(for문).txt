@@ -1,0 +1,204 @@
+			## 반복문
+ 
+-반복문이란 비슷하거나 동일한 구문을 반복해서 수행할 수 있는 구문이다.
+-대표적인 반복문으로는 for문과 while문이 있다.
+
+	# for문
+
+-for문은 구문 작성시 반복을 위해 필요한 세가지 요소를 한곳에 작성하므로써
+  보다 명시적으로 반복 횟수를 표현할 수 있는 직관적인 구문이다.
+
+
+	for(초기식; 조건식; 반복식) {
+		// 조건이 true인 경우 수행할 코드 작성
+	}
+
+
+
+
+example) 기본 형식
+
+
+실행코드 1
+실행코드 2
+
+for(let i = 0;      	i < 5;      	i += 1 ) {
+
+	console.log(i); (반복할 코드1)
+	반복할 코드2
+	반복할 코드3
+}
+
+실행코드 4
+실행코드 5
+
+
+
+
+
+
+
+
+
+// 변수 i는 for문 안에서 만들어졌기때문에 for문 안에서만 사용가능하다.
+
+for(let i = 1; i <= 5; i += 1) {
+    console.log(i + '번째 반복합니다.');
+}
+
+
+
+
+// EX) 1부터 10까지의 총 합을 구하는 반복문을 구성하시오
+let sum = 0
+for(let i = 1; i <= 10; i += 1) {
+    sum += i;
+}
+console.log('1부터 10까지의 총합 : ' + sum);
+
+
+
+
+
+// EX) 1부터 20까지의 범위중 짝수만 출력되어야 한다.
+
+for(let i = 1; i <= 20; i += 1) {   // 짝수
+    if(i % 2 == 0) {
+        console.log(i);
+    }
+}
+
+for(let i = 2; i <= 20; i += 2) {   // 짝수
+    console.log(i);
+}
+
+for(let i = 1; i <= 20; i += 1) {   // 홀수
+    if(i % 2 == 1) {
+        console.log(i);
+    }
+}
+
+for(let i = 1; i <= 20; i += 2) {   // 홀수
+    console.log(i);
+}
+
+
+
+
+// EX) 1부터 50까지의 범위중 3의 배수만 출력
+for(let i = 1; i <= 50; i += 1) {
+    if(i % 3 == 0) {
+        console.log(i);
+    }
+}
+
+
+
+
+// EX) promprt()로 5개의 정수를 입력받은 후 5개 정수의 합을 출력하는 반복문을 구성하시오
+let sum2 = 0;
+for(let i = 1; i <= 5; i += 1) {
+    const input = parseInt(prompt(`${i}번째 정수 입력`));
+    sum2 += input;
+}
+console.log('입력한 값의 총 합 : ' + sum2);
+
+
+
+
+
+// EX) 두개의 정수를 입력받아 첫번째 입력한  정수부터 두번째 입력한 정수의 총 합을 구하는 반복문 구성
+
+let start = parseInt(prompt('첫번째 정수 입력'));
+let end = parseInt(prompt('두번째 정수 입력'));
+let sum3 = 0;
+
+if(start < end) {
+    for(let i = start; i <= end; i += 1) {
+        sum3 += i;
+    }
+    console.log(`${start} 부터 ${end} 까지의 합 : ` + sum3);
+} else {
+    console.log('다시입력하세요(두번째 정수가 첫번째 정수보다 커야합니다.)')
+}
+
+
+
+
+
+// EX) 두개의 정수를 입력받아 첫번째 입력한 정수부터 두번째 입력한 정수 사이의 3의 배수를 출력
+//     두번째 정수가 첫번째 정수보다 큰 경우에만 출력되어야 하나.
+
+let start1 = parseInt(prompt('첫번째 정수 입력'));
+let end1 = parseInt(prompt('두번째 정수 입력'));
+
+if(start < end) {
+    for(let i = start1; i <= end1; i += 1) {
+        if(i % 3 == 0) {
+            console.log(i);
+        }
+    }
+} else {
+        console.log('다시입력하세요(두번째 정수가 첫번째 정수보다 커야합니다.)')
+}
+
+
+
+
+// EX) prompt()를 사용해 사용자에게 5개의 숫자를 입력받고, 그중 1부터 100 사이의 숫자만 출력하세요.
+
+for(let i = 1; i <= 5; i += 1) {
+    const input = prompt('정수를 입력하세요');
+    if(input >= 1 && input <= 100) {
+        console.log('유효범위 안의 수 : ' + input);
+    } else {
+        console.log('유효범위 밖의 수 : ' + input);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

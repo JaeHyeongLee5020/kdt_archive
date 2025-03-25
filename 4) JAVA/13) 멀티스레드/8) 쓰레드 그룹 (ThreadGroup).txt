@@ -1,0 +1,254 @@
+			## 쓰레드 그룹 (ThreadGroup)
+ 
+-쓰레드 그룹(ThreadGroup)은 관련된 쓰레드를 묶어서 관리할 목적으로 이용된다. 
+-JVM이 실행되면 system 쓰레드 그룹을 만들고, JVM 운영에 필요한 쓰레드들을 생성해서 
+ system 쓰레드 그룹에 포함시킨다. 그리고 system의 하위 쓰레드 그룹으로 main을 만들고, 
+ 메인 쓰레드를 main 쓰레드 그룹에 포함시킨다. 
+-쓰레드는 반드시 하나의 쓰레드 그룹에 포함되는데, 명시적으로 쓰레드 그룹에 포함시키지 않으면 
+ 기본적으로 자신을 생성한 쓰레드와 같은 쓰레드 그룹에 속하게 된다. 
+-우리가 생성하는 작업 쓰레드는 대부분 main 쓰레드가 생성하므로 기본적으로 main 쓰레드 그룹에 속하게 된다.
+
+	# 쓰레드 그룹 이름 얻기
+
+-현재 쓰레드가 속한 쓰레드 그룹의 이름을 얻고 싶다면 다음과 같은 코드를 사용할 수 있다.
+
+	ThreadGroup group = Thread.currentThread().getThreadGroup();
+	String groupName = group.getName();
+
+
+-Thread의 정적 메서드인 getAllStackTraces()를 이용하면 프로세스 내에서 실행하는 
+ 모든 쓰레드에 대한 정보를 얻을 수 있다.
+
+	Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
+
+-getAllStackTraces() 메서드는 Map 타입의 객체를 리턴하는데, 키는 쓰레드 객체이고 
+ 값은 쓰레드의 상태 기록을 갖고 있는 StackTraceElement[] 배열이다.
+
+
+
+
+package test.chapter12.example08;
+public class WorkThreadA extends Thread {
+	
+	@Override
+	public void run() {
+		for(int i = 0; i < 10; i++) {
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+
+
+
+package test.chapter12.example08;
+
+import java.util.Map;
+import java.util.Set;
+
+public class WorkThreadMain {
+	public static void main(String[] args) {
+		
+		WorkThreadA workThread = new WorkThreadA();
+		workThread.setName("workThreadA");	// 쓰레드 이름 설정
+		workThread.setDaemon(true);		// WorkThreadA 쓰레드를 데몬 쓰레드로 사용		
+		workThread.start();
+		
+		Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
+		Set<Thread> threads = map.keySet();
+		for(Thread thread : threads) {
+			// isDaemon() : 데몬쓰레드 = true , 주 쓰레드  = false
+			if(thread.isDaemon()) {
+				System.out.println("Name: " + thread.getName() + " (데몬 쓰레드)");
+			} else {
+				System.out.println("Name: " + thread.getName() + " (주 쓰레드)");
+			}
+			System.out.println("\t" + "소속 그룹 : " + thread.getThreadGroup().getName());
+			System.out.println();
+		}
+	}
+}
+
+
+
+
+Name: main (주 쓰레드)
+	소속 그룹 : main
+
+Name: Notification Thread (데몬 쓰레드)
+	소속 그룹 : system
+
+Name: workThreadA (데몬 쓰레드)
+	소속 그룹 : main
+
+Name: Reference Handler (데몬 쓰레드)
+	소속 그룹 : system
+
+Name: Signal Dispatcher (데몬 쓰레드)
+	소속 그룹 : system
+
+Name: Finalizer (데몬 쓰레드)
+	소속 그룹 : system
+
+Name: Common-Cleaner (데몬 쓰레드)
+	소속 그룹 : InnocuousThreadGroup
+
+Name: Attach Listener (데몬 쓰레드)
+	소속 그룹 : system
+
+
+
+
+
+
+================================================================================================
+
+
+		# 스레드 그룹 생성
+
+-명시적으로 스레드 그룹을 만들고 싶다면 다음 생성자 중 하나를 이용해서 ThreadGroup 객체를 만들면 된다. 
+-ThreadGroup 이름만 주거나, 부모 ThreadGroup과 이름을 매개값으로 줄 수 있다.
+
+	ThreadGroup tg = new ThreadGroup(String name);
+	ThreadGroup tg = new ThreadGroup(ThreadGroup parent, String name);
+
+
+-스레드 그룹 생성시 부모(parent) 스레드 그룹을 지정하지 않으면 현재 스레드가 속한 그룹의 하위 그룹으로 생성된다. 
+ 예를 들면 main 스레드가 ThreadGroup(String name)을 이용해서 새로운 스레드 그룹을 생성하면, 
+ main 스레드 그룹의 하위 스레드 그룹이 된다.
+-새로운 스레드 그룹을 생성한 후, 이 그룹에 스레드를 포함시키려면 Thread 객체를 생성할 때 
+ 생성자 매개값으로 스레드 그룹을 지정하면 된다. 스레드 그룹을 매개값으로 갖는 Thread 생성자는 다음 네 가지가 있다.
+
+	Thread t = new Thread(ThreadGroup group, Runnable target);
+	Thread t = new Thread(ThreadGroup group, Runnable target, String name);
+	Thread t = new Thread(ThreadGroup group, Runnable target, String name, long stackSize);
+	Thread t = new Thread(ThreadGroup group, String name); (상속 방식)
+
+
+Runnable 타입의 target은 Runnable 구현 객체를 말하며, String 타입의 name은 스레드의 이름이다. 
+그리고 long 타입의 stackSize는 JVM이 이 스레드에 할당할 스택 크기이다.
+
+
+
+	# 스레드 그룹의 일괄 interrupt()
+
+스레드는 스레드 그룹의 장점
+
+스레드 그룹에서 제공하는 interrupt() 메서드를 이용하면 
+그룹 내에 포함된 모든 스레드를 일괄적으로 interrupt할 수 있다. 
+예를 들어 10개의 스레드를 모두 중지시키기 위해 각 스레드에서 interrupt() 메서드를 10번 호출할 수도 있지만, 
+스레드 그룹을 사용하면 더 효율적으로 관리할 수 있다.
+
+이 스레드들이 같은 스레드 그룹에 속속되어 있을 경우, 스레드 그룹의 interrupt() 메서드를 한 번만 호출해주면 된다. 
+이것이 가능한 이유는 스레드 그룹의 interrupt() 메서드는 포함된 모든 스레드의 interrupt() 메서드를 
+내부적으로 호출해주기 때문이다.
+			
+스레드 그룹의 interrupt() 메서드는 소속된 스레드의 interrupt() 메서드를 호출만 할 뿐 
+개별 스레드에서 발생하는 InterruptedException에 대한 예외 처리를 하지 않는다. 
+따라서 안전한 종료를 위해서는 개별 스레드가 예외 처리를 해야 한다.
+스레드 그룹에는 interrupt() 메서드 이외에도 suspend(), resume(), stop() 메서드들이 있는데, 모두 Deprecated 되었다. stop() 메서드를 호출하면 그룹에 포함된 모든 스레드들의 stop() 메서드가 일괄 호출되어 
+모든 스레드들을 쉽게 종료할 수 있으나, 스레드의 안전성 문제 때문에 가급적 사용하지 말아야 한다. 
+대신 interrupt() 메서드로 스레드들을 안전하게 종료하도록 유도하는 것이 좋다.
+다음은 ThreadGroup이 가지고 있는 주요 메서드들이다.
+
+
+
+		package test.chapter12.example08;
+public class WorkThread extends Thread{
+	
+	// 생성자를 사용해서 workThread의 그룹명과 쓰레드 이름을 매개변수로 받아서 처리
+	public WorkThread(ThreadGroup threadGroup, String name) {
+		super(threadGroup, name);	// super = 부모 생성자 호출
+	}
+	
+	@Override
+	public void run() {
+		while(true) {
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				break;
+			}
+		}
+		System.out.println(getName() + " 종료");
+	}
+}
+
+
+
+package test.chapter12.example08;
+public class WorkThreadExample {
+	public static void main(String[] args) {
+		
+		ThreadGroup myGroup = new ThreadGroup("myGroup");
+		
+		WorkThread workThreadA = new WorkThread(myGroup, "workThreadA");
+		WorkThread workThreadB = new WorkThread(myGroup, "workThreadB");
+		
+		workThreadA.start();
+		workThreadB.start();
+		
+		// Thread.currentThread() = 현재 실행중인 쓰레드의 정보
+		ThreadGroup mainGroup = Thread.currentThread().getThreadGroup();
+		mainGroup.list();	// 현재 실행중인 쓰레드 그룹의 정보와 그 하위 쓰레드 그룹의 정보를 출력
+
+		// 동일한 그룹에 소속된 쓰레드는 한번의 interrupt로 일시정시인 쓰레드들을 실행 대기상태로 전환할 수 있다.
+		
+		for(int i = 1; i <= 5; i++) {
+			try {
+				Thread.sleep(1000);
+				System.out.println(i);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		myGroup.interrupt();
+	}
+}
+
+
+
+java.lang.ThreadGroup[name=main,maxpri=10]
+    Thread[#1,main,5,main]
+    java.lang.ThreadGroup[name=myGroup,maxpri=10]
+        Thread[#21,workThreadA,5,myGroup]
+        Thread[#22,workThreadB,5,myGroup]
+1
+2
+3
+4
+5
+workThreadA 종료
+workThreadB 종료
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

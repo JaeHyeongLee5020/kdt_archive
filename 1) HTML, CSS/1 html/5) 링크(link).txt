@@ -1,0 +1,87 @@
+		## 링크(link)
+
+-링크란 현재 문서에서 다른 문서로 이동하는 수단을 의미한다.
+
+-a 태그(anchor)
+ # a 태그 요소는  href 속성을 통해 다른 페이지, 전화번호 , 이메일 주소와 
+  그외 다른 url로 연결할 수 있는 링크를 만든다.
+ # anchor는 인라인 요소이며 컨텐츠는 주로 링크의 목적지를 나타낸다.
+
+<body>
+    <a href="">컨텐츠</a>
+</body>
+
+-웹브라우저에 출력된 Naver에 마우스를 가져가면 이동할수 있다는 의미로 손가락으로 표시된다.
+-<a>태그안의 href를 속성이라고 한다. (속성은 여러 가지를 사용할 수 있다.)
+-href는 hyperlink Reference의 약자이다.(href="" 의 쌍따옴표 안에 경로를 설정하게되면 해당 경로로 이동하게된다.)
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>이미지 등록</title>
+</head>
+<body>
+    <!-- _self : 현재 페이지에서 이동 -->
+    <a href="https://www.naver.com" target="_self">네이버 이동</a><br/>
+    <br/>
+    <!-- _self : 현재 페이지에서 이동 -->
+    <a href="https://www.google.com" target="_self">구글 이동</a><br/>
+    <br/>
+
+    <!-- _blank : 새로운 페이지에서 실행 -->
+    <a href="https://www.naver.com" target="_blank">네이버 이동</a><br/>
+    <br/>
+    <!-- _blank : 새로운 페이지에서 실행 -->
+    <a href="https://www.google.com" target="_blank">구글 이동</a><br/>
+    <br/>
+
+    <a href="https://www.naver.com">
+        <img src="/images/naver.jpg" width="150">
+    </a><br/>
+    <br/>
+    <a href="https://www.google.com">
+        <img src="/images/google.png" width="150">
+    </a><br/>
+    <br/>
+
+    <a href="https://www.naver.com" target="_self">
+        <button>네이버 이동</button>
+    </a><br/>
+     <br/>
+    <a href="https://www.google.com" target="_self">
+        <button>구글 이동</button>
+    </a><br/>
+     <br/>
+
+    <a href="tel:010-1234-5678">전화걸기</a><br/>
+    <br/>
+    <a href="mailto:java@naver.com" target="_blank">이메일</a>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

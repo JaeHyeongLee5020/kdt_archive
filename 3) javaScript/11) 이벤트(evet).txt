@@ -1,0 +1,178 @@
+			## 이벤트(evet)
+ 
+-이벤트는 브라우저에서 발생하는 사용자 또는 시스템의 특정 행동이나 상태말한다. 
+-웹 페이지에서 사용자와 상호작용할 때 발생하며, 자바스크립트는 이를 감지하여 적절한 동작을 수행할 수 있다.
+-앞으로 배울 웹에서도 이벤트는 발생한다.
+	
+-웹에서 발생하는 이벤트의 예
+ # 웹페이지 사용자가 버튼을 클릭한 경우 (클릭 이벤트)
+ # 웹페이지 사용자가 키보드로 입력 경우 (키다운 이벤트)
+ # 웹페이지 사용자가 입력 form의 내용을 전송한 경우 (제출 이벤트)
+ # 외 다수의 이벤트가 발생할 수 있다.
+
+-각각의 이벤트들은 이벤트 핸들러(event handler)를 가질 수 있다.
+-이벤트 핸들러는 이벤트가 발생하면 실행될 코드 블록을 의미한다.
+ 주로 함수가 이 역할을 담당한다.
+-이벤트 핸들러 역할을 수행할 함수를 정의하는 것을 이벤트 핸들러 등록이라고 한다.
+
+
+
+	# 구문 기본 형태
+-이벤트가 발생할 수 있는(혹은 발생 예정인) 타겟을 선택하고, 이벤트 핸들러 속성에 이벤트 핸들러를 대입한다.
+-이벤트 핸들러를 대입시에는 소괄호는 사용하지 않는다. 
+-소괄호는 함수 호출시에 사용된다.
+
+example) 타겟.on이벤트명 = 이벤트 핸들러 함수;
+
+example) button.onclick = handlClick;
+
+
+
+
+example)
+
+const handleClick = function() {		// 함수 생성
+    window.alert("회원가입을 축하합니다.");	// 함수 호출시 alert을 사용하여 경고 다이얼로그를 띄운다.
+}
+const button = document.querySelector("#button");		// id가 button인 요소를 button에 대입
+button.onclick = handleClick;				// button.onclick : button을 클릭시 handlClick 함수를 호출
+
+
+
+
+
+
+<body>
+    <button id="button1">버튼1</button>
+    <button id="button2">버튼2</button>
+    <button id="button3">버튼3</button>
+    <input id="typing" type="text">
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+
+const btn1 = document.querySelector("#button1");
+const btn2 = document.querySelector("#button2");
+const btn3 = document.querySelector("#button3");
+const inputType = document.querySelector("#typing");
+
+const handleClick1 = function() {
+    window.alert('회원가입을 축하합니다.');
+}
+
+const handleClick2 = function() {
+    confirm('정말 탈퇴하시겠습니까?');
+}
+
+const handleClick3 = function() {
+    let message = prompt('메세지를 입력하세요');
+    alert(`입력한 메세지 : ${message}`);
+}
+
+const handleClick4 = function() {
+    console.log('입력중입니다.')
+}
+
+btn1.onclick = handleClick1;
+btn2.onclick = handleClick2;
+btn3.onclick = handleClick3;
+inputType.onkeydown = handleClick4;
+
+
+
+
+
+
+
+<body>
+    <input id="textInput" type="text" laceholder="입력하세요">
+    <h4 id="out"></h3>
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+const inputField = document.querySelector("#textInput");    // input 태그
+const outputField = document.querySelector("#out");         // h3 태그
+
+const updateText = function() {
+    outputField.textContent = inputField.value;
+}
+
+inputField.oninput = updateText;
+
+
+
+
+
+
+
+<body>
+    <img id="hoverImage" src="/images/cat.jpg">
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+const imgHover = document.querySelector("#hoverImage");
+
+imgHover.style.width = "300px";
+imgHover.style.height = "200px";
+
+const changeImgHover = function() {
+    imgHover.src = "/images/dog.jpg";
+}
+
+const changeImgLeave = function()  {
+    imgHover.src = "/images/cat.jpg";
+}
+
+imgHover.onmouseover = changeImgHover;
+imgHover.onmouseout = changeImgLeave;
+
+
+
+
+
+
+<body>
+    <button id="countBTN">클릭</button>
+    <h3 id="clickCount"></h3>
+    <script src="/javaScript/script.js"></script>
+</body>
+
+const countButton = document.querySelector("#countBTN");
+const clickCount = document.querySelector("#clickCount");
+
+let count = 0;
+
+const countNum = function() {
+    count += 1;
+    clickCount.textContent = `클릭 회수 : ${count}`;
+}
+
+countButton.onclick = countNum;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

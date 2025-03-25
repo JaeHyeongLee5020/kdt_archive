@@ -1,0 +1,139 @@
+			## DOM (Document Object Model)
+ 
+-JavaScript의 DOM(Document Object Model)은 HTML 문서를 조작하고 
+ 구조를 동적으로 변경할 수 있도록 설계된 프로그래밍 인터페이스이다. 
+
+-DOM은 문서를 노드의 트리 구조로 표현하며, JavaScript를 사용해 웹 페이지의 구조, 
+ 스타일 및 내용을 실시간으로 변경할 수 있도록 해줍니다.
+
+-웹브라우저는 HTML 문서를 해석하고 화면을 통해 해석된 결과를 보여준다.
+-해석한 HTML 코드를 화면을 통해 보여주는 과정을 렌더링이라고 한다.
+
+		
+                      
+
+               
+	# DOM의 목적
+
+-문서 객체 모델, 즉 DOM은 웹 페이지(HTML이나 XML 문서)의 콘텐츠 및 구조, 그리고 스타일 요소를 구조화 시켜 
+ 표현하여 프로그래밍 언어가 해당 문서에 접근하여 읽고 조작할 수 있도록 API를 제공하는 일종의 인터페스이다
+
+-DOM은 자바스크립트를 사용해서 웹 콘텐츠를 추가, 수정, 삭제하거나 마우스 클릭, 키보드 타이핑등 
+ 이벤트에 대한 처리를 정의할 수 있도록 제공되는 프로그래밍 인터페이스이다.
+
+-자바스크립트가 웹 문서에 대한 동작을 구현하고 나면 자바스크립트 파일이 아닌  
+ DOM에 그 결과가 반영되며 그 내용을 토대로 웹브라우저 화면이 다시 렌더링 된다.
+
+-HTML코드는 정적인 텍스이므로 사용자와의 동적인 상호작용이 어렵다 
+ 그렇기 때문에 DOM이 사용자와 동적인 상호작용하게 된다.
+
+-Document 노드	: DOM의 루트 노드로, 문서 전체를 나타냅니다.
+-Element 노드	: HTML 요소를 나타냅니다. (<div>, <p> 등)
+-Attribute 노드	: 요소의 속성을 나타냅니다. (id, class 등)
+
+
+
+		# window.document (문서에 접근 및 조작)
+
+-브라우저 객체 window의 document 속성은 창이 포함한 문서를 참조한다.
+ 즉 window.document 코드는 현재 브라우저에 랜더링되고 있는 문서를 의미하며
+ 이 속성을 이용하면 해당 문서에 접근할 수 있다.
+
+-window.document는 페이지 콘텐츠 즉 DOM에 대한 진입점 역할을 하는 프로그래밍 인터페이스이다.
+ 이를 사용하여 페이지의 정보를 얻거나 웹 요소를 생성 및 조작 할 수 있다.
+
+-document는 문서(HTML, XML, SVG등)에 대한 공통의 속성과 메소드를 제공한다.
+ 즉 다양한 API(Application Programming Interface)를 제공한다.
+
+
+
+# document.querySelector();
+ : 선택자를 인자로 전달받아, 전달받은 선택자와 일치하는 문서 내 첫 번째 요소(Element)를 반환한다.
+   일치하는 요소가 없으면 ‘없다.’라는 의미의 null 데이터를 반환한다.
+   인자로 전달되는 선택자는 문자열 타입의 ‘유효한 CSS 선택자’를 의미한다.
+
+ex) document.querySelector("p");		// p 태그를 선택
+ex) document.querySelector("#text");		// id가 text인 요소를 선택
+ex) document.querySelector(".text");		// class가 text인 요소를 선택
+
+
+# document.getElementById();
+ :　document의 getElementById 메소드는 id를 인자로 전달받아, 
+    전달받은 선택자와 일치하는 문서 내 요소(Element)를 반환한다.
+    일치하는 요소가 없으면 ‘없다.’라는 의미의 null 데이터를 반환한다.
+    인자로 전달되는 선택자는 문자열 타입의 ‘id’를 의미한다.
+ex) document.getElementById("text");		// id가 text인 요소를 선택
+ex) document.getElementById("image");		// id가 image인 요소를 선택
+
+
+
+# textContent
+ :　textContent 속성은 해당 노드가 포함하고 있는 텍스트 콘텐츠를 표현하는 속성이다.
+     textContent를 통해서 요소가 포함한 텍스트를 읽거나 변경할 수 있다.
+ex)
+const p = document.querySelector("p");		// p 요소를 반환받아 상수에 대입
+console.log(p.textContent);			// p 요소의 textContent 속성을 콘솔에 출력
+p.textContent = "텍스트를 이걸로 변경합니다.";	// p 요소의 textContent값을 변경
+
+
+
+
+
+
+
+
+
+
+<body>
+    <h1>오늘은 자바스크립트를 공부합니다.</h1>
+    <p>국회의원은 국가이익을 우선하여 양심에 따라 직무를 행한다.</p>
+    <p id="text">국가는 여자의 복지와 권익의 향상을 위하여 노력하여야 한다.</p>
+    <p id="p_id" class="p_class">모든 국민은 법률이 정하는 바에 의하여 납세의 의무를 진다.</p>
+    <p>저작자·발명가·과학기술자와 예술가의 권리는 법률로써 보호한다.</p>
+
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+// querySelector() : 태그 , class, id를 사용하여 요소를 선택
+console.log(document.querySelector("h1"));
+console.log(document.querySelector("p"));
+console.log(document.querySelector("#text"));
+console.log(document.querySelector(".p_class"));
+
+// getElementById() : id를 사용하여 요소를 선택
+console.log(document.getElementById("text"));
+console.log(document.getElementById("p_id"));
+console.log(document.getElementById("p"));  // id만 사용가능
+
+
+
+let str1 = document.querySelector("h1");
+console.log(str1.textContent);
+
+let str2 = document.getElementById("text");
+console.log(str2.textContent);
+
+str1.textContent = 'h1태그는 가장큰 제목을 표현합니다.';
+console.log(str1.textContent);
+
+str2.textContent = 'p태그의 내용일 이렇게 변경해봅니다.';
+console.log(str2.textContent);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

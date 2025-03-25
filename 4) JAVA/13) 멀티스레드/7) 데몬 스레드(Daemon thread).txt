@@ -1,0 +1,303 @@
+			## 데몬 스레드(Daemon thread)
+ 
+-일반 스레드의 작업을 돕는 보조적인 역할을 수행하는 스레드
+-일반 스레드가 모두 종료되면 데몬 쓰레드는 자동을 종료된다. 
+EX) 데몬 쓰레드는 가비지 컬렉터, 자동 저장, 화면 자동 갱신등에 사용된다.
+
+-데몬(daemon) 스레드는 주 스레드의 작업을 돕는 보조적인 역할을 수행히는 스레드이다. 
+-주 스레드가 종료되면 데몬 스레드는 강제적으로 자동 종료되는데 그 이유는 주스레드의 
+ 보조 역할을 수행하므로 주 스레드가 종료되면 데몬 스레드의 존재 의미가 없어지기 때문이다.    
+ 이 점을 제외하면 데몬 스레드는 일반 스레드와 크게 차이가 없다. 
+-데몬 스레드의 적용 예는 워드프로세서의 자동 저장, 미디어 플레이어의 동영상 및 음악 재생, 
+ 가비지 컬렉터 등이 있는데 이 기능들은 주 스레드(워드프로세스, 미디어 플레이어)가 종료되면 같이 종료된다.
+-스레드를 데몬으로 만들기 위해서는 주 스레드가 데몬이 될 스레드의 setDaemon (true) 를 호출해주변 된다.
+-아래 코드를 보면 메인 스레드가 주 스레드가 되고 AutoSaveThread가 데몬 스레드가 된다.
+
+
+	public  static void main(String[]  args)  { 
+		AutoSaveThread thread = new AutoSaveThread(); 
+		thread.setDaemon(true);		// Deamon 쓰레드가된다.
+		thread.start();
+	}
+
+	메인 메서드가 종료되면 데몬 쓰레드도 종료된다.
+
+
+
+
+
+-무한 루프와 조건문을 사용하여 실행 후 대기하다가 특정 조건이 만족되면 작업을 수행하고 다시 대기하도록 작성한다.
+
+   boolean isDaemon()		: 해당 스레드가 데몬 스레드인지 확인(데몬 스레드인 경우 true를 리턴한다.)
+   void setDaemon(boolean on)	: 스레드를 데몬 스레드 또는 사용자 스레드로 변경
+				  (매개변수 on을 true로 지정하면 데몬 스레드가 된다.)
+
+
+# setDaemon(boolean on)은 반드시 start()를 호출하기전에 실행되어야 한다.
+  그렇지 않으면 IllegalThreadStateException이 발생한다.
+
+
+
+package test.chapter12.example07;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+public class AutoSaveThrad extends Thread {
+	
+	// 자동 저장하는 메서드
+	public void save() {
+		Date day = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+		String str = sdf.format(day);
+		System.out.println("작업 내용을 저장합니다.(" + str + ")");
+	}
+	
+	@Override
+	public void run() {
+		while(true) {
+			try {
+				Thread.sleep(2000);	// 2초마다 자동 저장
+			} catch (InterruptedException e) {
+				break;	// 예외 발생시 반복문 종료
+			}
+			save();	// 자동 저장 메서드 호출
+		}
+	}
+}
+
+
+
+
+package test.chapter12.example07;
+public class DaemonThreadMain {
+	public static void main(String[] args) {
+		
+		AutoSaveThrad autoSave = new AutoSaveThrad();
+		autoSave.setDaemon(true);	// autoSave 쓰레드를 데몬쓰레드로 사용
+		autoSave.start();	// autoSave 쓰레드를 호출하는 쓰레드가 주 쓰레드가된다.
+		
+		try {
+			Thread.sleep(10000);	// 10초간 Main쓰레드를 sleep
+		} catch (InterruptedException e) {}
+		
+		// 자동 저장 메세지가 출력
+		
+		System.out.println("메인 쓰레드 종료");
+	}
+}
+
+작업 내용을 저장합니다.(2025/02/24 10:31:00)
+작업 내용을 저장합니다.(2025/02/24 10:31:02)
+작업 내용을 저장합니다.(2025/02/24 10:31:04)
+작업 내용을 저장합니다.(2025/02/24 10:31:06)
+메인 쓰레드 종료
+
+
+
+
+
+
+
+==================================================================================================
+
+package test.chapter12.example07;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+public class DaemonThread implements Runnable {
+	
+	static boolean autoSave = false;	// 자동 저장 유/무
+	
+	// 자동 저장 메서드
+	public void save() {
+		Date day = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd hh:mm:ss");
+		String str = sdf.format(day);
+		System.out.println("자동 저장 되었습니다.(저장 시간 : " + str + ")");
+	}
+	
+	@Override
+	public void run() {
+		while(true) {
+			
+			try {
+				Thread.sleep(3000);	// 3초마다 한번씩 자동 저장
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if(autoSave) {	// 자동 저장 기능이 켜져있으면 (true이면)
+				save();		// 자동 저장
+			}
+		}
+	}
+}
+
+
+
+
+package test.chapter12.example07;
+public class DaemonThreadExample {
+	public static void main(String[] args) {
+		
+		Runnable runnable = new DaemonThread();
+		Thread thrad = new Thread(runnable);
+		thrad.setDaemon(true); 	// 데몬 쓰레드로 사용
+		thrad.start();
+		
+		for(int i = 1; i <= 20; i++) {
+			
+			try {
+				Thread.sleep(1000);
+				System.out.println(i);
+				if(i == 10) {
+					DaemonThread.autoSave = true;
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("메인 쓰레드 종료");
+	}
+}
+
+
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+자동 저장 되었습니다.(저장 시간 : 25/02/24 10:50:58)
+13
+14
+15
+자동 저장 되었습니다.(저장 시간 : 25/02/24 10:51:02)
+16
+17
+18
+자동 저장 되었습니다.(저장 시간 : 25/02/24 10:51:05)
+19
+20
+메인 쓰레드 종료
+
+
+
+
+
+
+====================================================================================
+
+
+package test.chapter12.example08;
+import java.util.Arrays;
+public class AutoSaveDaemonThread extends Thread {
+	
+	private String[] saveContent = new String[100];
+	private String inputText;
+	private boolean running;	// 쓰레드 실행 여부
+	private int index;			// 저장할 인덱스 번호
+	
+	// 사용자가 작성하는 내용을 inputText 필드에 저장
+	public void setContent(String content) {
+		this.inputText = content;
+	}
+	
+	public void stopAutoSave() {	// 자동 저장 기능 off
+		this.running = false;
+	}
+	
+	public void printSaveContent() {	// 작성글 자동 저장 후 출력
+		for(int i = 0; i < index; i++) {
+			System.out.print("[" + saveContent[i] + "]");
+		}
+		System.out.println();
+	}
+	
+	public String[] getSaveContent() {	// 저장된 값을 불러오는 메서드
+		// saveContent 배열 복사 (index 번까지 : 저장된 index까지 복사)
+		return Arrays.copyOf(saveContent, index);
+	}
+	
+	@Override
+	public void run() {
+		while(true) {
+			try {
+				Thread.sleep(5000);	// 5초마다 작성된 글을 자동 저장
+				if(inputText != null && !inputText.equals("")) {
+					this.saveContent[index] = inputText;
+					index++;
+					System.out.print("자동 저장 : ");
+					printSaveContent();	// 저장된 내용 출력 메서드
+					inputText = "";	// 내용 초기화
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				break;	// 예외 발생시 반복문 종료
+			}
+		}
+	}
+}
+
+
+
+
+package test.chapter12.example08;
+import javax.swing.JOptionPane;
+public class AutoSaveDaemonThreadMain {
+	public static void main(String[] args) {
+		
+		AutoSaveDaemonThread autoSave = new AutoSaveDaemonThread();
+		autoSave.setDaemon(true);
+		autoSave.start();
+		
+		while(true) {
+			String input = JOptionPane.showInputDialog("exit 입력시 자동 저장 종료");
+			
+			if(input == null || input.equals("exit")) {
+				autoSave.stopAutoSave();
+				break;
+			}
+			autoSave.setContent(input);
+		}
+		System.out.println("최종 저장된 내용");
+		String[] strArray = autoSave.getSaveContent();
+		
+		for(String content : strArray) {
+			System.out.print("[" + content + "]");
+		}
+		System.out.println("\n메인 쓰레드 종료");
+	}
+}
+
+
+
+
+자동 저장 : [안녕]
+자동 저장 : [안녕][하세요]
+자동 저장 : [안녕][하세요][반갑습니다.]
+최종 저장된 내용
+[안녕][하세요][반갑습니다.]
+메인 쓰레드 종료
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

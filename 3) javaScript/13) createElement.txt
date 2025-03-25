@@ -1,0 +1,193 @@
+			## document.createElement
+
+-HTML에서만 HTML 요소를 만들 수 있는 것은 아니다. 
+-물론 해당 파일에서 생성하는 것이 가장 간단하기 때문에 대부분 HTML document에서 바로 요소를 생성한다.
+ 물론 자바스크립트를 통해서도 요소를 생성하는 것이 가능하다.
+
+-동적으로 특정 태그의 HTML 요소를 생성하려면 자바스크립트의 document.createElement() 메소드를 사용할 수 있다.    
+  이 메소드는 요소의 태그 이름을 매개변수로 받아 해당 노드를 생성한다.
+
+-document의 createElement메소드는 지정된 이름의 HTML요소를 만들어 반환한다.
+
+
+	document.createElement('div');
+
+	document.createElement('p');
+
+	document.createElement('a');
+
+
+-물론 위의 설정만으로 요소가 생성되지는 않는다.
+
+-appendChild() 메소드는 DOM내 개별요소에 자식 요소를 추가할 때 사용하는 메서드이다.
+
+	예시)
+
+	const p = document.createElement("p");
+
+	document.body.appendChild(p);
+
+
+
+
+
+
+	# appendChild() VS append()
+
+-appendChild() 메소드와 비슷한 append() 메소드도 있다.
+-타겟 요소에 자식 요소를 추가한다는 점에서 같으나, 차이점이 존재한다.
+
+# 차이점
+-appendChild()의 경우 추가한 자식 노드를 반환하지만, append()는 반환 데이터가 없다.
+-append를 사용하면 요소에 노드 객체 또는 문자열을 자식 요소로 추가할 수 있지만
+ paaendChild()는 노드 객체만 추가할 수 있다.
+
+
+
+
+	# DIV 태그 생성
+<body>
+    <button id="push">클릭</button>
+    <div id="area"></div>
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+
+let num = 0;
+
+const button = document.querySelector("#push");
+const creDiv = document.querySelector("#area");
+
+button.addEventListener('click' , function(){
+    num += 1;
+    console.log(`새로운 div를 ${num}개 생성했습니다.`);
+    const newDiv = document.createElement('div');
+    newDiv.style.backgroundColor = 'orange';
+    newDiv.style.width = '100px';
+    newDiv.style.height = '100px';
+    newDiv.style.margin = '5px';
+    newDiv.className = 'newDivClass';
+    creDiv.appendChild(newDiv);
+});
+
+
+
+
+	# input 태그 생성
+
+<body>
+    <button id="add_input">추가</button>
+    <div id="addr"></div>
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+
+let number = 0;
+
+const button = document.querySelector("#add_input");
+const addr = document.querySelector("#addr");
+
+button.addEventListener('click' , function() {
+    number += 1;
+    if(number <= 5) {
+        console.log(`입력창 ${number}개 생성`);
+        const newAddr = document.createElement("input");
+        newAddr.style.width = "150px";
+        newAddr.style.display = "block";
+        newAddr.style.margin = "5px";
+        newAddr.placeholder="입력하세요";
+        newAddr.className = "creInput";
+        newAddr.id = `createNewInput_${number}`;
+        addr.appendChild(newAddr);
+    } else {
+        alert('입력창은 최대 5개까지만 생성 가능합니다.');
+    }
+});
+
+
+
+
+	# ul 태그에 li(list) 추가
+
+<body>
+    <button id="addlistItem">리스트 항목 추가</button>
+    <h1>점심 메뉴</h1>
+    <ul id="list"></ul>
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+let number = 0;
+const addlistItemButton = document.querySelector("#addlistItem");
+const listItem = document.querySelector("#list");
+
+addlistItemButton.addEventListener('click', function() {
+    number += 1;
+    const message = prompt('li에 추가할 내용 입력');
+    if(message) {
+        const ulList = document.createElement("li");
+        ulList.textContent = message;
+        console.log(`li가 ${number}개 추가`)
+        listItem.appendChild(ulList);
+    } else {
+        alert('입력한 내용이 없습니다.');
+    }
+});
+
+
+
+
+
+	# select 태그의  option과 value 추가
+
+
+<body>
+    <button id="addOption">Select Option 추가</button><br>
+    <select id="dropDown">
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+
+
+
+let number = 0;
+const addOption = document.querySelector("#addOption");
+const dropDown = document.querySelector("#dropDown");
+
+addOption.addEventListener('click' , function(){
+    number += 1;
+
+    const optionText = prompt('텍스트 값 입력');
+    if(!optionText) {
+        alert('텍스트 값이 입력되지 않았습니다.');
+        return;
+    }
+
+    const optionValue = prompt('Value 값 입력');
+    if(!optionValue) {
+        alert('Value 값이 입력되지 않았습니다.');
+        return;
+    }
+
+    const newOption = document.createElement("option");
+    newOption.textContent = optionText;
+    newOption.value = optionValue;
+    console.log(`select 태그의 option이 ${number}개 생성`);
+    dropDown.appendChild(newOption);
+    alert(`입력한 텍스트 : ${optionText} , 입력한 value : ${optionValue}`);
+});
+
+
+
+
+
+
+
+
+
+
+
+

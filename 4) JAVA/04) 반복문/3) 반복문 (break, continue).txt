@@ -1,0 +1,191 @@
+			## break
+
+-자바에서 반복문(for, while, do-while)에서 break는 반복을 즉시 종료하는 데 사용된다. 
+
+-반복문 내부에서 break가 실행되면 현재 반복을 중단하고 반복문 바깥으로 프로그램 흐름이 이동한다.
+
+-break는 반복문뿐만 아니라 switch 문에서도 사용되며, 특정 조건이 충족되었을 때 빠져나올 수 있도록 설계되었있다.
+
+-break문은 대개 if문과 같이 사용되어 if문의 조건식에 따라 for문과 while문을 종료할 때 사용한다. 
+
+
+
+
+public class BreakExample01 {
+	public static void main(String[] args) {
+		
+		int count = 0;
+		
+		for(int i = 0; i <= 10; i++) {
+			int number = (int)(Math.random() * 6) + 1;
+			System.out.println(number);
+			count++;
+			if(number == 5) {
+				break;
+			}
+		}
+		System.out.println(count + "번 반복하여 숫자 5가 나왔습니다.");
+	}
+}
+
+
+
+
+
+
+
+	public static void main(String[] args) {
+		
+		// 1부터 순차적으로 더하여 합이 100을 초과하게되면 반복을 중단해야 한다.
+		int i = 0;		// 1부터 1씩 증가하여 덧셈 연산
+		int sum = 0;	// i변수의 값을 누적하여 sum에 대입
+		
+		while(true) {
+			i++;
+			sum += i;
+			System.out.println("누적 값 : " + sum);
+			
+			if(sum >= 500) {
+				System.out.println("누적 합이 500을 초과하여 반복문을 종료합니다.");
+				break;
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+public class BreakExample03 {
+
+	public static void main(String[] args) {
+		// 1부터 100사이의 값을 랜덤으로 받아 6의 배수이면 반복문 중단
+		
+		int count = 0;
+		
+		while(true) {
+			count++;
+			
+			int num = (int)(Math.random() * 100) + 1;
+			System.out.println("입력 받은 " + count + "번째 숫자 : " + num);
+			
+			if(num % 6 == 0) {
+				System.out.println("처은 나온 6의 배수 : " + num);
+				break;
+			}
+		}
+	}
+}
+
+
+
+
+
+public class BreakExample04 {
+	public static void main(String[] args) {
+		// break는 반복문(for, while , do-while)을 중단 시킬때사용할 수 있다.
+		// 다중 반복문 사용시 내부에서 break를 사용하게되면 내부 반복문은 중단시킬 수 있지만 외부 반복문은 중단시킬 수 없다.
+		// 외부 반복문을 종료시켜야 하는경우 외부 반복문에 name을 작성하고 해당 name을 갖은 반복문을 종료시킬 수 있다.
+
+		System.out.println("프로그램 시작");
+		
+		// 대문자 A에서부터 대문자 Z까지 출력
+		Outter : for(char upper = 'A'; upper <= 'Z'; upper++) {
+			// 소문자 a에서부터 소문자 z까지 출력
+			for(char lower = 'a'; lower <= 'z'; lower++) {
+				System.out.print(upper + " - " + lower + ", ");
+				if(lower == 'f') {
+					break Outter;	// 반복문 이름이 Outter인 반복문을 종료한다.
+				}
+			}
+			System.out.println();
+		}
+		System.out.println();
+		System.out.println("프로그램 종료");
+	}
+}
+
+
+
+
+
+===========================================================================================
+
+		# continue
+
+
+-continue 문은 반복문의 현재 실행 흐름을 건너뛰고 다음 반복으로 넘어가는 역할
+
+-continue문은 반복문인 for문. while문. do-while문에서만 사용되는데, 
+  블록 내부에서 continue문이 실행되면 for문의 증감식 또는 while문. do-while문의 조건식으로 이동한다. 
+
+-break가 반복문을 완전히 종료하는 것과 달리, continue는 반복문을 계속 실행하지만 
+  특정 조건을 건너뛰고 다음 반복으로 이동합니다.
+
+-continue문은 반복문을 종료하지 않고 계속 반복을 수행한다는 점이 break문과 다르다. 
+
+-break문과 마찬가지로 contmue문도 대개 if문과 같이 사용되는데, 
+ 특정 조건을 만족하는 경우에 contmue문을 실행해서 그 이후의 문장을 실행하지 않고 다음 반복으로 넘어간다. 
+
+
+public class ContinuExample01 {
+	public static void main(String[] args) {
+		
+		for(int i = 1; i <= 30; i++) {
+			
+			if(i % 2 != 0) {
+				continue;
+			}
+			System.out.println(i);
+		}
+		
+		System.out.println("=============================");
+		
+		int num = 1;
+		while(num <= 30) {
+			if(num % 2 == 0) {
+				num++;
+				continue;
+			}
+			System.out.println(num);
+			num++;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,205 @@
+			## 타이머 만들기
+
+	# 비동기(Asynchronous)란?
+-비동기(Asynchronous)는 작업이 동시에 실행되는 것이 아니라, 하나의 작업이 진행되는 
+ 동안 다른 작업을 블로킹(Blocking)하지 않고 바로 다음 작업을 실행할 수 있는 프로그래밍 모델
+-비동기 방식에서는 실행 결과를 기다리지 않고 다른 작업을 진행하며, 
+ 실행이 완료된 시점에 콜백 함수 등을 통해 결과를 처리
+
+	# 콜백 함수(Callback Function)란?
+-콜백 함수란 다른 함수의 매개변수로 전달되어 해당 함수 내에서 호출되는 함수를 의미
+-콜백 함수는 JavaScript에서 비동기 프로그래밍과 이벤트 기반 프로그래밍을 구현하는 데 중요한 역할을 수행한다.
+
+	# 콜백 함수의 특징
+-매개변수로 전달: 콜백 함수는 다른 함수에 인자로 전달되어 실행 흐름을 제어
+-함수 자체가 값: JavaScript에서는 다른 함수에 전달하거나 반환값으로 사용할 수 있다.
+-동기 및 비동기 실행: 콜백 함수는 동기적 또는 비동기적으로 실행될 수 있다.
+
+
+
+==============================================================================
+
+		# setTimeout
+
+-setTimeout은 JavaScript에서 비동기적으로 코드를 일정 시간 후 실행하기 위해 사용하는 메서드
+-비동기 프로그래밍과 이벤트 루프의 기본적인 원리를 이해하는 데 중요한 역할을 하며, 타이머 기능 구현에 사용
+-setTimeout은 특정 시간이 지난 후에 지정된 콜백 함수(코드)를 실행하도록 예약하는 함수
+
+
+
+	setTimeout(실행할함수, ms단위의 시간);
+
+
+example) 
+setTimeout(function() {
+     console.log("함수호출 2초 후 동작");
+}, 2000);
+
+
+
+
+
+
+==============================================================================
+
+		# setInterval
+
+-JavaScript의 setInterval 메서드는 일정한 시간 간격으로 특정 코드를 반복적으로 실행하기 위해 사용 
+-setInterval은 비동기 방식으로 작동하며, 특정 작업을 주기적으로 수행해야 할 때 유용
+-일정한 시간 간격에 따라 함수를 반복적으로 실행할 수 있도록 해주는 타이머 매소드
+
+
+	setInterval(반복실행할함수, ms단위의 시간);
+
+
+example) 
+setInterval(function() {
+     console.log("Hello javaScript");
+}, 1000);
+
+
+
+
+
+		# clearInterval
+
+-clearInterval은 JavaScript에서 setInterval로 설정된 반복 작업을 중단하기 위해 사용되는 메서드
+
+-setInterval은 명시적으로 중단하지 않는 한 계속해서 작업을 반복 실행하므로, 
+  필요하지 않을 때 반복을 멈추기 위해 반드시 clearInterval을 사용해야 한다.
+
+-clearInterval은 setInterval이 반환한 ID 값을 이용해 특정 반복 작업을 중단한다.
+
+-setInterval 메소드가 호출되어 반복 실행할 함수 타이머를 등록하면 타이머는 0이 아닌 숫자를 반환한다.
+
+-숫자는 타이머의 ID를 의미하며 이를 clearInterval 메소드에 전달하면 해당 타이머의 반복 실행이 취소된다.
+
+
+
+
+
+
+
+
+	# setTimeout을 사용하여 함수 호출
+
+setTimeout(function() {
+    console.log('setTimeout()을 사용하여 함수를 호출합니다.');
+}, 1000);
+
+
+
+
+
+	# 함수 5번 호출
+let count = 1;
+
+function printLoading() {
+    if(count <= 5) {
+        console.log(`Loading... | 호출회수 = ${count}`);
+        count += 1;
+        setTimeout(printLoading , 1000);
+    } else {
+        console.log('함수 호출 완료');
+    }
+}
+printLoading();
+
+
+
+
+
+
+EX) 10부터 카운트다운 되도록 setTimeout을 작성 (0이되면 카운트 다운이 종료되어야 한다.)
+
+let count = 10;
+
+function countDown() {
+    if(count >= 0) {
+        console.log(`카운트 다운 : ${count}`);
+        count -= 1;
+        setTimeout(countDown , 1000);
+    } else {
+        console.log('카운트다운 종료');
+    }
+}
+countDown();
+
+
+
+
+
+
+	# clearInterval을 사용하여 setInterval 종료
+<body>
+    <button>STOP</button>
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+let count = 1;
+
+let setIntervalId;
+setIntervalId = setInterval(function() {
+    console.log(`setInterval() ${count}번 호출`);
+    count += 1;
+}, 1000);  // 주어진 시간을 반복적으로 수행
+
+console.log(setIntervalId);
+
+const btn = document.querySelector("button");
+btn.addEventListener('click' , function() {
+    clearInterval(setIntervalId);
+    console.log('clearInterval()을 사용하여 호출 중단');
+});
+
+
+
+
+
+
+
+	# 현재 시간을 콘솔에 출력
+
+function currentTime() {
+    const now = new Date();
+    const time = now.toLocaleTimeString();
+    console.log(time);
+};
+
+setInterval(function(){
+    currentTime();
+}, 1000);
+
+
+
+
+
+
+	# 현재 시간을 콘솔에 출력 (STOP버튼 클릭시 시간 표기 중단)
+
+<body>
+    <h1>현재 시간</h1>
+    <h2 id="currentTime"></h2>
+    <button id="stopButton">시간 중지</button>
+    <script src="/javaScript/script.js"></script>
+</body>
+
+
+    // 현재 시간을 브라우저에 1초 간격으로 출력
+function updateTime() {
+    const now = new Date();
+    const time = now.toLocaleTimeString();
+    document.getElementById("currentTime").textContent = time;
+};
+
+const setInterId = setInterval(function(){
+    updateTime();
+}, 1000);
+
+document.getElementById("stopButton").addEventListener('click', function(){
+    clearInterval(setInterId);
+    alert('시간 표기를 중지합니다.');
+});
+
+console.log(setInterId);

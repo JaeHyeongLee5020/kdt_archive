@@ -1,0 +1,217 @@
+				## 의사 클래스
+
+-의사 클래스는 CSS에서 특정 상태에 있는 요소를 선택하기 위해 사용되는 특별한 선택자
+-기본적으로 선택자는 요소 자체를 선택하지만, 의사 클래스는 요소의 상태를 기준으로 스타일을 지정한다.
+-의사 클래스는 콜론(:)을 사용하여 정의한다.
+-의사 클래스(가상 클래스)는 선택자에 추가하는 키워드로 
+ 요소가 어떤 특정한 상태가 되었을 때 요소를 선택하겠다는 의미이다.
+
+-형식
+
+선택자: 의사클래스{
+	속성명: 속성값;
+}
+
+
+=========================================================================
+|  의사 클래스	|                           의미					|
+-------------------------------------------------------------------------
+| hover		| 마우스 포인터가 요소에 올라가있는 상태				|
+-------------------------------------------------------------------------
+| active		| 사용자가 요소를 활성화 했다.(EX 마우스 클릭)			|
+-------------------------------------------------------------------------
+| focus		| 요소가 포커스 받고 있다.					|
+-------------------------------------------------------------------------
+| disabled	| 비활성화 사태의 요소					|
+-------------------------------------------------------------------------
+| nth-child()	| 형제 사이의 순서에 따라 요소를 선택				|
+=========================================================================
+
+
+	# hover
+
+<body>
+    <input class="first-button" type="button" value="버튼1">
+    <br><br>
+    <input class="second-button" type="button" value="버튼2">
+</body>
+
+
+
+input {
+    width: 100px;
+    height: 30px;
+    background-color: gray;
+    border-radius: 10px;
+    border: none;
+    transition: 0.5s;
+}
+
+.first-button:hover {
+    background-color: tomato;
+}
+
+.second-button:hover {
+    background-color: dodgerblue;
+}
+
+
+
+
+
+
+
+
+
+
+<body>
+    <a href="https://www.naver.com">네이버</a><br><br>
+    <a href="https://www.google.com">구글</a><br><br>
+    <a href="https://www.daum.net">다음</a>
+</body>
+
+
+
+
+a {
+    text-decoration: none;
+    border: 1px solid black;
+    display: inline-block;
+    width: 100px;
+    height: 20px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px;
+    transition: 0.5s;
+}
+
+a:hover {
+    background-color: dodgerblue;
+    color: white;
+}
+
+a:active {
+    background-color: tomato;
+    color: white;
+    width: 120px;
+    height: 30px;
+}
+
+
+
+	# focus
+
+<body>
+    <input type="text" placeholder="여기에 입력하세요">
+</body>
+
+
+
+input:focus {
+    background-color: dodgerblue;
+    color: white;
+}
+
+
+
+	# disabled
+<body>
+    <input type="text" placeholder="여기에 입력하세요" disabled>
+</body>
+
+
+
+input:focus {
+    background-color: dodgerblue;
+    color: white;
+}
+
+
+
+
+
+	# nth-child()
+
+-CSS의 nth-child()는 특정 부모 요소의 자식들 중에서 특정 순번에 해당하는 자식 요소를 선택할 수 있는 의사 클래스
+-nth-child()는 단순히 순서를 기반으로 선택하기 때문에 부모 요소 내에서 모든 자식 요소를 
+ 순서대로 검사하고 해당 조건에 맞는 자식 요소에 스타일을 적용
+
+
+    <div class="flex">
+        <div class="box">1번째 div</div>
+        <div class="box">2번째 div</div>
+        <div class="box">3번째 div</div>
+        <div class="box">4번째 div</div>
+        <div class="box">5번째 div</div>
+        <div class="box">6번째 div</div>
+    </div>
+
+
+
+
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+}
+
+.box:nth-child(2n-1) {
+    background-color: dodgerblue;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
