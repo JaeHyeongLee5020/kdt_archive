@@ -1,0 +1,34 @@
+
+--id = java 0x , password = java0x
+--192.168.25.3   -->  192.168.25.35
+
+drop table test;
+
+create table test(
+    id VARCHAR2(100) primary key,   -- id
+    pw  VARCHAR2(100) not null,     -- password
+    name  VARCHAR2(100) not null, 
+    age number default 0,           -- 나이
+    reg date default sysdate        -- 등록일
+);
+
+insert into test values('java', '1234', '홍길동', 25, sysdate);
+insert into test values('jsp', '1234', '김자바',  35, sysdate);
+insert into test values('integer', '1234', '유재석',  45, sysdate);
+insert into test values('string', '1234', '아이유',  55, sysdate);
+insert into test values('long', '1234', '강호동',  65, sysdate);
+insert into test values('script', '1234', '신동엽',  75, sysdate);
+
+commit;
+
+select * from test;
+
+
+
+
+
+
+
+
+
+

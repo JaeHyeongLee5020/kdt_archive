@@ -1,0 +1,258 @@
+create table member (
+    id         	varchar2(50) 	primary key,    -- 아이디 (중복 X)
+    pw         	varchar2(100) 	not null,       -- 비밀번호
+    name       	varchar2(50) 	not null,       -- 이름
+    nickname   	varchar2(50) 	unique,         -- 닉네임 (중복 X)
+    email      	varchar2(100) 	unique,         -- 이메일 (중복 X)
+    addr       	varchar2(200) 	not null,       -- 주소
+    reg        	date default 	sysdate         -- 등록일
+);
+
+
+==========================================================================================
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Member회원가입</title>
+<%@ include file="css.jsp" %>
+</head>
+<body>
+	<h1>Member 회원가입</h1>
+	<div class="container">
+		<form action="memberFormPro.jsp" class="form-horizontal" method="post" >
+		
+			<div class="form-group row">
+				<label class="col-sm-2">아이디</label>
+				<div class="col-sm-3">
+					<input type="text" name="id" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2">비밀번호</label>
+				<div class="col-sm-3">
+					<input type="password" name="pw" class="form-control" />
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-sm-2">이름</label>
+				<div class="col-sm-3">
+					<input type="text" name="name" class="form-control" />
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-sm-2">닉네임</label>
+				<div class="col-sm-3">
+					<input type="text" name="nickName" class="form-control" />
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-sm-2">이메일</label>
+				<div class="col-sm-3">
+					<input type="email" name="email" class="form-control" />
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-sm-2">주소</label>
+				<div class="col-sm-3">
+					<input type="text" name="addr" class="form-control" />
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<div class="col-sm-3">
+					<input type="submit" value="회원가입" class="btn btn-primary" />
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+==========================================================================================
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<h1>MemberMain(메인 페이지)</h1>
+
+<button onclick="location.href='memberForm.jsp'">회원 가입</button>
+<button onclick="location.href=''">회원 수정</button>
+<button onclick="location.href=''">회원 탈퇴</button>
+<button onclick="location.href=''">회원 확인</button>
+
+
+
+
+
+==========================================================================================
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.Date" %>
+<% request.setCharacterEncoding("UTF-8"); %>
+<h1>memberFormPro.jsp</h1>
+
+<jsp:useBean id="dto" class="ryu.web.member.dto.MemberDTO" />
+<jsp:useBean id="dao" class="ryu.web.member.dao.MemberDAO" />
+
+<jsp:setProperty property="*" name="dto" />
+
+<%
+	int memberInserst = dao.insertMember(dto);
+
+	if(memberInserst > 0) {%>
+		<h2>회원가입 되었습니다.</h2>
+	<%} else {%>
+		<h2>회원가입에 실패했습니다.</h2>
+	<%}
+%>
+
+<button type="button" onclick="location.href='main.jsp'">메인</button>
+<button type="button" onclick="location.href='memberForm.jsp'">회원가입</button>
+
+
+
+
+
+==========================================================================================
+
+package ryu.web.member.dto;
+
+import java.sql.Date;
+
+public class MemberDTO {
+	private String id;
+	private String pw;
+	private String name;
+	private String nickName;
+	private String email;
+	private String addr;
+	private Date reg;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPw() {
+		return pw;
+	}
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	public Date getReg() {
+		return reg;
+	}
+	public void setReg(Date reg) {
+		this.reg = reg;
+	}
+}
+
+==========================================================================================
+
+package ryu.web.member.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import ryu.web.member.dto.MemberDTO;
+
+public class MemberDAO {
+
+	// connection , close()를 메서드로 만든 후 호출하여 사용
+	private Connection conn = null;			// DB 연결
+	private PreparedStatement pstmt = null;	// SQL문 실행
+	private ResultSet rs = null;			// 검색 결과 저장
+	
+	// DB 연결 객체를 리턴하는 메소드
+	public Connection getConnection() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String url = "jdbc:oracle:thin:@192.168.25.35:1521/xe";
+			String user = "system";
+			String password = "admin";
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+	
+	// DB 연결을 종료하는 메소드
+	public void getClose() {
+		try {if(conn != null) {conn.close();}} catch (Exception e) {e.printStackTrace();}
+		try {if(pstmt != null) {pstmt.close();}} catch (Exception e) {e.printStackTrace();}
+		try {if(rs != null) {rs.close();}} catch (Exception e) {e.printStackTrace();}
+	}
+	
+	
+    public int insertMember(MemberDTO dto) {
+    	int result = 0;
+    	String sql = "insert into member (id, pw, name, nickname, email, addr) values (?, ?, ?, ?, ?, ?)";
+    	try {
+    		conn = getConnection();
+    		pstmt = conn.prepareStatement(sql);
+    		pstmt.setString(1, dto.getId());
+    		pstmt.setString(2, dto.getPw());
+    		pstmt.setString(3, dto.getName());
+    		pstmt.setString(4, dto.getNickName());
+    		pstmt.setString(5, dto.getEmail());
+    		pstmt.setString(6, dto.getAddr());
+    		result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	getClose();
+        return result;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
