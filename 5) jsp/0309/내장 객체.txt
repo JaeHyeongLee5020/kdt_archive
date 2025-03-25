@@ -1,0 +1,118 @@
+	# request 객체
+
+-request 객체는 클라이언트(사용자)로부터 보내진 HTTP 요청 정보를 담고 있다.
+-클라이언트가 웹 서버에 어떤 요청을 보냈는지와 관련된 모든 정보를 이 객체로 접근할 수 있다.
+ # request.getParameter(String name)		: 요청 파라미터 값을 가져오는 메서드
+ # request.getParameterValues(String name)	: 동일한 이름의 여러 값을 가져올 때 사용 
+					      (주로 체크박스나 여러 선택을 허용하는 폼에서 사용)
+ # request.getContextPath()			: 현재 웹 애플리케이션의 루트 경로를 반환
+ # request.getRequestURL()			: 요청된 URL의 경로를 반환
+ # request.getRequestURI()
+
+
+
+	# response 객체
+-response 객체는 서버가 클라이언트에게 응답을 보낼 때 사용된다.
+-이 객체를 통해 HTML 문서, JSON, 파일 다운로드 등 다양한 형태의 응답을 클라이언트에게 전달할 수 있다.
+  (다운로드도 response의 한 종류, errorPage)
+ # response.setStatus(int sc)		 : HTTP 상태 코드를 설정
+ # response.getStatus()		 : 클라이언트에게 보낼 HTTP 응답의 상태 코드를 가져옴
+ # response.sendRedirect(String location): 클라이언트를 다른 페이지로 리다이렉트
+ # response.setContentType(String type)	 : 응답의 콘텐츠 타입을 설정 (예: text/html, application/json)
+ # response.addCookie(Cookie cookie)	 : 클라이언트에 쿠키를 추가
+
+
+
+
+	# out
+-System.out.println은 콘솔로 출력하지만 out.println은 브라우저로 출력한다.
+ (System.out.println 자바에서 사용되지만 out.println은 JSP에서 만들어진 기능이다.)
+-HTML이나 <%= %>를 사용하여 출력하기 때문에 out 객체는 사용되지 않는다.
+  # out.print(String s) 	: 문자열을 출력
+  # out.flush()	   	: 출력 버퍼를 비우고 즉시 클라이언트에 전달
+  # out.close()	   	: 출력 스트림을 닫음
+
+
+
+
+	# session 객체
+-session 객체는 사용자별 세션 정보를 관리하는 데 사용된다.
+-세션은 클라이언트가 웹 서버와 상호작용하는 동안 유지되는 일련의 상태 정보를 의미
+-session 객체는 기본적으로 사용자별로 고유하게 생성되며, 
+  서버는 이를 통해 클라이언트의 정보를 여러 요청을 유지할 수 있다.
+
+-쿠키와 세션의 동작 방식은 동일하다. 
+-사용자의 정보 또는 브라우저에서 사용했던 기능을 저장할 수 있는데 
+ 사용자 PC에 저장하면 쿠기 서버쪽에 저장하면 세션이라고 한다. 
+-쿠키는 내장 객체가 아니기때문에 만들어서 사용해야 하지만 세션은 내장 객체이므로 바로 사용이 가능하다.
+-session이 사용되는 대표적인 예가 로그인 처리이다.
+-session이 있으면 로그인된것으로 판단되고 session이 없으면 로그인이 되지 않은 것으로 판단한다.
+
+ # session.setAttribute(String name, Object value) : 세션에 데이터를 저장하는 메서드
+  (세션은 데이터를 공유할 수 있기 때문에 로그인 정보나 장바구니 데이터 등을 저장하는 데 유용)
+ # session.getAttribute(String name) : 세션에 저장된 데이터를 가져오는 메서드
+ # session.setMaxInactiveInterval(int seconds) : 세션의 유효 시간을 초 단위로 설정 (해당 시간이 지나면 세션은 만료)
+ # session.invalidate() : 세션을 무효화하고, 세션에 저장된 모든 데이터를 삭제(로그아웃할 때 사용)
+
+
+
+
+	# application
+-Project 자체를 의미한다. (우리가 생성한 web, ryu, market이 하나의 Project 또는 Application이다.)
+-Application의 대표적인 기능은 log이다.
+-우리가 서버를 키거나 재 시작할때 빨간색으로 출력되는 내용들이 log이다.
+ (우리가 접속하게 되면 로그인한 시간 로그아웃한 시간 어떤 작업을 했는지를 모두 log로 남길수 있다.)
+ # application.setAttribute(String name, Object value)	: 애플리케이션 범위에서 데이터 저장
+ # application.getAttribute(String name)			: 애플리케이션 범위의 데이터 가져오기
+
+
+
+
+	# pageContext
+-모든 내장 객체를 통합하여 관리하는 내장 객체이다.
+-PageContext 하나로 나머지 모든 객체의 정보를 받을 수 있다.
+ 하지만 각 기능들이 나뉘어져 있기때문에 사용되지는 않는다.
+ # pageContext.getRequest()			: request 객체 반환
+ # pageContext.getResponse()			: response 객체 반환
+ # pageContext.getSession()			: session 객체 반환
+ # pageContext.getApplication()			: application 객체 반환
+ # pageContext.forward(String relativeUrlPath)	: 다른 JSP 페이지로 요청을 전달 (RequestDispatcher와 유사)
+
+
+
+
+	# page
+-JSP 현재 페이지의 정보를 담고있는 정보이다. (application는 Dynamic Web Project의 정보)
+-this 키워드와 동일한 역할을 수행하며, 일반적으로 잘 사용되지 않는다.
+
+
+
+	# config
+-JSP, HTML, CSS, Script등은 공식된 파일이지만 그외에 xml, propertise, IOS등 외부 정보를 받을때 사용한다.
+
+
+
+
+	# exception
+-다른 내장 객체들은 바로 사용할 수 있지만 exception은 특정한 조건이 필요한다.
+-예외가 발생했을 때만 사용 가능하며, isErrorPage="true"가 설정된 JSP에서만 사용 가능.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

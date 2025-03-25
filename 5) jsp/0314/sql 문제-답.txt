@@ -1,0 +1,145 @@
+
+*-----------------------------------------------------------------*
+<<1>> 부서번호가 10번인 부서의 사람 중 사원번호, 이름, 급여를 출력하라.
+select empno, ename, sal from emp where deptno = 10;
+
+
+<<2>> 사원번호가 7639인 사람 중 이름, 입사일자, 부서번호를 출력하라.
+select ename, hiredate, deptno from emp where empno = 7639;
+
+
+<<3>> 이름이 ALLEN인 사람의 모든 정보를 출력하라.
+select * from emp where ename = 'ALLEN';
+
+
+<<4>> 입사일자가 81/04/12인 사원의 이름, 부서번호, 급여를 출력하라.
+select ename, deptno, sal from emp where hiredate = '81-04-02';
+
+
+<<5>> 직업이 MANAGER가 아닌 사람의 모든 정보를 출력하라.
+select * from emp where job != 'MANAGER';
+
+
+<<6>> 입사일자가 81/04/02 이후에 입사한 사원의 정보를 출력하라.
+select * from emp where hiredate > '81-04-02';
+
+
+<<7>> 급여가 $800 이상인 사람의 이름, 급여, 부서번호를 출력하라.
+select ename, sal, deptno from emp where sal >= 800;
+
+
+<<8>> 부서번호가 20번 이상인 사원의 모든 정보를 출력하라.
+select * from emp where deptno >= 20;
+
+
+<<9>> 사원번호가 7698보다 작거나 같은 사람들의 입사번호와 이름을 출력하라.
+select empno, ename from emp where empno <= 7698;
+
+
+<<10>> 입사일자가 81/04/02보다 늦고 82/12/09보다 빠른 사원의 이름, 월급, 부서번호를 출력하라.
+select ename, sal, deptno from emp where hiredate > '81-04-02'
+and hiredate < '82-12-09';
+
+
+<<11>> 급여가 1,600보다 크고 $3,000보다 작은 사람은 이름, 직무, 급여를 출력하라.
+select ename, job, sal from emp where sal > 1600 and sal < 3000;
+
+
+<<12>> 사원번호가 7654와 7782 사이 이외의 사원의 모든 정보를 출력하라.
+select * from emp where empno not between 7654 and 7782;
+
+
+<<13>> 직무가 MANAGER와 SALESMAN인 사람의 모든 정보를 출력하라.
+select * from emp where job in ('MANAGER', 'SALESMAN');
+
+
+<<14>> 부서번호와 20, 30번을 제외한 모든 사람의 이름, 사원번호, 부서번호를 출력하라.
+select ename, empno, deptno from emp where deptno not in (20, 30);
+
+
+<<15>> 이름 중 S자가 들어가 있는 사람만 모든 정보를 출력하라.
+select * from emp where ename like '%S%';
+
+
+<<16>> 이름이 S로 시작하고 마지막 글자가 T인 사람의 모든 정보를 출력하라 (단, 이름은 전체 5자리이다).
+select * from emp where ename like 'S___T';
+
+
+<<17>> 첫 번째 문자는 관계없고 두 번째 문자가 A인 사람의 정보를 출력하라.
+select * from emp where ename like '_A%';
+
+
+<<18>> 커미션이 null인 사람의 정보를 출력하라.
+select * from emp where comm is null;
+
+
+<<19>> 커미션이 null이 아닌 사람의 모든 정보를 출력하라.
+select * from emp where comm is not null;
+
+
+<<20>> 부서가 30번 부서이고 급여가 $1,500 이상인 사람의 이름, 부서, 월급을 출력하라.
+select ename, deptno, sal from emp where deptno = 30 and sal >= 1500;
+
+
+<<21>> 이름의 첫 글자가 K로 시작하거나 부서번호가 30인 사람의 사원번호, 이름, 부서번호를 출력하라.
+select empno, ename, deptno from emp where ename like 'K%' or deptno = 30;
+
+
+<<22>> 급여가 $1,500 이상이고 부서번호가 30번인 사원 중 직업이 MANAGER인 사람의 정보를 출력하라.
+select * from emp where sal >= 1500 and deptno = 30 and job = 'MANAGER';
+
+
+<<23>> 부서번호가 30인 사람 중 사원번호를 SORT 하라.
+select empno from emp where deptno = 30 order by empno;
+
+
+<<24>> 급여가 많은 순으로 SORT하라.
+select * from emp order by sal desc;
+
+
+<<25>> 부서번호로 ASCENDING SORT한 후 급여가 많은 사람 순으로 출력하라.
+select * from emp order by deptno asc, sal desc;
+
+
+<<26>> 부서번호로 descENDING SORT하고 이름순으로 ASCENDING SORT, 급여순으로 descENDING SORT하라.
+select * from emp order by deptno desc, ename asc, sal desc;
+
+
+--------------------------JOIN--------------------------
+
+<<1>> EMP와 DEPT TABLE을 JOIN하여부서번호, 부서명, 이름, 급여를출력하라.
+
+
+
+<<2>>이름이 'ALLEN'인 사원의 부서명을 출력하라.
+
+
+
+<<3>> EMP Table의데이터를 출력하되 해당 사원에 대한 상관번호와 상관의 성명을 함께 출력하라.
+
+
+
+<<4>> 'JONES'가 속해있는 부서의 모든 사람의 사원번호, 이름, 입사일자, 급여, 를 출력하라. (위와 비슷한 문제이므로 각자 풀어보자)
+
+
+
+
+<<5>> 'ALLEN'의 직무와 같은 사람의 이름, 부서명, 급여, 직무를 출력하라.
+
+
+
+
+<<6>> 10번부서에 근무하는 사원의 사원번호, 이름, 부서명, 지역, 급여를 급여가 많은순으로 출력하라.
+
+
+
+
+
+
+
+
+
+
+
+
+

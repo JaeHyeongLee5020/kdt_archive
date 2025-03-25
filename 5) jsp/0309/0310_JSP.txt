@@ -1,0 +1,467 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<h1>/web/views/0310/form.jsp</h1>
+
+<form action="pro.jsp" method="post" >
+	id :	<input type="text" name="id"><br />
+	pw :	<input type="password" name="pw"><br />
+	name :	<input type="text" name="name"><br />
+	age :	<input type="text" name="age"><br />
+			<input type="submit" value="전송"><br />
+</form>
+
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="web.tag.dto.FormDTO" %>
+<% request.setCharacterEncoding("UTF-8"); %>
+<h1>/web/views/0310/pro.jsp</h1>
+<%-- Parameter 받기 --%>
+<%
+/* 
+	String id = request.getParameter("id");
+	String pw = request.getParameter("pw");
+	String name = request.getParameter("name");
+	String age = request.getParameter("age");
+	
+	FormDTO dto = new FormDTO();
+	
+	dto.setId(id);
+	dto.setPw(pw);
+	dto.setName(name);
+	dto.setAge(age);
+	 */
+	 FormDTO dto = new FormDTO();
+	 dto.setId(request.getParameter("id"));
+	 dto.setPw(request.getParameter("pw"));
+	 dto.setName(request.getParameter("name"));
+	 dto.setAge(request.getParameter("age"));	 
+%>
+
+
+<h3>id : <%= dto.getId() %></h3>
+<h3>pw : <%= dto.getPw() %></h3>
+<h3>name : <%= dto.getName() %></h3>
+<h3>age : <%= dto.getAge() %></h3>
+
+
+
+
+================================================================================================
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<h1>/web/views/0310/form.jsp</h1>
+
+<form action="pro2.jsp" method="post" >
+	id :	<input type="text" name="id"><br />
+	pw :	<input type="password" name="pw"><br />
+	name :	<input type="text" name="name"><br />
+	age :	<input type="text" name="age"><br />
+			<input type="submit" value="전송"><br />
+</form>
+
+
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="web.tag.dto.FormDTO" %>
+<h1>/web/views/0310/pro2.jsp</h1>
+<% request.setCharacterEncoding("UTF-8"); %>
+
+<jsp:useBean id="dto" class="web.tag.dto.FormDTO" />
+
+<jsp:setProperty property="id" name="dto"/>
+<jsp:setProperty property="pw" name="dto"/>
+<jsp:setProperty property="name" name="dto"/>
+<jsp:setProperty property="age" name="dto"/>
+
+<h3><jsp:getProperty property="id" name="dto"/></h3>
+<h3><jsp:getProperty property="pw" name="dto"/></h3>
+<h3><jsp:getProperty property="name" name="dto"/></h3>
+<h3><jsp:getProperty property="age" name="dto"/></h3>
+
+
+
+
+================================================================================================
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<h1>/web/views/0310/form3.jsp</h1>
+
+<form action="pro3.jsp" method="post">
+	id : 	<input type="text" name="id" /><br />
+	pw : 	<input type="password" name="pw" /><br />
+	서울 		<input type="checkbox" name="ch1" value="val1" />
+	경기 		<input type="checkbox" name="ch2" value="val2" />
+	충청 		<input type="checkbox" name="ch3" value="val3" /><br />
+			<input type="submit" value="전송" />
+
+</form>
+
+
+package web.tag.dto;
+
+public class Form3DTO {
+	private String id;
+	private String pw;
+	private String ch1;
+	private String ch2;
+	private String ch3;
+	
+	public String getId() {return id;}
+	public void setId(String id) {this.id = id;}
+	
+	public String getPw() {return pw;}
+	public void setPw(String pw) {this.pw = pw;}
+	
+	public String getCh1() {return ch1;}
+	public void setCh1(String ch1) {this.ch1 = ch1;}
+	
+	public String getCh2() {return ch2;}
+	public void setCh2(String ch2) {this.ch2 = ch2;}
+	
+	public String getCh3() {return ch3;}
+	public void setCh3(String ch3) {this.ch3 = ch3;}
+}
+
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="web.tag.dto.Form3DTO" %>
+<h1>/web/views/0310/pro3.jsp</h1>
+<%request.setCharacterEncoding("UTF-8");%>
+
+<jsp:useBean id="dto" class="web.tag.dto.Form3DTO" />
+
+<jsp:setProperty property="id" name="dto"/>
+<jsp:setProperty property="pw" name="dto"/>
+<jsp:setProperty property="ch1" name="dto"/>
+<jsp:setProperty property="ch2" name="dto"/>
+<jsp:setProperty property="ch3" name="dto"/>
+
+<h3><jsp:getProperty property="id" name="dto"/></h3>
+<h3><jsp:getProperty property="pw" name="dto"/></h3>
+<h3><jsp:getProperty property="ch1" name="dto"/></h3>
+<h3><jsp:getProperty property="ch2" name="dto"/></h3>
+<h3><jsp:getProperty property="ch3" name="dto"/></h3>
+
+
+<%	
+	Form3DTO dto = new Form3DTO();
+	dto.setId(request.getParameter("id"));
+	dto.setPw(request.getParameter("pw"));
+	dto.setCh1(request.getParameter("ch1"));
+	dto.setCh2(request.getParameter("ch2"));
+	dto.setCh3(request.getParameter("ch3"));
+%>
+<h3>id : <%= dto.getId() %></h3>
+<h3>pw : <%= dto.getPw() %></h3>
+<h3>ch1 : <%= dto.getCh1() %></h3>
+<h3>ch2 : <%= dto.getCh2() %></h3>
+<h3>ch3 : <%= dto.getCh3() %></h3>
+
+
+
+
+
+
+
+
+================================================================================================
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<h1>/web/views/0310/form4.jsp</h1>
+
+<form action="pro4.jsp" method="post">
+	id : 	<input type="text" name="id" /><br />
+	pw : 	<input type="password" name="pw" /><br />
+	서울 		<input type="checkbox" name="ch" value="Seoul" />
+	경기 		<input type="checkbox" name="ch" value="Gyeonggi" />
+	충청 		<input type="checkbox" name="ch" value="Chungcheong" /><br />
+			<input type="submit" value="전송" />
+</form>
+
+
+
+
+
+
+
+
+package web.tag.dto;
+
+public class Form4DTO {
+	private String id;
+	private String pw;
+	private String[] ch;
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPw() {
+		return pw;
+	}
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+	public String[] getCh() {
+		return ch;
+	}
+	public void setCh(String[] ch) {
+		this.ch = ch;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<h1>/web/views/0310/pro4.jsp</h1>
+<%-- 
+<%
+	request.setCharacterEncoding("UTF-8");
+	
+	String id = request.getParameter("id");
+	String pw = request.getParameter("pw");
+	String ch = request.getParameter("ch");
+%>
+
+<h3>id : <%= id %></h3>
+<h3>pw : <%= pw %></h3>
+<h3>ch : <%= ch %></h3>
+ --%>
+
+<%-- 
+<%
+	request.setCharacterEncoding("UTF-8");
+	
+	String id = request.getParameter("id");
+	String pw = request.getParameter("pw");
+	String[] ch = request.getParameterValues("ch");
+%>
+
+<h3>id : <%= id %></h3>
+<h3>pw : <%= pw %></h3>
+<%
+	for(String str : ch) { %>
+		<h3>ch : <%= str %></h3>
+	<%}
+%>
+ --%>
+ 
+<%-- 
+<%@ page import="web.tag.dto.Form4DTO" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	
+	Form4DTO dto = new Form4DTO();
+	dto.setId(request.getParameter("id"));
+	dto.setPw(request.getParameter("pw"));
+	dto.setCh(request.getParameterValues("ch"));
+%>
+
+<h3>id : <%= dto.getId() %></h3>
+<h3>pw : <%= dto.getPw() %></h3>
+<%
+	String[] ch = dto.getCh();
+
+	if(ch != null) {
+		for(String str : ch) { %>
+			<h3>ch : <%= str %></h3>
+		<%}
+	} else { %>
+		<h3>체크박스를 선택하지 않았습니다.</h3>
+	<%}
+%>
+ --%>
+
+<jsp:useBean id="dto" class="web.tag.dto.Form4DTO" />
+
+<jsp:setProperty property="*" name="dto"/>
+
+<h3><jsp:getProperty property="id" name="dto"/></h3>
+<h3><jsp:getProperty property="pw" name="dto"/></h3>
+
+<%
+	String[] ch = dto.getCh();
+
+	if(ch != null) {
+		for(String str : ch) { %>
+			<h3>ch : <%= str %></h3>
+		<%}
+	} else { %>
+		<h3>체크박스를 선택하지 않았습니다.</h3>
+	<%}
+%>
+
+
+
+
+
+
+
+
+================================================================================================
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<h1>/web/views/0310/form5.jsp</h1>
+
+<form action="pro5.jsp" method="post">
+		<input type="number" name="num1"><br />
+	+	<input type="radio" name="oper" value="+">
+	-	<input type="radio" name="oper" value="-">
+	*	<input type="radio" name="oper" value="*">
+	/	<input type="radio" name="oper" value="/"><br />
+		<input type="number" name="num2"><br />
+		<input type="submit" value="=">
+</form>
+
+
+
+
+
+package web.tag.dto;
+
+public class CalculatorDTO {
+	
+	private int num1;
+	private int num2;
+	private String oper;
+	private int result;
+	private int errCode;	// 0=정상, 1=0으로 나누기 , 2=operErr
+	
+	public int getErrCode() {
+		return errCode;
+	}
+	public void setErrCode(int errCode) {
+		this.errCode = errCode;
+	}
+	public int getNum1() {
+		return num1;
+	}
+	public void setNum1(int num1) {
+		try { 
+			this.num1 = num1;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public int getNum2() {
+		return num2;
+	}
+	public void setNum2(int num2) {
+		try { 
+			this.num2 = num2;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public String getOper() {
+		return oper;
+	}
+	public void setOper(String oper) {
+		this.oper = oper;
+	}
+	public int getResult() {
+		if(oper.equals("+")) {
+			result = num1 + num2;
+		} else if(oper.equals("-")) {
+			result = num1 - num2;
+		} else if(oper.equals("*")) {
+			result = num1 * num2;
+		} else if(oper.equals("/")) {
+			if(num2 == 0) {
+				errCode = 1;	// 정수를 0으로 나누는 에러
+				return 0;
+			} else {
+				result = num1 / num2;
+			}
+		} else {
+			errCode = 2;
+			result = 0;
+		}
+		return result;
+	}
+	public void setResult(int result) {
+		this.result = result;
+	}
+}
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<h1>/web/views/0310/pro5.jsp</h1>
+<% request.setCharacterEncoding("UTF-8"); %>
+
+<jsp:useBean id="dto" class="web.tag.dto.CalculatorDTO" />
+<jsp:setProperty property="*" name="dto" />
+<%
+	int err = dto.getErrCode();
+	if(err == 0) {%>
+		<h1>
+		<jsp:getProperty property="num1" name="dto"/>
+		<jsp:getProperty property="oper" name="dto"/>
+		<jsp:getProperty property="num2" name="dto"/>
+		=
+		<jsp:getProperty property="result" name="dto"/>
+		</h1>	
+	<%} else if(err == 1) {%>
+		<h1>
+		<jsp:getProperty property="num1" name="dto"/>
+		<jsp:getProperty property="oper" name="dto"/>
+		<jsp:getProperty property="num2" name="dto"/>
+		=
+		<jsp:getProperty property="result" name="dto"/>
+		</h1>	
+		<h1>정수를 0으로 나눌수 없습니다.</h1>	
+	<%} else if(err == 2) {%>
+		<h1>
+		<jsp:getProperty property="num1" name="dto"/>
+		<jsp:getProperty property="oper" name="dto"/>
+		<jsp:getProperty property="num2" name="dto"/>
+		=
+		<jsp:getProperty property="result" name="dto"/>
+		</h1>	
+		<h1> + , - , * , /만 사용가능합니다.</h1>	
+	<%}
+%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

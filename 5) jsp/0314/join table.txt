@@ -1,0 +1,142 @@
+CREATE TABLE board (
+    num NUMBER(10) PRIMARY KEY, 	-- 글번호
+    title VARCHAR2(200) NOT NULL,    	-- 제목
+    content CLOB NOT NULL,           	-- 본문
+    writer VARCHAR2(50) NOT NULL,    	-- 글쓴이
+    views NUMBER DEFAULT 0,          	-- 조회수 (기본값 0)
+    created_at DATE DEFAULT SYSDATE  -- 작성 날짜 (기본값 SYSDATE)
+);
+
+INSERT INTO board VALUES
+(1, '주말 여행 추천지', '이번 주말에는 강릉 바다를 보러 가려고 해요. 추천할 만한 장소 있나요?', '김철수', 10, SYSDATE);
+
+INSERT INTO board VALUES
+(2, '맛집 추천해주세요!', '서울에서 가장 맛있는 파스타 집 추천해주세요!', '이영희', 5, SYSDATE);
+
+INSERT INTO board VALUES
+(3, '야구 경기 직관 후기', '어제 잠실에서 두산과 롯데 경기 봤어요! 완전 대박이었어요!', '박지성', 15, SYSDATE);
+
+INSERT INTO board VALUES 
+(4, '강아지 입양 고민', '유기견 보호소에서 강아지를 데려올까 고민 중입니다. 조언 부탁드려요!', '홍길동', 20, SYSDATE);
+
+INSERT INTO board VALUES
+(5, '다이어트 성공 후기', '3개월 동안 10kg 감량했습니다. 저의 다이어트 방법 공유합니다!', '강호동', 25, SYSDATE);
+
+INSERT INTO board VALUES
+(6, '넷플릭스 추천작', '요즘 볼만한 넷플릭스 드라마나 영화 있을까요?', '유재석', 30, SYSDATE);
+
+INSERT INTO board VALUES
+(7, '등산 초보 질문', '처음으로 북한산 등산 가보려고 합니다. 준비물 뭐가 필요할까요?', '신동엽', 18, SYSDATE);
+
+INSERT INTO board VALUES
+(8, '자동차 구매 상담', '첫 차를 구매하려고 하는데, K5랑 소나타 중 어떤 게 나을까요?', '이순신', 22, SYSDATE);
+
+INSERT INTO board VALUES
+(9, '축구 경기 예측', '이번 주 토트넘 경기 어떻게 될까요? 손흥민 골 넣을까요?', '정우성', 12, SYSDATE);
+
+INSERT INTO board VALUES
+(10, '노래 추천해주세요!', '요즘 감성 터지는 발라드 노래 뭐가 있을까요?', '이정재', 28, SYSDATE);
+
+INSERT INTO board VALUES
+(11, '요즘 날씨 너무 덥네요', '벌써 여름 같아요.. 다들 어떻게 더위 피하시나요?', '최민식', 9, SYSDATE);
+INSERT INTO board VALUES
+(12, '커피 맛집 추천', '서울에서 분위기 좋은 카페 추천 부탁드려요!', '송강호', 34, SYSDATE);
+INSERT INTO board VALUES
+(13, '오늘의 명언', '실패는 성공의 어머니이다. - 누구나 아는 명언', '배두나', 16, SYSDATE);
+INSERT INTO board VALUES
+(14, '고양이 키우기 어렵나요?', '처음 반려묘를 키우려고 하는데 주의할 점이 있을까요?', '김연아', 21, SYSDATE);
+INSERT INTO board VALUES
+(15, '해외 여행 준비', '여권 갱신하는데 얼마나 걸리나요? 유럽 여행 계획 중입니다!', '손흥민', 27, SYSDATE);
+INSERT INTO board VALUES
+(16, '헬스장 다닐까 고민 중', '운동을 시작하려는데 PT를 받을까요? 혼자 해도 될까요?', '차두리', 13, SYSDATE);
+INSERT INTO board VALUES
+(17, '와인 초보 질문', '처음 마셔볼 와인 추천해주세요!', '정해인', 32, SYSDATE);
+INSERT INTO board VALUES
+(18, '부동산 시장 전망', '올해 집값은 어떻게 될까요? 전세가 나을까요?', '이성경', 24, SYSDATE);
+INSERT INTO board VALUES
+(19, '오늘의 점심 메뉴 고민', '뭘 먹어야 할지 모르겠어요. 추천 좀 해주세요!', '이병헌', 19, SYSDATE);
+INSERT INTO board VALUES
+(20, '반려식물 추천', '키우기 쉬운 반려식물 추천 부탁드려요.', '유해진', 14, SYSDATE);
+
+
+
+
+
+
+===================================================================================================
+
+CREATE TABLE member (
+    member_id VARCHAR2(10) PRIMARY KEY,  	-- 회원 ID (기본 키, VARCHAR2로 변경)
+    name VARCHAR2(50) NOT NULL,          	-- 회원 이름
+    age NUMBER(3),                       		-- 나이
+    city VARCHAR2(50),                   		-- 거주 도시
+    created_at DATE DEFAULT SYSDATE      	-- 가입일
+);
+
+
+-- 회원 테이블 데이터 삽입 (10명, member_id 값을 문자열로 변경)
+INSERT INTO member VALUES ('M001', '홍길동', 25, '서울', sysdate);
+INSERT INTO member VALUES ('M002', '김철수', 30, '부산', sysdate);
+INSERT INTO member VALUES ('M003', '이영희', 27, '대구', sysdate);
+INSERT INTO member VALUES ('M004', '박지성', 35, '대전', sysdate);
+INSERT INTO member VALUES ('M005', '손흥민', 28, '인천', sysdate);
+INSERT INTO member VALUES ('M006', '유재석', 45, '서울', sysdate);
+INSERT INTO member VALUES ('M007', '강호동', 40, '부산', sysdate);
+INSERT INTO member VALUES ('M008', '신동엽', 38, '대구', sysdate);
+INSERT INTO member VALUES ('M009', '이정재', 50, '광주', sysdate);
+INSERT INTO member VALUES ('M010', '배두나', 33, '울산', sysdate);
+
+
+
+
+CREATE TABLE orders (
+    order_id NUMBER(10) PRIMARY KEY,  	-- 주문 ID (기본 키)
+    member_id VARCHAR2(10),           	-- 회원 ID (외래 키, VARCHAR2로 변경)
+    product VARCHAR2(100) NOT NULL,   	-- 주문한 상품
+    price NUMBER(10),                 	-- 가격
+    order_date DATE DEFAULT SYSDATE  	-- 주문 날짜
+);
+
+-- 주문내역 테이블 데이터 삽입 (30개, member_id 값을 문자열로 변경)
+INSERT INTO orders VALUES (101, 'M001', '노트북', 1500000, sysdate);
+INSERT INTO orders VALUES (102, 'M001', '태블릿', 600000, sysdate);
+INSERT INTO orders VALUES (103, 'M001', '스마트폰', 1000000, sysdate);
+INSERT INTO orders VALUES (104, 'M002', '모니터', 300000, sysdate);
+INSERT INTO orders VALUES (105, 'M002', 'SSD', 350000, sysdate);
+INSERT INTO orders VALUES (106, 'M002', '스피커', 400000, sysdate);
+INSERT INTO orders VALUES (107, 'M003', '키보드', 100000, sysdate);
+INSERT INTO orders VALUES (108, 'M003', '마우스', 50000, sysdate);
+INSERT INTO orders VALUES (109, 'M003', '외장하드', 200000, sysdate);
+INSERT INTO orders VALUES (110, 'M004', '헤드폰', 250000, sysdate);
+INSERT INTO orders VALUES (111, 'M004', '무선 충전기', 80000, sysdate);
+INSERT INTO orders VALUES (112, 'M004', '스마트워치', 450000, sysdate);
+INSERT INTO orders VALUES (113, 'M005', '그래픽 카드', 2000000, sysdate);
+INSERT INTO orders VALUES (114, 'M005', '파워 서플라이', 150000, sysdate);
+INSERT INTO orders VALUES (115, 'M005', 'CPU', 500000, sysdate);
+INSERT INTO orders VALUES (116, 'M006', '램 16GB', 120000, sysdate);
+INSERT INTO orders VALUES (117, 'M006', '마더보드', 250000, sysdate);
+INSERT INTO orders VALUES (118, 'M006', '쿨러', 70000, sysdate);
+INSERT INTO orders VALUES (119, 'M007', '책상', 300000, sysdate);
+INSERT INTO orders VALUES (120, 'M007', '의자', 150000, sysdate);
+INSERT INTO orders VALUES (121, 'M007', '책장', 200000, sysdate);
+INSERT INTO orders VALUES (122, 'M008', 'TV', 2500000, sysdate);
+INSERT INTO orders VALUES (123, 'M008', '리모컨', 50000, sysdate);
+INSERT INTO orders VALUES (124, 'M008', '사운드바', 700000, sysdate);
+INSERT INTO orders VALUES (125, 'M009', '냉장고', 1200000, sysdate);
+INSERT INTO orders VALUES (126, 'M009', '세탁기', 900000, sysdate);
+INSERT INTO orders VALUES (127, 'M009', '전자레인지', 300000, sysdate);
+INSERT INTO orders VALUES (128, 'M010', '청소기', 400000, sysdate);
+INSERT INTO orders VALUES (129, 'M010', '에어컨', 1500000, sysdate);
+INSERT INTO orders VALUES (130, 'M010', '선풍기', 80000, sysdate);
+
+
+
+
+
+
+
+
+
+
+
+

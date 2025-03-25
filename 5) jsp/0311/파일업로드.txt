@@ -1,0 +1,123 @@
+			## DefaultFileRenamePolicy
+
+-DefaultFileRenamePolicy는 주로 자바 기반 웹 애플리케이션에서 파일 업로드 시, 
+ 동일한 이름의 파일이 이미 존재하는 경우 파일이 덮어쓰여지는 것을 방지하기 위해 사용되는 클래스
+
+-이는 O'Reilly에서 제공하는 cos.jar 라이브러리의 com.oreilly.servlet.multipart 패키지에 포함되어 있으며, 
+ FileRenamePolicy 인터페이스를 구현한 기본 클래스
+
+-파일 이름 중복 방지
+  : 업로드하려는 파일과 동일한 이름의 파일이 서버에 이미 존재할 경우, 기존 파일을 보호하기 위해 파일 이름을 자동으로 변경합니다.
+
+-자동 재명명
+ : 예를 들어, "example.jpg" 파일이 존재하면, "example1.jpg", "example2.jpg"와 같이 숫자를 붙여 중복되지 않는 이름으로 변경
+  이 과정은 파일 이름에 대한 중복 여부를 확인하면서 유일한 이름이 생성될 때까지 반복
+
+-인터페이스 기반 구현
+ : FileRenamePolicy 인터페이스를 구현하였기 때문에, 필요에 따라 개발자가 커스텀 파일명 정책을 적용하거나 다른 구현체로 교체할 수 있다.
+
+	// MultipartRequest 생성 시, 파일 업로드 경로(uploadPath), 최대 파일 크기(maxSize),
+	// 문자 인코딩("UTF-8")과 함께 DefaultFileRenamePolicy를 지정합니다.
+	MultipartRequest multi = new MultipartRequest(request, uploadPath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+
+-위처럼 설정하면, 파일 업로드 시 동일한 이름의 파일이 존재할 경우 자동으로 파일명이 변경되어 기존 파일이 덮어쓰기가 방지된다.
+
+-데이터 보호
+ : 기존 파일을 덮어쓰는 위험을 줄여 데이터 손실을 방지
+
+-편리한 구현
+ : 복잡한 파일명 충돌 처리 로직을 직접 구현할 필요 없이, 기본 제공되는 정책을 사용하여 손쉽게 문제를 해결할 수 있다.
+
+
+
+
+
+=========================================================================================================
+
+			## MultipartRequest
+
+-MultipartRequest는 주로 자바 웹 애플리케이션에서 파일 업로드를 처리하기 위해 사용되는 유틸리티 클래스
+-이 클래스는 O'Reilly에서 제공하는 cos.jar 라이브러리에 포함되어 있으며,
+  HTTP 요청 중 multipart/form-data 형식으로 전송되는 데이터를 파싱하고 처리하는 역할
+
+-HTML 폼에서 파일 업로드를 위해 사용되는 enctype="multipart/form-data" 요청을 자동으로 파싱한다.
+ 이 과정에서 텍스트 필드와 파일 필드를 구분하여 각각 접근할 수 있게 해줍니다.
+
+-파일 저장 처리
+ : 업로드된 파일 데이터를 지정한 서버의 디렉토리에 바로 저장
+  사용자는 업로드 경로(directory), 최대 업로드 파일 크기(max size), 문자 인코딩 등의 옵션을 지정할 수 있다.
+
+-MultipartRequest에서 주로 사용되는 get 메소드
+
+ # getParameter(String name) : 폼 내의 일반 텍스트 필드 값을 반환합니다.  
+    (예를 들어, <input type="text" name="username">와 같이 전송된 값을 가져올 때 사용합니다.)
+
+ # getParameterValues(String name) : 하나의 이름으로 여러 값이 전달된 경우(예: 체크박스) 해당 이름의 모든 값을 String 배열로 반환
+
+ # getFile(String name) : 파일 업로드 필드에 해당하는 File 객체를 반환(이 객체를 통해 업로드된 파일의 경로, 크기 등의 정보를 확인할 수 있다.)
+
+ # getOriginalFileName(String name) : 클라이언트가 업로드한 파일의 원래 이름(즉, 클라이언트 측의 파일 이름)을 반환
+    (이는 서버에 저장된 실제 파일 이름(getFilesystemName 메소드로 확인 가능)과 다를 수 있습니다.)
+
+ # getFilesystemName(String name) : 클라이언트가 업로드한 원래 파일 이름과 달리, 서버에 저장된 실제 파일 이름을 반환
+   (파일명 중복 방지를 위해 파일 이름이 변경되었을 경우 그 이름이 반환)
+
+ # getContentType(String name) : 파일 업로드 필드의 MIME 타입(예: image/jpeg, application/pdf 등)을 반환
+
+ # getFileNames():업로드된 파일 필드의 이름을  반환합니다.
+
+-만약 동일한 이름의 파일이 이미 존재할 경우, 기본적으로 DefaultFileRenamePolicy와 같은 파일 이름 재지정 정책을 적용하여 파일명이 중복되지 않도록 처리할 수 있다.
+
+	String uploadPath = "C:/upload";
+	int maxSize = 10 * 1024 * 1024; 	// 예: 10MB
+	String encoding = "UTF-8";
+
+	// 일반 폼 데이터 접근
+	String title = multi.getParameter("title");
+
+	// MultipartRequest 객체를 생성하면 자동으로 요청 파싱 및 파일 저장이 진행
+	MultipartRequest multi = new MultipartRequest(request, uploadPath, maxSize, encoding, new DefaultFileRenamePolicy());
+
+	// 업로드된 파일에 대한 정보 접근
+	File uploadedFile = multi.getFile("fileInputName");
+	String fileName = multi.getFilesystemName("fileInputName");
+
+
+
+
+=========================================================================================================
+
+			## MIME 타입(Multipurpose Internet Mail Extensions Type)
+
+-MIME 타입(Multipurpose Internet Mail Extensions Type)은 인터넷 상에서 전송되는 파일이나 데이터의 형식과 성격을 식별하기 위한 표준 규격
+-원래 이메일에서 다양한 종류의 데이터를 전송하기 위해 만들어졌지만, 현재는 웹 통신(HTTP)에서도 널리 사용된다.
+
+-형식 구분
+ : MIME 타입은 데이터의 내용을 식별하기 위해 "타입/서브타입" 형식으로 표현한다. 
+   예를 들어, text/html은 HTML 문서를 의미하고, image/jpeg는 JPEG 이미지 파일을 의미한다.
+
+-데이터 처리
+ : 웹 브라우저나 이메일 클라이언트는 MIME 타입을 참조하여 해당 데이터의 처리 방법을 결정
+  예를 들어, 브라우저는 text/css 타입을 스타일 시트로 해석하여 적용
+
+
+   # 텍스트
+text/plain: 일반 텍스트
+text/html: HTML 문서
+text/css: CSS 스타일 시트
+text/javascript: 자바스크립트 파일
+
+   # 이미지
+image/jpeg: JPEG 이미지
+image/png: PNG 이미지
+image/gif: GIF 이미지
+
+   # 어플리케이션
+application/xml: XML 문서
+application/pdf: PDF 파일
+
+
+
+
+
+
